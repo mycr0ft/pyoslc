@@ -19,6 +19,7 @@ from app.api.adapter.namespaces.rm.parsers import specification_parser
 from app.api.adapter.resources.resource_service import config_service_resource
 from app.api.adapter.services.providers import ServiceProviderCatalogSingleton, RootServiceSingleton, PublisherSingleton
 from app.api.adapter.services.specification import ServiceResource
+from app.api.adapter.services.shapes import build_requirement_shape
 from pyoslc.resources.domains.rm import Requirement
 from pyoslc.resources.models import ResponseInfo, Compact, Preview
 from pyoslc.rest.resource import OslcResource
@@ -61,6 +62,13 @@ class ServiceProviderCatalog(OslcResource):
         response.headers['Link'] = '<http://www.w3.org/ns/ldp#BasicContainer>; rel="type"'
         return response
 
+    def options(self):
+        response = make_response('', 204)
+        response.headers['Allow'] = 'GET,OPTIONS,HEAD'
+        oslc_version = OslcResource.get_requested_version()
+        response.headers['OSLC-Core-Version'] = oslc_version
+        return response
+
 
 @adapter_ns.route('/provider/<service_provider_id>')
 @api.representation('application/rdf+xml')
@@ -82,11 +90,19 @@ class ServiceProvider(OslcResource):
         provider = ServiceProviderCatalogSingleton.get_provider(service_provider_url, service_provider_id)
 
         if not provider:
-            return make_response('No resources with ID {}'.format(service_provider_id), 404)
+            return OslcResource.build_error_response(
+                404, 'No resources with ID {}'.format(service_provider_id))
 
         provider.to_rdf(self.graph)
         response = self.create_response(graph=self.graph)
         response.headers['Link'] = '<http://www.w3.org/ns/ldp#BasicContainer>; rel="type"'
+        return response
+
+    def options(self, service_provider_id):
+        response = make_response('', 204)
+        response.headers['Allow'] = 'GET,OPTIONS,HEAD'
+        oslc_version = OslcResource.get_requested_version()
+        response.headers['OSLC-Core-Version'] = oslc_version
         return response
 
 
@@ -108,7 +124,13 @@ class ResourceOperation(OslcResource):
 
         data = get_requirement_list(base_url, select, where)
         if len(data) == 0:
-            return make_response('No resources form provider with ID {}'.format(service_provider_id), 404)
+            return OslcResource.build_error_response(
+                404, 'No resources from provider with ID {}'.format(service_provider_id))
+
+        services_base = base_url.split('/provider/')[0]
+        requirement_shape = services_base + '/resourceShapes/requirement'
+        for req in data:
+            req.instance_shape = requirement_shape
 
         response_info = ResponseInfo(base_url)
         response_info.total_count = len(data)
@@ -163,7 +185,7 @@ class ResourceOperation(OslcResource):
 
             return response
         else:
-            return make_response(req.description, req.code)
+            return OslcResource.build_error_response(req.code, req.description)
 
 
 @adapter_ns.route('/provider/<service_provider_id>/resources/requirement/<requirement_id>')
@@ -184,6 +206,8 @@ class ResourcePreview(OslcResource):
         requirement = get_requirement(base_url, requirement_id)
         if requirement:
             requirement.about = base_url
+            services_base = base_url.split('/provider/')[0]
+            requirement.instance_shape = services_base + '/resourceShapes/requirement'
             requirement.to_rdf(self.graph, base_url, attributes)
 
         if 'application/x-oslc-compact+xml' in accept or ', application/x-jazz-compact-rendering' in accept:
@@ -256,7 +280,7 @@ class ResourcePreview(OslcResource):
             req.to_rdf(self.graph, base_url, attributes)
             return self.create_response(self.graph)
         else:
-            return make_response(req.description, req.code)
+            return OslcResource.build_error_response(req.code, req.description)
 
     def delete(self, service_provider_id, requirement_id):
         rq = CsvRequirementRepository('specs')
@@ -266,14 +290,18 @@ class ResourcePreview(OslcResource):
             req = delete_requirement(requirement_id)
             if req:
                 response = make_response('Resource deleted.', 200)
-                # response.headers['Accept'] = 'application/rdf+xml'
-                # response.headers['Content-Type'] = 'application/rdf+xml'
-                # response.headers['OSLC-Core-Version'] = "2.0"
                 return response
             else:
-                return make_response(req.description, req.code)
+                return OslcResource.build_error_response(req.code, req.description)
         else:
-            return make_response('The resource was not found.', 404)
+            return OslcResource.build_error_response(404, 'The resource was not found.')
+
+    def options(self, service_provider_id, requirement_id):
+        response = make_response('', 204)
+        response.headers['Allow'] = 'GET,PUT,DELETE,OPTIONS,HEAD'
+        oslc_version = OslcResource.get_requested_version()
+        response.headers['OSLC-Core-Version'] = oslc_version
+        return response
 
 
 @adapter_ns.route('/provider/<service_provider_id>/resources/requirement/<requirement_id>/<preview_type>')
@@ -302,6 +330,36 @@ class ResourcePreviewSmallLarge(OslcResource):
         return response
 
 
+@adapter_ns.route('/resourceShapes/<shape_name>')
+@api.representation('application/rdf+xml')
+@api.representation('application/json-ld')
+@api.representation('text/turtle')
+class ResourceShapeEndpoint(OslcResource):
+
+    def get(self, shape_name):
+        super().get()
+        endpoint_url = url_for(
+            '{}.{}'.format(request.blueprint, self.endpoint),
+            shape_name=shape_name,
+        )
+        base_url = '{}{}'.format(request.url_root.rstrip('/'), endpoint_url)
+
+        if shape_name == 'requirement':
+            shape = build_requirement_shape(base_url)
+        else:
+            raise NotFound()
+
+        shape.to_rdf(self.graph)
+        return self.create_response(graph=self.graph)
+
+    def options(self, shape_name):
+        response = make_response('', 204)
+        response.headers['Allow'] = 'GET,OPTIONS,HEAD'
+        oslc_version = OslcResource.get_requested_version()
+        response.headers['OSLC-Core-Version'] = oslc_version
+        return response
+
+
 @adapter_ns.route('/rootservices')
 class RootServices(OslcResource):
 
@@ -325,6 +383,13 @@ class RootServices(OslcResource):
         root_services.to_rdf(self.graph)
 
         return self.create_response(graph=self.graph, rdf_format='rootservices-xml')
+
+    def options(self):
+        response = make_response('', 204)
+        response.headers['Allow'] = 'GET,OPTIONS,HEAD'
+        oslc_version = OslcResource.get_requested_version()
+        response.headers['OSLC-Core-Version'] = oslc_version
+        return response
 
 
 @adapter_ns.route('/config')

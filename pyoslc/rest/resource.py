@@ -6,6 +6,7 @@ from rdflib import Graph, RDF, RDFS, DCTERMS
 from rdflib.plugin import PluginException
 from werkzeug.exceptions import UnsupportedMediaType
 
+from pyoslc.resources.models import Error
 from pyoslc.vocabularies.core import OSLC
 from pyoslc.vocabularies.jazz import JAZZ_PROCESS
 
@@ -92,4 +93,36 @@ class OslcResource(Resource):
         if etag:
             response.add_etag()
 
+        return response
+
+    @staticmethod
+    def build_error_response(status_code, message, extended_error=None,
+                             rdf_format='pretty-xml'):
+        graph = Graph()
+        graph.bind('oslc', OSLC)
+        graph.bind('rdf', RDF)
+        graph.bind('dcterms', DCTERMS)
+
+        error_uri = request.url if request.url else 'http://open-services.net/ns/core#Error'
+        error = Error(
+            about=error_uri,
+            status_code=status_code,
+            message=message,
+            extended_error=extended_error,
+        )
+        error.to_rdf(graph)
+
+        try:
+            data = graph.serialize(format=rdf_format)
+        except PluginException:
+            data = graph.serialize(format='pretty-xml')
+
+        oslc_version = OslcResource.get_requested_version()
+
+        response = make_response(
+            data.decode('utf-8') if not isinstance(data, str) else data,
+            status_code,
+        )
+        response.headers['Content-Type'] = 'application/rdf+xml; charset=UTF-8'
+        response.headers['OSLC-Core-Version'] = oslc_version
         return response

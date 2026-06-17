@@ -1,6 +1,6 @@
 import logging
 
-from rdflib import RDF, Literal
+from rdflib import RDF, Literal, URIRef
 from rdflib.extras.describer import Describer
 from rdflib.namespace import DCTERMS
 
@@ -73,6 +73,10 @@ class Requirement(BaseResource):
 
         d.about(base_url)
         d.rdftype(OSLC_RM.Requirement)
+
+        instance_shape = getattr(self, '_BaseResource__instance_shape', None)
+        if instance_shape:
+            d.value(OSLC.instanceShape, URIRef(instance_shape))
 
         for attribute_key in self.__dict__:
             item = {v['attribute']: v['oslc_property'] for k, v in attributes.items() if

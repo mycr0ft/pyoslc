@@ -1323,40 +1323,234 @@ class Compact(AbstractResource):
         return d
 
 
-"""
+class ExtendedError(BaseResource):
 
-class ResourceShape(BaseResource):
-    def __init__(self, about, types, properties,
-                 describes, title):
-        BaseResource.__init__(self, about, types, properties)
-
-        self.__describes = describes if describes is not None else OrderedDict()
-        self.__properties = properties if properties is not None else OrderedDict()
-        self.__title = title if title is not None else None
+    def __init__(self, about=None, types=None, properties=None,
+                 description=None, identifier=None, short_title=None,
+                 title=None, contributor=None, creator=None, subject=None,
+                 created=None, modified=None, type=None,
+                 discussed_by=None, instance_shape=None,
+                 service_provider=None, relation=None,
+                 hint_width=None, hint_height=None, message=None,
+                 more_info=None, rel=None, status_code=None):
+        super().__init__(
+            about, types, properties, description, identifier,
+            short_title, title, contributor, creator, subject,
+            created, modified, type, discussed_by, instance_shape,
+            service_provider, relation,
+        )
+        self.__hint_width = hint_width
+        self.__hint_height = hint_height
+        self.__message = message
+        self.__more_info = more_info
+        self.__rel = rel
+        self.__status_code = status_code
 
     @property
-    def describes(self):
-        return self.__describes
+    def hint_width(self):
+        return self.__hint_width
 
-    @describes.setter
-    def describes(self, describes):
-        self.__describes = describes
-
-    def add_describe(self, describe):
-        if describe:
-            self.__describes.append(describe)
+    @hint_width.setter
+    def hint_width(self, hint_width):
+        self.__hint_width = hint_width
 
     @property
-    def properties(self):
-        return self.__properties
+    def hint_height(self):
+        return self.__hint_height
 
-    @properties.setter
-    def properties(self, properties):
-        self.__properties = properties
+    @hint_height.setter
+    def hint_height(self, hint_height):
+        self.__hint_height = hint_height
 
-    def add_propertie(self, propertie):
-        if propertie:
-            self.__properties.append(propertie)
+    @property
+    def message(self):
+        return self.__message
+
+    @message.setter
+    def message(self, message):
+        self.__message = message
+
+    @property
+    def more_info(self):
+        return self.__more_info
+
+    @more_info.setter
+    def more_info(self, more_info):
+        self.__more_info = more_info
+
+    @property
+    def rel(self):
+        return self.__rel
+
+    @rel.setter
+    def rel(self, rel):
+        self.__rel = rel
+
+    @property
+    def status_code(self):
+        return self.__status_code
+
+    @status_code.setter
+    def status_code(self, status_code):
+        self.__status_code = status_code
+
+    def to_rdf(self, graph):
+        super().to_rdf(graph)
+
+        ee = Resource(graph, BNode())
+        ee.add(RDF.type, OSLC.ExtendedError)
+
+        if self.status_code is not None:
+            ee.add(OSLC.statusCode, Literal(self.status_code, datatype=XSD.integer))
+        if self.message:
+            ee.add(OSLC.message, Literal(self.message))
+        if self.more_info:
+            ee.add(OSLC.moreInfo, URIRef(self.more_info))
+        if self.rel:
+            ee.add(OSLC.rel, Literal(self.rel))
+        if self.hint_width:
+            ee.add(OSLC.hintWidth, Literal(self.hint_width))
+        if self.hint_height:
+            ee.add(OSLC.hintHeight, Literal(self.hint_height))
+
+        return ee
+
+
+class Error(BaseResource):
+
+    def __init__(self, about=None, types=None, properties=None,
+                 description=None, identifier=None, short_title=None,
+                 title=None, contributor=None, creator=None, subject=None,
+                 created=None, modified=None, type=None,
+                 discussed_by=None, instance_shape=None,
+                 service_provider=None, relation=None,
+                 message=None, status_code=None, extended_error=None):
+        super().__init__(
+            about, types, properties, description, identifier,
+            short_title, title, contributor, creator, subject,
+            created, modified, type, discussed_by, instance_shape,
+            service_provider, relation,
+        )
+        self.__message = message
+        self.__status_code = status_code
+        self.__extended_error = extended_error
+
+    @property
+    def message(self):
+        return self.__message
+
+    @message.setter
+    def message(self, message):
+        self.__message = message
+
+    @property
+    def status_code(self):
+        return self.__status_code
+
+    @status_code.setter
+    def status_code(self, status_code):
+        self.__status_code = status_code
+
+    @property
+    def extended_error(self):
+        return self.__extended_error
+
+    @extended_error.setter
+    def extended_error(self, extended_error):
+        self.__extended_error = extended_error
+
+    def to_rdf(self, graph):
+        super().to_rdf(graph)
+
+        uri = self.about if self.about else ''
+        e = Resource(graph, URIRef(uri))
+        e.add(RDF.type, OSLC.Error)
+
+        if self.status_code is not None:
+            e.add(OSLC.statusCode, Literal(self.status_code, datatype=XSD.integer))
+        if self.message:
+            e.add(OSLC.message, Literal(self.message))
+        if self.extended_error:
+            ee = self.extended_error.to_rdf(graph)
+            e.add(OSLC.extendedError, ee)
+
+        return e
+
+
+class Property(AbstractResource):
+
+    def __init__(self, about=None, types=None, properties=None,
+                 property_definition=None, name=None, value_type=None,
+                 range=None, occurs=None, read_only=None,
+                 representation=None, title=None, description=None,
+                 value_shape=None):
+        super().__init__(about, types, properties)
+        self.__property_definition = property_definition
+        self.__name = name
+        self.__value_type = value_type
+        self.__range = range
+        self.__occurs = occurs
+        self.__read_only = read_only
+        self.__representation = representation
+        self.__title = title
+        self.__description = description
+        self.__value_shape = value_shape
+
+    @property
+    def property_definition(self):
+        return self.__property_definition
+
+    @property_definition.setter
+    def property_definition(self, property_definition):
+        self.__property_definition = property_definition
+
+    @property
+    def name(self):
+        return self.__name
+
+    @name.setter
+    def name(self, name):
+        self.__name = name
+
+    @property
+    def value_type(self):
+        return self.__value_type
+
+    @value_type.setter
+    def value_type(self, value_type):
+        self.__value_type = value_type
+
+    @property
+    def range(self):
+        return self.__range
+
+    @range.setter
+    def range(self, range):
+        self.__range = range
+
+    @property
+    def occurs(self):
+        return self.__occurs
+
+    @occurs.setter
+    def occurs(self, occurs):
+        self.__occurs = occurs
+
+    @property
+    def read_only(self):
+        return self.__read_only
+
+    @read_only.setter
+    def read_only(self, read_only):
+        self.__read_only = read_only
+
+    @property
+    def representation(self):
+        return self.__representation
+
+    @representation.setter
+    def representation(self, representation):
+        self.__representation = representation
 
     @property
     def title(self):
@@ -1366,9 +1560,104 @@ class ResourceShape(BaseResource):
     def title(self, title):
         self.__title = title
 
+    @property
+    def description(self):
+        return self.__description
+
+    @description.setter
+    def description(self, description):
+        self.__description = description
+
+    @property
+    def value_shape(self):
+        return self.__value_shape
+
+    @value_shape.setter
+    def value_shape(self, value_shape):
+        self.__value_shape = value_shape
+
+    def to_rdf(self, graph):
+        super().to_rdf(graph)
+
+        p = Resource(graph, BNode())
+        p.add(RDF.type, OSLC.Property)
+
+        if self.property_definition:
+            p.add(OSLC.propertyDefinition, URIRef(self.property_definition))
+        if self.name:
+            p.add(OSLC.name, Literal(self.name))
+        if self.value_type:
+            p.add(OSLC.valueType, URIRef(self.value_type))
+        if self.range:
+            p.add(OSLC.range, URIRef(self.range))
+        if self.occurs:
+            p.add(OSLC.occurs, URIRef(self.occurs))
+        if self.read_only is not None:
+            p.add(OSLC.readOnly, Literal(self.read_only, datatype=XSD.boolean))
+        if self.representation:
+            p.add(OSLC.representation, URIRef(self.representation))
+        if self.title:
+            p.add(DCTERMS.title, Literal(self.title))
+        if self.description:
+            p.add(DCTERMS.description, Literal(self.description))
+        if self.value_shape:
+            p.add(OSLC.valueShape, URIRef(self.value_shape))
+
+        return p
 
 
+class ResourceShape(BaseResource):
 
+    def __init__(self, about=None, types=None, properties=None,
+                 description=None, identifier=None, short_title=None,
+                 title=None, contributor=None, creator=None, subject=None,
+                 created=None, modified=None, type=None,
+                 discussed_by=None, instance_shape=None,
+                 service_provider=None, relation=None,
+                 describes=None, shape_properties=None):
+        super().__init__(
+            about, types, properties, description, identifier,
+            short_title, title, contributor, creator, subject,
+            created, modified, type, discussed_by, instance_shape,
+            service_provider, relation,
+        )
+        self.__describes = describes
+        self.__shape_properties = shape_properties if shape_properties is not None else []
 
+    @property
+    def describes(self):
+        return self.__describes
 
-"""
+    @describes.setter
+    def describes(self, describes):
+        self.__describes = describes
+
+    @property
+    def shape_properties(self):
+        return self.__shape_properties
+
+    @shape_properties.setter
+    def shape_properties(self, shape_properties):
+        self.__shape_properties = shape_properties
+
+    def add_shape_property(self, prop):
+        if prop:
+            self.__shape_properties.append(prop)
+
+    def to_rdf(self, graph):
+        super().to_rdf(graph)
+
+        rs = Resource(graph, URIRef(self.about))
+        rs.add(RDF.type, OSLC.ResourceShape)
+
+        if self.title:
+            rs.add(DCTERMS.title, Literal(self.title))
+
+        if self.describes:
+            rs.add(OSLC.describes, URIRef(self.describes))
+
+        for prop in self.shape_properties:
+            r = prop.to_rdf(graph)
+            rs.add(OSLC.property, r)
+
+        return rs

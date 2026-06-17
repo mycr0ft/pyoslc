@@ -67,3 +67,9 @@ $ uv run pytest -v
 ```bash
 $ uv run flake8 pyoslc app pyoslc_oauth
 ```
+
+## OSLC Core v3
+
+The `oslc-v3` branch adds backward-compatible OSLC Core v3.0 support.
+See [OSLC v2/v3 Compatibility](docs/OSLC_V2_V3_COMPATIBILITY.md) for details
+on the changes and how both versions are supported simultaneously.
