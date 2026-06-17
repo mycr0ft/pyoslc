@@ -13,7 +13,7 @@ class ServiceProviderCatalogSingleton(object):
 
     def __new__(cls, *args, **kwargs):
         if not cls.instance:
-            cls.instance = super(ServiceProviderCatalogSingleton, cls).__new__(cls, *args, **kwargs)
+            cls.instance = super().__new__(cls, *args, **kwargs)
 
             cls.catalog = ServiceProviderCatalog()
             cls.catalog.title = 'Contact Software Platform Service Provider Catalog'
@@ -114,7 +114,7 @@ class RootServiceSingleton(object):
 
     def __new__(cls, *args, **kwargs):
         if not cls.instance:
-            cls.instance = super(RootServiceSingleton, cls).__new__(cls, *args, **kwargs)
+            cls.instance = super().__new__(cls, *args, **kwargs)
 
             cls.root_service = RootService()
             cls.root_service.title = 'Root services for connecting with Jazz'
@@ -138,7 +138,7 @@ class PublisherSingleton(object):
 
     def __new__(cls, *args, **kwargs):
         if not cls.instance:
-            cls.instance = super(PublisherSingleton, cls).__new__(cls, *args, **kwargs)
+            cls.instance = super().__new__(cls, *args, **kwargs)
 
             cls.publisher = Publisher()
             cls.publisher.title = 'PyOSLC'
@@ -165,7 +165,7 @@ class ConfigurationManagementSingleton(object):
 
     def __new__(cls, *args, **kwargs):
         if not cls.instance:
-            cls.instance = super(ConfigurationManagementSingleton, cls).__new__(cls, *args, **kwargs)
+            cls.instance = super().__new__(cls, *args, **kwargs)
 
             cls.catalog = ServiceProviderCatalog()
             cls.catalog.title = 'Configuration Management'

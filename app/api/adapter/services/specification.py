@@ -41,7 +41,7 @@ class Provider(object):
 class ProviderResource(type):
 
     def __init__(cls, name, bases, d):
-        super(ProviderResource, cls).__init__(name, bases, d)
+        super().__init__(name, bases, d)
 
         if 'methods' not in d:
             methods = set()
@@ -62,7 +62,7 @@ class ServiceResource(ProviderResource, Provider):
         if method is None:
             method = getattr(self, 'query_capability', None)
 
-        assert method is not None, 'Unimplemented method %r' % method
+        assert method is not None, f'Unimplemented method {method!r}'
         return method(*args, **kwargs)
 
 

@@ -5,7 +5,6 @@ from rdflib.collection import Collection
 from rdflib.plugins.serializers.rdfxml import PrettyXMLSerializer, XMLBASE, fix, XMLLANG, OWL_NS
 from rdflib.plugins.serializers.xmlwriter import XMLWriter
 from rdflib.util import first, more_than
-from six import b
 
 from pyoslc.vocabularies.jazz import JAZZ_CONFIG
 
@@ -13,7 +12,7 @@ from pyoslc.vocabularies.jazz import JAZZ_CONFIG
 class ConfigurationSerializer(PrettyXMLSerializer):
 
     def __init__(self, store, max_depth=3):
-        super(ConfigurationSerializer, self).__init__(store, max_depth=3)
+        super().__init__(store, max_depth=3)
         self.__root_serialized = {}
         self.__serialized = {}
 
@@ -76,7 +75,7 @@ class ConfigurationSerializer(PrettyXMLSerializer):
                 self.subject(subject, 1)
 
         writer.pop(RDF.RDF)
-        stream.write(b("\n"))
+        stream.write(b"\n")
 
         # Set to None so that the memory can get garbage collected.
         self.__serialized = None

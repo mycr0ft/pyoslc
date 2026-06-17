@@ -16,7 +16,7 @@ attributes = specification_map
 def get_requirement(base_url, specification_id):
     path = 'examples/specifications.csv'
     if os.path.isfile(path):
-        with open(path, 'r') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f, delimiter=';')
             for row in reader:
                 if row['Specification_id'] == specification_id:
@@ -31,7 +31,7 @@ def get_requirement_list(base_url, select, where):
     requirements = list()
     path = 'examples/specifications.csv'
     if os.path.isfile(path):
-        with open(path, 'r') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f, delimiter=';')
             for row in reader:
                 requirement = Requirement()
@@ -44,7 +44,7 @@ def get_requirement_list(base_url, select, where):
 def get_requirements(base_url):
     path = 'examples/specifications.csv'
     requirements = list()
-    with open(path, 'r') as f:
+    with open(path, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f, delimiter=';')
 
         for row in reader:
@@ -74,11 +74,11 @@ def create_requirement(data):
             path = 'examples/specifications.csv'
             tempfile = NamedTemporaryFile(mode='w', delete=False)
 
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f, delimiter=';')
                 field_names = reader.fieldnames
 
-            with open(path, 'r') as csvfile, tempfile:
+            with open(path, 'r', encoding='utf-8') as csvfile, tempfile:
                 reader = csv.DictReader(csvfile, fieldnames=field_names, delimiter=';')
                 writer = csv.DictWriter(tempfile, fieldnames=field_names, delimiter=';')
                 exist = False
@@ -120,12 +120,12 @@ def update_requirement(requirement_id, data):
             path = 'examples/specifications.csv'
             tempfile = NamedTemporaryFile(mode='w', delete=False)
 
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f, delimiter=';')
                 field_names = reader.fieldnames
 
             modified = False
-            with open(path, 'r') as csvfile, tempfile:
+            with open(path, 'r', encoding='utf-8') as csvfile, tempfile:
                 reader = csv.DictReader(csvfile, fieldnames=field_names, delimiter=';')
                 writer = csv.DictWriter(tempfile, fieldnames=field_names, delimiter=';')
                 for row in reader:
@@ -152,12 +152,12 @@ def delete_requirement(requirement_id):
     path = 'examples/specifications.csv'
     tempfile = NamedTemporaryFile(mode='w', delete=False)
 
-    with open(path, 'r') as f:
+    with open(path, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f, delimiter=';')
         field_names = reader.fieldnames
 
     modified = False
-    with open(path, 'r') as csvfile, tempfile:
+    with open(path, 'r', encoding='utf-8') as csvfile, tempfile:
         reader = csv.DictReader(csvfile, fieldnames=field_names, delimiter=';')
         writer = csv.DictWriter(tempfile, fieldnames=field_names, delimiter=';')
         for row in reader:

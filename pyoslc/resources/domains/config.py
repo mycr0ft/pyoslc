@@ -8,7 +8,7 @@ class ConfigurationResource(BaseResource):
                  discussed_by=None, instance_shape=None, service_provider=None, relation=None,
                  short_id=None, modified_by=None, was_derived_from=None, was_revision_of=None, was_generated_by=None):
 
-        super(ConfigurationResource, self).__init__(about, types, properties, description, identifier, short_title,
+        super().__init__(about, types, properties, description, identifier, short_title,
                                                     title, contributor, creator, subject, created, modified, type,
                                                     discussed_by, instance_shape, service_provider, relation)
 
@@ -59,7 +59,7 @@ class ConfigurationResource(BaseResource):
         self.__was_generated_by = was_generated_by
 
     def to_rdf(self, graph):
-        super(BaseResource, self).to_rdf(graph)
+        super().to_rdf(graph)
 
 
 class ConfigurationItem(ConfigurationResource):
@@ -70,7 +70,7 @@ class ConfigurationItem(ConfigurationResource):
                  modified_by=None, was_derived_from=None, was_revision_of=None, was_generated_by=None,
                  is_version_of=None, version_id=None):
 
-        super(ConfigurationItem, self).__init__(about, types, properties, description, identifier, short_title, title,
+        super().__init__(about, types, properties, description, identifier, short_title, title,
                                                 contributor, creator, subject, created, modified, type, discussed_by,
                                                 instance_shape, service_provider, relation, short_id, modified_by,
                                                 was_derived_from, was_revision_of, was_generated_by)
@@ -95,7 +95,7 @@ class ConfigurationItem(ConfigurationResource):
         self.__version_id = version_id
 
     def to_rdf(self, graph):
-        super(BaseResource, self).to_rdf(graph)
+        super().to_rdf(graph)
 
 
 class Configuration(ConfigurationResource):
@@ -107,7 +107,7 @@ class Configuration(ConfigurationResource):
                  member=None, contains_relation=None, contained_by_relation=None,
                  component=None, mutable=None, action=None):
 
-        super(Configuration, self).__init__(about, types, properties, description, identifier, short_title, title,
+        super().__init__(about, types, properties, description, identifier, short_title, title,
                                             contributor, creator, subject, created, modified, type, discussed_by,
                                             instance_shape, service_provider, relation, short_id, modified_by,
                                             was_derived_from, was_revision_of, was_generated_by)
@@ -195,7 +195,7 @@ class Component(ConfigurationResource):
                  discussed_by=None, instance_shape=None, service_provider=None, relation=None, short_id=None,
                  modified_by=None, was_derived_from=None, was_revision_of=None, was_generated_by=None,
                  member=None, contains_relation=None, contained_by_relation=None, is_version_of=None):
-        super(Component, self).__init__(about, types, properties, description, identifier, short_title, title,
+        super().__init__(about, types, properties, description, identifier, short_title, title,
                                         contributor, creator, subject, created, modified, type, discussed_by,
                                         instance_shape, service_provider, relation, short_id, modified_by,
                                         was_derived_from, was_revision_of, was_generated_by)

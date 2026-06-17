@@ -140,11 +140,11 @@ class RequirementList(Resource):
 
             tempfile = NamedTemporaryFile(mode='w', delete=False)
 
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f, delimiter=';')
                 field_names = reader.fieldnames
 
-            with open(path, 'r') as csvfile, tempfile:
+            with open(path, 'r', encoding='utf-8') as csvfile, tempfile:
                 reader = csv.DictReader(csvfile, fieldnames=field_names, delimiter=';')
                 writer = csv.DictWriter(tempfile, fieldnames=field_names, delimiter=';')
                 exist = False
@@ -257,11 +257,11 @@ class RequirementItem(Resource):
 
             tempfile = NamedTemporaryFile(mode='w', delete=False)
 
-            with open(path, 'r') as f:
+            with open(path, 'r', encoding='utf-8') as f:
                 reader = csv.DictReader(f, delimiter=';')
                 field_names = reader.fieldnames
 
-            with open(path, 'r') as csvfile, tempfile:
+            with open(path, 'r', encoding='utf-8') as csvfile, tempfile:
                 reader = csv.DictReader(csvfile, fieldnames=field_names, delimiter=';')
                 writer = csv.DictWriter(tempfile, fieldnames=field_names, delimiter=';')
                 modified = False
@@ -292,12 +292,12 @@ class RequirementItem(Resource):
 
         tempfile = NamedTemporaryFile(mode='w', delete=False)
 
-        with open(path, 'r') as f:
+        with open(path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f, delimiter=';')
             field_names = reader.fieldnames
 
         modified = False
-        with open(path, 'r') as csvfile, tempfile:
+        with open(path, 'r', encoding='utf-8') as csvfile, tempfile:
             reader = csv.DictReader(csvfile, fieldnames=field_names, delimiter=';')
             writer = csv.DictWriter(tempfile, fieldnames=field_names, delimiter=';')
             for row in reader:
@@ -331,7 +331,7 @@ class UploadCollection(Resource):
             destination = os.path.join(current_app.instance_path, 'medias/')
             if not os.path.exists(destination):
                 os.makedirs(destination)
-            csv_file = '%s%s' % (destination, 'custom_file_name.csv')
+            csv_file = f'{destination}custom_file_name.csv'
             args['csv_file'].save(csv_file)
 
             # TODO take each line of CSV to process for RDF format

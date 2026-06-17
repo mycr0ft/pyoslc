@@ -1,6 +1,5 @@
 from base64 import b64encode
 
-import six
 from authlib.integrations.flask_client import OAuth
 from enum import Enum
 from rdflib import Graph, RDF, URIRef, Literal, BNode, XSD
@@ -50,7 +49,7 @@ class OAuthServiceProvider:
 class OAuthConsumer(OAuth):
 
     def __init__(self, callback_url=None, consumer_key=None, consumer_secret=None, service_provider=None):
-        super(OAuthConsumer, self).__init__()
+        super().__init__()
         self.__callback_url = callback_url if callback_url is not None else None
         self.__key = consumer_key if consumer_key is not None else None
         self.__secret = consumer_secret if consumer_secret is not None else None
@@ -110,7 +109,7 @@ class OSLCOAuthConsumer(OAuthConsumer):
 
     def __init__(self, name=None, provisional=True, trusted=None,
                  consumer_key=None, consumer_secret=None):
-        super(OSLCOAuthConsumer, self).__init__(consumer_key=consumer_key,
+        super().__init__(consumer_key=consumer_key,
                                                 consumer_secret=consumer_secret)
         self.__name = name if name is not None else None
         self.__provisional = provisional
@@ -155,13 +154,13 @@ class OAuthConfiguration(object):
 
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
-            cls._instance = super(OAuthConfiguration, cls).__new__(cls, *args, **kwargs)
+            cls._instance = super().__new__(cls, *args, **kwargs)
 
         return cls._instance
 
     def __init__(self):
         if not self._instance:
-            self._instance = super(OAuthConfiguration, self).__init__()
+            self._instance = super().__init__()
 
         self.__consumer_store = None
         self.__application = None
@@ -260,11 +259,7 @@ class FileSystemConsumerStore(object):
 
     def __to_resource(self, consumer):
 
-        if six.PY2:
-            consumer.secret = b64encode(consumer.secret.encode("utf-8"))
-
-        if six.PY3:
-            consumer.secret = b64encode(consumer.secret)
+        consumer.secret = b64encode(consumer.secret if isinstance(consumer.secret, bytes) else consumer.secret.encode("utf-8"))
 
         resource = Resource(self._graph, BNode())
         resource.add(RDF.type, OAUTH.Consumer)

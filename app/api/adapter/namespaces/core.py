@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime
-from six.moves.urllib.parse import urlparse
+from urllib.parse import urlparse
 from xml.sax import SAXParseException
 
 from flask import request, make_response, url_for, render_template
@@ -45,10 +45,10 @@ config_service_resource(
 class ServiceProviderCatalog(OslcResource):
 
     def __init__(self, *args, **kwargs):
-        super(ServiceProviderCatalog, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def get(self):
-        super(ServiceProviderCatalog, self).get()
+        super().get()
         endpoint_url = url_for('{}.{}'.format(request.blueprint, self.endpoint))
         base_url = '{}{}'.format(request.url_root.rstrip('/'), endpoint_url)
 
@@ -67,10 +67,10 @@ class ServiceProviderCatalog(OslcResource):
 class ServiceProvider(OslcResource):
 
     def __init__(self, *args, **kwargs):
-        super(ServiceProvider, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
     def get(self, service_provider_id):
-        super(ServiceProvider, self).get()
+        super().get()
         endpoint_url = url_for('{}.{}'.format(request.blueprint, self.endpoint),
                                service_provider_id=service_provider_id)
         base_url = '{}{}'.format(request.url_root.rstrip('/'), endpoint_url)
@@ -93,7 +93,7 @@ class ServiceProvider(OslcResource):
 class ResourceOperation(OslcResource):
 
     def get(self, service_provider_id):
-        super(ResourceOperation, self).get()
+        super().get()
 
         select = request.args.get('oslc.select', '')
         where = request.args.get('oslc.where', '')
@@ -159,7 +159,7 @@ class ResourceOperation(OslcResource):
 class ResourcePreview(OslcResource):
 
     def get(self, service_provider_id, requirement_id):
-        super(ResourcePreview, self).get()
+        super().get()
 
         accept = request.headers['accept']
 
@@ -295,7 +295,7 @@ class RootServices(OslcResource):
         Generate Rootservices response
         :return:
         """
-        super(RootServices, self).get()
+        super().get()
 
         endpoint_url = url_for('{}.{}'.format(request.blueprint, self.endpoint))
         base_url = '{}{}'.format(request.url_root.rstrip('/'), endpoint_url)
@@ -338,7 +338,7 @@ class ConfigurationCatalog(OslcResource):
 class ConfigurationComponent(OslcResource):
 
     def get(self):
-        super(ConfigurationComponent, self).get()
+        super().get()
         endpoint_url = url_for('{}.{}'.format(request.blueprint, self.endpoint))
         base_url = '{}{}'.format(request.url_root.rstrip('/'), endpoint_url)
 
@@ -362,7 +362,7 @@ class ConfigurationComponent(OslcResource):
 class ConfigurationPublisher(OslcResource):
 
     def get(self):
-        super(ConfigurationPublisher, self).get()
+        super().get()
         endpoint_url = url_for('{}.{}'.format(request.blueprint, self.endpoint))
         base_url = '{}{}'.format(request.url_root.rstrip('/'), endpoint_url)
 

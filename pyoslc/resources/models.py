@@ -2,7 +2,6 @@ import hashlib
 import logging
 from datetime import date
 
-import six
 from rdflib import URIRef, Literal, RDF, XSD, BNode
 from rdflib.namespace import DCTERMS, RDFS
 from rdflib.resource import Resource
@@ -90,11 +89,7 @@ class AbstractResource(object):
                     state += value
 
         dig = hashlib.sha256()
-        if six.PY2:
-            dig.update(state)
-        if six.PY3:
-            sb = bytes(state, 'utf-8')
-            dig.update(sb)
+        dig.update(state.encode('utf-8'))
 
         return str(dig.hexdigest())
 
@@ -110,7 +105,7 @@ class BaseResource(AbstractResource):
         Initialize the generic resource with the about property
         """
 
-        super(BaseResource, self).__init__(about, types, properties)
+        super().__init__(about, types, properties)
         self.__description = description if description is not None else ''
         self.__identifier = identifier if identifier is not None else ''
         self.__short_title = short_title if short_title is not None else ''
@@ -261,7 +256,7 @@ class BaseResource(AbstractResource):
         self.__relation = relation
 
     def to_rdf(self, graph):
-        super(BaseResource, self).to_rdf(graph)
+        super().to_rdf(graph)
 
 
 class ServiceProviderCatalog(BaseResource):
@@ -273,7 +268,7 @@ class ServiceProviderCatalog(BaseResource):
                  relation=None, uri=None, publisher=None, domain=None,
                  service_provider_catalog=None, oauth_configuration=None):
 
-        super(ServiceProviderCatalog, self).__init__(about, types, properties, description,
+        super().__init__(about, types, properties, description,
                                                      identifier, short_title, title, contributor,
                                                      creator, subject, created, modified, type,
                                                      discussed_by, instance_shape, service_provider,
@@ -324,7 +319,7 @@ class ServiceProviderCatalog(BaseResource):
         self.__oauth_configuration = oauth_configuration
 
     def to_rdf(self, graph):
-        super(ServiceProviderCatalog, self).to_rdf(graph)
+        super().to_rdf(graph)
 
         spc = Resource(graph, URIRef(self.about))
         spc.add(RDF.type, OSLC.ServiceProviderCatalog)
@@ -370,7 +365,7 @@ class ServiceProvider(BaseResource):
         """
         Initialize ServiceProvider
         """
-        super(ServiceProvider, self).__init__(about, types, properties, description, identifier, short_title, title,
+        super().__init__(about, types, properties, description, identifier, short_title, title,
                                               contributor, creator, subject, created, modified, type, discussed_by,
                                               instance_shape, service_provider, relation)
         self.__publisher = publisher
@@ -432,7 +427,7 @@ class ServiceProvider(BaseResource):
         self.__oauth_configuration = oauth_configuration
 
     def to_rdf(self, graph):
-        super(ServiceProvider, self).to_rdf(graph)
+        super().to_rdf(graph)
 
         uri = self.about if self.about.__contains__(self.identifier) \
             else self.about + '/{}'.format(self.identifier) if self.identifier else ''
@@ -487,7 +482,7 @@ class Service(BaseResource):
         """
         Initialize Service
         """
-        super(Service, self).__init__(about, types, properties, description,
+        super().__init__(about, types, properties, description,
                                       identifier, short_title, title, contributor,
                                       creator, subject, created, modified, type,
                                       discussed_by, instance_shape, service_provider,
@@ -553,7 +548,7 @@ class Service(BaseResource):
         self.__creation_dialog.append(creation_dialog)
 
     def to_rdf(self, graph):
-        super(Service, self).to_rdf(graph)
+        super().to_rdf(graph)
 
         # uri = self.about if self.about.__contains__(self.identifier) else self.about + '/{}'.format(
         #     self.identifier) if self.identifier else ''
@@ -602,7 +597,7 @@ class QueryCapability(BaseResource):
                  relation=None, label=None, query_base=None, usage=None,
                  resource_type=None, resource_shape=None):
 
-        super(QueryCapability, self).__init__(about, types, properties, description,
+        super().__init__(about, types, properties, description,
                                               identifier, short_title, title, contributor,
                                               creator, subject, created, modified, type,
                                               discussed_by, instance_shape, service_provider,
@@ -664,7 +659,7 @@ class QueryCapability(BaseResource):
         self.__usage.update(usage)
 
     def to_rdf(self, graph):
-        super(QueryCapability, self).to_rdf(graph)
+        super().to_rdf(graph)
 
         qc = Resource(graph, BNode())
         qc.add(RDF.type, OSLC.QueryCapability)
@@ -706,7 +701,7 @@ class CreationFactory(BaseResource):
         """
         Creation Factory
         """
-        super(CreationFactory, self).__init__(about, types, properties, description,
+        super().__init__(about, types, properties, description,
                                               identifier, short_title, title, contributor,
                                               creator, subject, created, modified, type,
                                               discussed_by, instance_shape, service_provider,
@@ -768,7 +763,7 @@ class CreationFactory(BaseResource):
         self.__usage.update(usage)
 
     def to_rdf(self, graph):
-        super(CreationFactory, self).to_rdf(graph)
+        super().to_rdf(graph)
 
         cf = Resource(graph, BNode())
         cf.add(RDF.type, OSLC.CreationFactory)
@@ -806,7 +801,7 @@ class Dialog(BaseResource):
                  relation=None, dialog=None, hint_height=None, hint_width=None,
                  label=None, usage=None, resource_type=None):
 
-        super(Dialog, self).__init__(about, types, properties, description,
+        super().__init__(about, types, properties, description,
                                      identifier, short_title, title, contributor,
                                      creator, subject, created, modified, type,
                                      discussed_by, instance_shape, service_provider,
@@ -874,7 +869,7 @@ class Dialog(BaseResource):
         self.__usage.append(usage)
 
     def to_rdf(self, graph):
-        super(Dialog, self).to_rdf(graph)
+        super().to_rdf(graph)
 
         d = Resource(graph, BNode())
         d.add(RDF.type, OSLC.Dialog)
@@ -913,7 +908,7 @@ class PrefixDefinition(BaseResource):
                  discussed_by=None, instance_shape=None, service_provider=None,
                  relation=None, prefix=None, prefix_base=None):
 
-        super(PrefixDefinition, self).__init__(about, types, properties, description,
+        super().__init__(about, types, properties, description,
                                                identifier, short_title, title, contributor,
                                                creator, subject, created, modified, type,
                                                discussed_by, instance_shape, service_provider,
@@ -938,7 +933,7 @@ class PrefixDefinition(BaseResource):
         self.__prefix_base = prefix_base
 
     def to_rdf(self, graph):
-        super(PrefixDefinition, self).to_rdf(graph)
+        super().to_rdf(graph)
 
         pd = Resource(graph, BNode())
         pd.add(RDF.type, OSLC.PrefixDefinition)
@@ -960,7 +955,7 @@ class Publisher(AbstractResource):
         Resource for publisher
         """
 
-        super(Publisher, self).__init__(about, types, properties)
+        super().__init__(about, types, properties)
         self.__icon = icon if icon is not None else None
         self.__identifier = identifier if identifier is not None else None
         self.__label = label if label is not None else None
@@ -1002,7 +997,7 @@ class Publisher(AbstractResource):
             raise ValueError('The title must be an instance of str')
 
     def to_rdf(self, graph):
-        super(Publisher, self).to_rdf(graph)
+        super().to_rdf(graph)
 
         graph.bind('jfs', JFS)
 
@@ -1042,7 +1037,7 @@ class OAuthConfiguration(BaseResource):
         private URI oauthRequestTokenURI;
         """
 
-        super(OAuthConfiguration, self).__init__(about, types, properties, description,
+        super().__init__(about, types, properties, description,
                                                  identifier, short_title, title, contributor,
                                                  creator, subject, created, modified, type,
                                                  discussed_by, instance_shape, service_provider,
@@ -1097,7 +1092,7 @@ class OAuthConfiguration(BaseResource):
 class FilteredResource(AbstractResource):
 
     def __init__(self, about, types, properties, resource):
-        super(FilteredResource, self).__init__(about, types, properties)
+        super().__init__(about, types, properties)
         self.__resource = resource if resource is not None else None
 
 
@@ -1107,7 +1102,7 @@ class ResponseInfo(FilteredResource):
                  types=None, properties=None,
                  resource=None, total_count=None, next_page=None,
                  container=None):
-        super(ResponseInfo, self).__init__(about, types, properties, resource)
+        super().__init__(about, types, properties, resource)
         self.__total_count = total_count if total_count is not None else 0
         self.__next_page = next_page if next_page is not None else None
         self.__container = container if container is not None else None
@@ -1146,7 +1141,7 @@ class ResponseInfo(FilteredResource):
         self.__members = members
 
     def to_rdf(self, graph):
-        super(ResponseInfo, self).to_rdf(graph)
+        super().to_rdf(graph)
 
         uri = self.about
         ri = Resource(graph, URIRef(uri))
@@ -1172,7 +1167,7 @@ class Preview(AbstractResource):
     def __init__(self, about=None, types=None, properties=None,
                  document=None, hint_height=None, hint_width=None,
                  initial_height=None):
-        super(Preview, self).__init__(about, types, properties)
+        super().__init__(about, types, properties)
 
         self.__document = document if document is not None else None
         self.__hint_height = hint_height if hint_height is not None else None
@@ -1212,7 +1207,7 @@ class Preview(AbstractResource):
         self.__initial_height = initial_height
 
     def to_rdf(self, graph):
-        super(Preview, self).to_rdf(graph)
+        super().to_rdf(graph)
 
         p = Resource(graph, BNode())
         p.add(RDF.type, OSLC.Preview)
@@ -1237,7 +1232,7 @@ class Compact(AbstractResource):
     def __init__(self, about=None, types=None, properties=None,
                  icon=None, large_preview=None, short_title=None,
                  small_preview=None, title=None):
-        super(Compact, self).__init__(about, types, properties)
+        super().__init__(about, types, properties)
         self.__icon = icon if icon is not None else None
         self.__large_preview = large_preview if large_preview is not None else Preview(about, types, properties)
         self.__short_title = short_title if short_title is not None else ''
@@ -1285,7 +1280,7 @@ class Compact(AbstractResource):
         self.__large_preview = large_preview
 
     def to_rdf(self, graph):
-        super(Compact, self).to_rdf(graph)
+        super().to_rdf(graph)
 
         uri = self.about if self.about else ''
 

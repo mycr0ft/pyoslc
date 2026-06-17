@@ -1,4 +1,4 @@
-from six.moves.urllib.parse import urlparse
+from urllib.parse import urlparse
 
 from flask import url_for, request, render_template, make_response
 from flask_restx import Namespace
@@ -21,7 +21,7 @@ register(
 class ConfigurationCatalog(OslcResource):
 
     def get(self):
-        super(ConfigurationCatalog, self).get()
+        super().get()
         endpoint_url = url_for('{}.{}'.format(request.blueprint, self.endpoint))
         base_url = '{}{}'.format(request.url_root.rstrip('/'), endpoint_url)
 

@@ -28,3 +28,4 @@ docs/build
 test-reports/
 
 .python-version
+uv.lock

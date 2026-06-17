@@ -1,15 +1,13 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
+"""Bootstrap script to set up the project with uv."""
 import os
 import subprocess
 import sys
 
-subprocess.call(['virtualenv', 'venv'])
-if sys.platform == 'win32':
-    bin = 'Scripts'
+subprocess.check_call(["uv", "venv"])
+if sys.platform == "win32":
+    bin = ".venv\\Scripts"
 else:
-    bin = 'bin'
+    bin = ".venv/bin"
 
-requirements = open("requirements.txt", "r")
-
-for line in requirements:
-    subprocess.call([os.path.join('venv', bin, 'pip'), 'install', '--upgrade', line])
+subprocess.check_call([os.path.join(bin, "uv"), "sync"])

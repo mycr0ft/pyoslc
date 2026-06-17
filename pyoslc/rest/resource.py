@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 class OslcResource(Resource):
 
     def __init__(self, *args, **kwargs):
-        super(OslcResource, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
         self.graph = kwargs.get('graph', Graph())
         self.graph.bind('oslc', OSLC)

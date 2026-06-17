@@ -5,7 +5,6 @@ from rdflib.collection import Collection
 from rdflib.plugins.serializers.rdfxml import PrettyXMLSerializer, XMLBASE, fix, OWL_NS, XMLLANG
 from rdflib.plugins.serializers.xmlwriter import XMLWriter
 from rdflib.util import first, more_than
-from six import b
 
 from pyoslc.vocabularies.jazz import JAZZ_DISCOVERY, JAZZ_PROCESS
 from pyoslc.vocabularies.jfs import JFS
@@ -17,7 +16,7 @@ RDF = Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 class JazzRootServiceSerializer(PrettyXMLSerializer):
 
     def __init__(self, store, max_depth=3):
-        super(JazzRootServiceSerializer, self).__init__(store, max_depth=3)
+        super().__init__(store, max_depth=3)
         self.__root_serialized = {}
         self.__serialized = {}
 
@@ -90,7 +89,7 @@ class JazzRootServiceSerializer(PrettyXMLSerializer):
                 self.subject(subject, 1)
 
         writer.pop(RDF.Description)
-        stream.write(b("\n"))
+        stream.write(b"\n")
 
         # Set to None so that the memory can get garbage collected.
         self.__serialized = None

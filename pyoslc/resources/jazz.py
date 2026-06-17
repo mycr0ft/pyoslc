@@ -25,7 +25,7 @@ class RootService(BaseResource):
         Initialize Root Service
         """
 
-        super(RootService, self).__init__(about, types, properties, description, identifier, short_title, title,
+        super().__init__(about, types, properties, description, identifier, short_title, title,
                                           contributor, creator, subject, created, modified, type, discussed_by,
                                           instance_shape, service_provider, relation)
 

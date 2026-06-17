@@ -32,13 +32,13 @@ class CsvRequirementRepository(Repository):
 
     def __init__(self, title):
         # self.csv_file_path = csv_file_path
-        super(CsvRequirementRepository, self).__init__(title)
+        super().__init__(title)
         self.csv_file_path = os.path.join(
             os.path.abspath(''), 'examples', 'specifications.csv')
 
     def find(self, requirement_id):
         requirement = None
-        with open(self.csv_file_path, 'r') as f:
+        with open(self.csv_file_path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f, delimiter=';')
             for row in reader:
                 if row['Specification_id'] == requirement_id:
@@ -48,7 +48,7 @@ class CsvRequirementRepository(Repository):
         return requirement
 
     def create(self, requirement):
-        with open(self.csv_file_path, 'a') as f:
+        with open(self.csv_file_path, 'a', encoding='utf-8') as f:
             fieldnames = list(CsvRequirementRepository.specification_map.keys())
             writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter=';')
             writer.writerow(
