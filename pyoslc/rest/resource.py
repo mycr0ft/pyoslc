@@ -27,7 +27,6 @@ class OslcResource(Resource):
     def get(self, *args, **kwargs):
         accept = request.headers.get('accept')
         logger.debug("accept: {}".format(accept))
-        print("accept " + accept)
         if not (accept in ('application/rdf+xml', 'application/json',
                            'application/ld+json', 'application/json-ld',
                            'application/xml', 'application/atom+xml',
@@ -35,14 +34,18 @@ class OslcResource(Resource):
                            'application/xml, application/x-oslc-cm-service-description+xml',
                            'application/x-oslc-compact+xml, application/x-jazz-compact-rendering; q=0.5',
                            'application/rdf+xml,application/x-turtle,application/ntriples,application/json')):
-            print("unsupported media type")
             raise UnsupportedMediaType
+
+    @staticmethod
+    def get_requested_version():
+        version = request.headers.get('OSLC-Core-Version', '2.0')
+        if version in ('2.0', '3.0'):
+            return version
+        return '2.0'
 
     @staticmethod
     def create_response(graph, accept=None, content=None, rdf_format=None, etag=False):
 
-        # Getting the content-type for checking the
-        # response we will use to serialize the RDF response.
         accept = accept if accept is not None else request.headers.get('accept', 'application/rdf+xml')
         content = content if content is not None else request.headers.get('content-type', accept)
         if content.__contains__('x-www-form-urlencoded') or content.__contains__('text/plain'):
@@ -51,17 +54,13 @@ class OslcResource(Resource):
         rdf_format = accept if rdf_format is None else rdf_format
 
         if accept in ('application/json-ld', 'application/ld+json', 'application/json', '*/*'):
-            # If the content-type is any kind of json,
-            # we will use the json-ld format for the response.
             rdf_format = 'json-ld'
-
-        # if rdf_format in 'config-xml':
-        #     rdf_format = 'config-xml'
-        # else:
-        #     rdf_format = 'pretty-xml'
 
         if rdf_format in ('application/xml', 'application/rdf+xml'):
             rdf_format = 'pretty-xml'
+
+        if rdf_format == 'text/turtle':
+            rdf_format = 'turtle'
 
         if rdf_format.__contains__('rootservices-xml') and (not accept.__contains__('xml')):
             rdf_format = accept
@@ -83,11 +82,12 @@ class OslcResource(Resource):
             }
             return response_object, 400
 
-        # Sending the response to the client
+        oslc_version = OslcResource.get_requested_version()
+
         response = make_response(data.decode('utf-8') if not isinstance(data, str) else data, 200)
         response.headers['Accept'] = accept
         response.headers['Content-Type'] = content
-        response.headers['OSLC-Core-Version'] = "2.0"
+        response.headers['OSLC-Core-Version'] = oslc_version
 
         if etag:
             response.add_etag()

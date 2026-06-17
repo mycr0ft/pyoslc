@@ -166,7 +166,7 @@ class BaseResource(AbstractResource):
 
     def add_contributor(self, contributor):
         if contributor:
-            self.__contributor.append(contributor)
+            self.__contributor.add(contributor)
 
     @property
     def creator(self):
@@ -178,7 +178,7 @@ class BaseResource(AbstractResource):
 
     def add_creator(self, creator):
         if creator:
-            self.__creator.append(creator)
+            self.__creator.add(creator)
 
     @property
     def subject(self):
@@ -190,7 +190,7 @@ class BaseResource(AbstractResource):
 
     def add_subject(self, subject):
         if subject:
-            self.__subject.append(subject)
+            self.__subject.add(subject)
 
     @property
     def created(self):
@@ -218,7 +218,7 @@ class BaseResource(AbstractResource):
 
     def add_type(self, type_):
         if type_:
-            self.__type.append(type_)
+            self.__type.add(type_)
 
     @property
     def discussed_by(self):
@@ -1060,7 +1060,7 @@ class OAuthConfiguration(BaseResource):
         )
         self.__authorization_uri = authorization_uri if authorization_uri is not None else None
         self.__oauth_access_token_uri = oauth_access_token_uri if oauth_access_token_uri is not None else None
-        self.__oauth_request_token_uri = oauth_request_token_uri if oauth_access_token_uri is not None else None
+        self.__oauth_request_token_uri = oauth_request_token_uri if oauth_request_token_uri is not None else None
 
     @property
     def authorization_uri(self):
@@ -1091,7 +1091,7 @@ class OAuthConfiguration(BaseResource):
             raise Exception("The title is missing")
 
         oac = Resource(graph, URIRef(self.about))
-        oac.add(RDF.type, URIRef(OSLC.oauthConfiguration))
+        oac.add(RDF.type, OSLC.OAuthConfiguration)
 
         if self.authorization_uri:
             oac.add(OSLC.authorizationURI, URIRef(self.authorization_uri))
