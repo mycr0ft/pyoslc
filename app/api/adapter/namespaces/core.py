@@ -57,7 +57,9 @@ class ServiceProviderCatalog(OslcResource):
         catalog = ServiceProviderCatalogSingleton.get_catalog(catalog_url)
         catalog.to_rdf(self.graph)
 
-        return self.create_response(graph=self.graph)
+        response = self.create_response(graph=self.graph)
+        response.headers['Link'] = '<http://www.w3.org/ns/ldp#BasicContainer>; rel="type"'
+        return response
 
 
 @adapter_ns.route('/provider/<service_provider_id>')
@@ -83,7 +85,9 @@ class ServiceProvider(OslcResource):
             return make_response('No resources with ID {}'.format(service_provider_id), 404)
 
         provider.to_rdf(self.graph)
-        return self.create_response(graph=self.graph)
+        response = self.create_response(graph=self.graph)
+        response.headers['Link'] = '<http://www.w3.org/ns/ldp#BasicContainer>; rel="type"'
+        return response
 
 
 @adapter_ns.route('/provider/<service_provider_id>/resources/requirement')
@@ -113,7 +117,17 @@ class ResourceOperation(OslcResource):
         response_info.members = data
         response_info.to_rdf(self.graph)
 
-        return self.create_response(graph=self.graph)
+        response = self.create_response(graph=self.graph)
+        response.headers['Link'] = '<http://www.w3.org/ns/ldp#BasicContainer>; rel="type"'
+        return response
+
+    def options(self, service_provider_id):
+        response = make_response('', 204)
+        response.headers['Allow'] = 'POST,GET,OPTIONS,HEAD,PUT'
+        response.headers['Accept-Post'] = 'text/turtle, application/ld+json'
+        oslc_version = OslcResource.get_requested_version()
+        response.headers['OSLC-Core-Version'] = oslc_version
+        return response
 
     # @adapter_ns.expect(specification)
     def post(self, service_provider_id):
@@ -142,7 +156,7 @@ class ResourceOperation(OslcResource):
             # Sending the response to the client
             response = make_response(data.decode('utf-8') if not isinstance(data, str) else data, 201)
             response.headers['Content-Type'] = 'application/rdf+xml; charset=UTF-8'
-            response.headers['OSLC-Core-Version'] = "2.0"
+            response.headers['OSLC-Core-Version'] = OslcResource.get_requested_version()
             response.headers['Location'] = base_url + '/' + req.identifier
             response.set_etag(req.digestion())
             response.headers['Last-Modified'] = http_date(datetime.now())
@@ -192,10 +206,12 @@ class ResourcePreview(OslcResource):
 
             compact.to_rdf(self.graph)
 
-        return self.create_response(graph=self.graph,
-                                    accept='application/x-oslc-compact+xml',
-                                    rdf_format='pretty-xml',
-                                    etag=True)
+        response = self.create_response(graph=self.graph,
+                                        accept='application/x-oslc-compact+xml',
+                                        rdf_format='pretty-xml',
+                                        etag=True)
+        response.headers['Link'] = '<http://www.w3.org/ns/ldp#Resource>; rel="type"'
+        return response
 
     def put(self, service_provider_id, requirement_id):
         accept = request.headers.get('accept')
