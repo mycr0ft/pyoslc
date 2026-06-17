@@ -20,9 +20,11 @@ class Requirement(BaseResource):
                  implemented_by=None, validated_by=None, satisfied_by=None, satisfies=None, decomposed_by=None,
                  decomposes=None, constrained_by=None, constrains=None):
 
-        super().__init__(about, types, properties, description, identifier, short_title, title,
-                                          contributor, creator, subject, created, modified, type, discussed_by,
-                                          instance_shape, service_provider, relation)
+        super().__init__(
+            about, types, properties, description, identifier, short_title, title,
+            contributor, creator, subject, created, modified, type, discussed_by,
+            instance_shape, service_provider, relation,
+        )
 
         self.__elaborated_by = elaborated_by if elaborated_by is not None else set()
         self.__elaborates = elaborates if elaborates is not None else set()

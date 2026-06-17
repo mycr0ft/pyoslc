@@ -14,9 +14,9 @@
 
 | Package | Version | Constraint |
 |---------|---------|------------|
-| Flask | 2.3.3 | `>=2.0,<3.0` |
-| Werkzeug | 2.3.8 | `>=2.0,<3.0` |
-| Authlib | 0.15.6 | `>=0.15,<1.0` |
+| Flask | 3.1.3 | `>=3.0,<4.0` |
+| Werkzeug | 3.1.8 | `>=3.0,<4.0` |
+| Authlib | 1.7.2 | `>=1.0,<2.0` |
 | RDFLib | (resolved) | `>=7.0.0` |
 | Flask-RESTx | (resolved) | `>=1.3.0` |
 | Flask-Bootstrap | (resolved) | `>=3.3.7.1` |
@@ -52,36 +52,41 @@
 - `app/config.py`: `FLASK_ENV` removed, `SQLALCHEMY_TRACK_MODIFICATIONS = False`, tuple-bug fixed (`MAIL_SERVER` / `LOG_TO_STDOUT`)
 - `.flaskenv`: `FLASK_ENV` removed
 
+### Flask 3.x + Authlib 1.x Upgrade
+- Flask upgraded from 2.3.3 → **3.1.3**, Werkzeug from 2.3.8 → **3.1.8**, Authlib from 0.15.6 → **1.7.2**
+- Replaced `authlib.integrations.sqla_oauth1` (removed in Authlib 1.x) with direct model implementations (`pyoslc_oauth/models.py`)
+- Replaced `create_query_client_func`, `register_nonce_hooks`, `register_temporary_credential_hooks`, `register_token_credential_hooks` with manual `register_hook()` calls (`pyoslc_oauth/server.py`)
+- All required methods (`get_client_secret`, `get_default_redirect_uri`, `get_oauth_token`, `get_oauth_token_secret`, etc.) implemented directly on `Client` and `TokenCredential` models
+- `_app_ctx_stack` deprecation resolved — no longer triggered by Authlib 1.x
+
 ### Linting
 - `setup.cfg` created with `max-line-length = 120` for flake8
 - `pyproject.toml` includes `[tool.flake8]` config (note: flake8 reads from `setup.cfg`, not `pyproject.toml`)
 
-## Key Constraints & Decisions
+## Key Decisions
 
 | Decision | Reason |
 |----------|--------|
-| Flask pinned `<3.0` | Authlib 0.15.x uses `_app_ctx_stack` (removed in Flask 3.0) |
-| Werkzeug pinned `<3.0` | Works with Flask `<3.0` |
-| Authlib pinned `<1.0` | `authlib.integrations.sqla_oauth1` removed in Authlib 1.x |
 | Flask-Bootstrap kept | Templates depend on it; migrating to Bootstrap-Flask would require template rewrites |
 | PEP 621 format used | uv-native; no Poetry dependency |
 | flake8 in `setup.cfg` not `pyproject.toml` | flake8 does not read `[tool.flake8]` from `pyproject.toml` — only reads from `setup.cfg`, `.flake8`, or `tox.ini` |
+| Direct `register_hook` for OAuth 1.0 | Authlib 1.x removed `sqla_oauth1` helpers; implemented hooks manually |
 
 ## Verification
 
 | Check | Result |
 |-------|--------|
 | `uv sync --extra test` | 80 packages resolved, 1 installed (pyoslc itself) |
-| `pytest -v` | **34 passed** in 10.55s |
-| `flake8 pyoslc app pyoslc_oauth` | 47 issues (46 E127 indentation, 1 E501 line length) — all pre-existing |
+| `pytest -v` | **34 passed** in 1.71s |
+| `flake8 pyoslc app pyoslc_oauth` | **Clean** — 0 issues |
 
 ## Remaining / Future Work
 
 | Task | Priority | Notes |
 |------|----------|-------|
-| Upgrade to Flask 3.0+ / Authlib 1.x+ | Low | Blocked on `_app_ctx_stack` (Authlib) and `sqla_oauth1` removal; requires implementing manual OAuth 1.0 token store |
+| ~~Upgrade to Flask 3.0+ / Authlib 1.x+~~ | Done | Flask 3.1.3, Werkzeug 3.1.8, Authlib 1.7.2 — all constraints lifted |
 | Migrate from Flask-Bootstrap to Bootstrap-Flask | Low | Templates use `{% extends "bootstrap/base.html" %}` — Bootstrap-Flask uses a different approach |
-| Fix pre-existing E127/E501 lint issues | Low | Cosmetic; indentation in rdf marshalling code |
-| Remove `u''` prefixes from `docs/source/conf.py` | Low | Cosmetic; Python 3 strings are Unicode by default |
-| Remove `MANIFEST.in` | Low | May be unused since `pyproject.toml` has `[tool.setuptools.package-data]` |
+| ~~Fix pre-existing E127/E501 lint issues~~ | Done | All continuation line indent and line length issues fixed |
+| ~~Remove `u''` prefixes from `docs/source/conf.py`~~ | Done | Python 3 strings are Unicode by default |
+| ~~Remove `MANIFEST.in`~~ | Done | Stale paths; `pyproject.toml` package-data covers it |
 | Add Python 3.13 to `tox.ini` envlist | Low | Currently `py310, py311, py312` |

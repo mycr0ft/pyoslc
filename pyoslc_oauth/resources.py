@@ -109,8 +109,10 @@ class OSLCOAuthConsumer(OAuthConsumer):
 
     def __init__(self, name=None, provisional=True, trusted=None,
                  consumer_key=None, consumer_secret=None):
-        super().__init__(consumer_key=consumer_key,
-                                                consumer_secret=consumer_secret)
+        super().__init__(
+            consumer_key=consumer_key,
+            consumer_secret=consumer_secret,
+        )
         self.__name = name if name is not None else None
         self.__provisional = provisional
         self.__trusted = trusted if trusted is not None else False
@@ -259,7 +261,8 @@ class FileSystemConsumerStore(object):
 
     def __to_resource(self, consumer):
 
-        consumer.secret = b64encode(consumer.secret if isinstance(consumer.secret, bytes) else consumer.secret.encode("utf-8"))
+        secret = consumer.secret if isinstance(consumer.secret, bytes) else consumer.secret.encode("utf-8")
+        consumer.secret = b64encode(secret)
 
         resource = Resource(self._graph, BNode())
         resource.add(RDF.type, OAUTH.Consumer)

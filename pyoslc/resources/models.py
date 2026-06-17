@@ -268,11 +268,13 @@ class ServiceProviderCatalog(BaseResource):
                  relation=None, uri=None, publisher=None, domain=None,
                  service_provider_catalog=None, oauth_configuration=None):
 
-        super().__init__(about, types, properties, description,
-                                                     identifier, short_title, title, contributor,
-                                                     creator, subject, created, modified, type,
-                                                     discussed_by, instance_shape, service_provider,
-                                                     relation)
+        super().__init__(
+            about, types, properties, description,
+            identifier, short_title, title, contributor,
+            creator, subject, created, modified, type,
+            discussed_by, instance_shape, service_provider,
+            relation,
+        )
 
         self.__uri = uri if uri is not None else build_uri(default_uri, 'serviceProviderCatalog')
         self.__publisher = publisher
@@ -365,9 +367,11 @@ class ServiceProvider(BaseResource):
         """
         Initialize ServiceProvider
         """
-        super().__init__(about, types, properties, description, identifier, short_title, title,
-                                              contributor, creator, subject, created, modified, type, discussed_by,
-                                              instance_shape, service_provider, relation)
+        super().__init__(
+            about, types, properties, description, identifier, short_title, title,
+            contributor, creator, subject, created, modified, type, discussed_by,
+            instance_shape, service_provider, relation,
+        )
         self.__publisher = publisher
         self.__service = service if service is not None else list()
         self.__details = details if details is not None else list()
@@ -482,11 +486,13 @@ class Service(BaseResource):
         """
         Initialize Service
         """
-        super().__init__(about, types, properties, description,
-                                      identifier, short_title, title, contributor,
-                                      creator, subject, created, modified, type,
-                                      discussed_by, instance_shape, service_provider,
-                                      relation)
+        super().__init__(
+            about, types, properties, description,
+            identifier, short_title, title, contributor,
+            creator, subject, created, modified, type,
+            discussed_by, instance_shape, service_provider,
+            relation,
+        )
 
         self.__domain = domain if domain is not None else None
         self.__creation_factory = creation_factory if creation_factory is not None else list()
@@ -597,11 +603,13 @@ class QueryCapability(BaseResource):
                  relation=None, label=None, query_base=None, usage=None,
                  resource_type=None, resource_shape=None):
 
-        super().__init__(about, types, properties, description,
-                                              identifier, short_title, title, contributor,
-                                              creator, subject, created, modified, type,
-                                              discussed_by, instance_shape, service_provider,
-                                              relation)
+        super().__init__(
+            about, types, properties, description,
+            identifier, short_title, title, contributor,
+            creator, subject, created, modified, type,
+            discussed_by, instance_shape, service_provider,
+            relation,
+        )
 
         self.__label = label if label is not None else None
         self.__query_base = query_base if query_base is not None else None
@@ -701,11 +709,13 @@ class CreationFactory(BaseResource):
         """
         Creation Factory
         """
-        super().__init__(about, types, properties, description,
-                                              identifier, short_title, title, contributor,
-                                              creator, subject, created, modified, type,
-                                              discussed_by, instance_shape, service_provider,
-                                              relation)
+        super().__init__(
+            about, types, properties, description,
+            identifier, short_title, title, contributor,
+            creator, subject, created, modified, type,
+            discussed_by, instance_shape, service_provider,
+            relation,
+        )
 
         self.__label = label if label is not None else None
         self.__creation = creation if creation is not None else None
@@ -801,11 +811,13 @@ class Dialog(BaseResource):
                  relation=None, dialog=None, hint_height=None, hint_width=None,
                  label=None, usage=None, resource_type=None):
 
-        super().__init__(about, types, properties, description,
-                                     identifier, short_title, title, contributor,
-                                     creator, subject, created, modified, type,
-                                     discussed_by, instance_shape, service_provider,
-                                     relation)
+        super().__init__(
+            about, types, properties, description,
+            identifier, short_title, title, contributor,
+            creator, subject, created, modified, type,
+            discussed_by, instance_shape, service_provider,
+            relation,
+        )
 
         self.__dialog = dialog if dialog is not None else None
         self.__hint_height = hint_height if hint_height is not None else None
@@ -908,11 +920,13 @@ class PrefixDefinition(BaseResource):
                  discussed_by=None, instance_shape=None, service_provider=None,
                  relation=None, prefix=None, prefix_base=None):
 
-        super().__init__(about, types, properties, description,
-                                               identifier, short_title, title, contributor,
-                                               creator, subject, created, modified, type,
-                                               discussed_by, instance_shape, service_provider,
-                                               relation)
+        super().__init__(
+            about, types, properties, description,
+            identifier, short_title, title, contributor,
+            creator, subject, created, modified, type,
+            discussed_by, instance_shape, service_provider,
+            relation,
+        )
         self.__prefix = prefix if prefix is not None else None
         self.__prefix_base = prefix_base if prefix_base is not None else None
 
@@ -1037,11 +1051,13 @@ class OAuthConfiguration(BaseResource):
         private URI oauthRequestTokenURI;
         """
 
-        super().__init__(about, types, properties, description,
-                                                 identifier, short_title, title, contributor,
-                                                 creator, subject, created, modified, type,
-                                                 discussed_by, instance_shape, service_provider,
-                                                 relation)
+        super().__init__(
+            about, types, properties, description,
+            identifier, short_title, title, contributor,
+            creator, subject, created, modified, type,
+            discussed_by, instance_shape, service_provider,
+            relation,
+        )
         self.__authorization_uri = authorization_uri if authorization_uri is not None else None
         self.__oauth_access_token_uri = oauth_access_token_uri if oauth_access_token_uri is not None else None
         self.__oauth_request_token_uri = oauth_request_token_uri if oauth_access_token_uri is not None else None

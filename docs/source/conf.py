@@ -19,14 +19,14 @@
 
 # -- Project information -----------------------------------------------------
 
-project = u'PyOSLC'
-copyright = u'2020, Contact-Software'
-author = u'Contact-Software'
+project = 'PyOSLC'
+copyright = '2020, Contact-Software'
+author = 'Contact-Software'
 
 # The short X.Y version
-version = u''
+version = ''
 # The full version, including alpha/beta/rc tags
-release = u'0.1.0'
+release = '0.1.0'
 
 
 # -- General configuration ---------------------------------------------------
@@ -130,8 +130,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (master_doc, 'PyOSLC.tex', u'PyOSLC Documentation',
-     u'Contact-Software', 'manual'),
+    (master_doc, 'PyOSLC.tex', 'PyOSLC Documentation',
+     'Contact-Software', 'manual'),
 ]
 
 
@@ -140,7 +140,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'pyoslc', u'PyOSLC Documentation',
+    (master_doc, 'pyoslc', 'PyOSLC Documentation',
      [author], 1)
 ]
 
@@ -151,7 +151,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'PyOSLC', u'PyOSLC Documentation',
+    (master_doc, 'PyOSLC', 'PyOSLC Documentation',
      author, 'PyOSLC', 'One line description of project.',
      'Miscellaneous'),
 ]

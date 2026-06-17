@@ -8,9 +8,11 @@ class ConfigurationResource(BaseResource):
                  discussed_by=None, instance_shape=None, service_provider=None, relation=None,
                  short_id=None, modified_by=None, was_derived_from=None, was_revision_of=None, was_generated_by=None):
 
-        super().__init__(about, types, properties, description, identifier, short_title,
-                                                    title, contributor, creator, subject, created, modified, type,
-                                                    discussed_by, instance_shape, service_provider, relation)
+        super().__init__(
+            about, types, properties, description, identifier, short_title,
+            title, contributor, creator, subject, created, modified, type,
+            discussed_by, instance_shape, service_provider, relation,
+        )
 
         self.__short_id = short_id if short_id is not None else ''
         self.__modified_by = modified_by if modified_by is not None else ''
@@ -70,10 +72,12 @@ class ConfigurationItem(ConfigurationResource):
                  modified_by=None, was_derived_from=None, was_revision_of=None, was_generated_by=None,
                  is_version_of=None, version_id=None):
 
-        super().__init__(about, types, properties, description, identifier, short_title, title,
-                                                contributor, creator, subject, created, modified, type, discussed_by,
-                                                instance_shape, service_provider, relation, short_id, modified_by,
-                                                was_derived_from, was_revision_of, was_generated_by)
+        super().__init__(
+            about, types, properties, description, identifier, short_title, title,
+            contributor, creator, subject, created, modified, type, discussed_by,
+            instance_shape, service_provider, relation, short_id, modified_by,
+            was_derived_from, was_revision_of, was_generated_by,
+        )
 
         self.__is_version_of = is_version_of if is_version_of is not None else ''
         self.__version_id = version_id if version_id is not None else ''
@@ -107,10 +111,12 @@ class Configuration(ConfigurationResource):
                  member=None, contains_relation=None, contained_by_relation=None,
                  component=None, mutable=None, action=None):
 
-        super().__init__(about, types, properties, description, identifier, short_title, title,
-                                            contributor, creator, subject, created, modified, type, discussed_by,
-                                            instance_shape, service_provider, relation, short_id, modified_by,
-                                            was_derived_from, was_revision_of, was_generated_by)
+        super().__init__(
+            about, types, properties, description, identifier, short_title, title,
+            contributor, creator, subject, created, modified, type, discussed_by,
+            instance_shape, service_provider, relation, short_id, modified_by,
+            was_derived_from, was_revision_of, was_generated_by,
+        )
 
         self.__member = member if member is not None else set()
         self.__contains_relation = contains_relation if contains_relation is not None else set()
@@ -195,10 +201,12 @@ class Component(ConfigurationResource):
                  discussed_by=None, instance_shape=None, service_provider=None, relation=None, short_id=None,
                  modified_by=None, was_derived_from=None, was_revision_of=None, was_generated_by=None,
                  member=None, contains_relation=None, contained_by_relation=None, is_version_of=None):
-        super().__init__(about, types, properties, description, identifier, short_title, title,
-                                        contributor, creator, subject, created, modified, type, discussed_by,
-                                        instance_shape, service_provider, relation, short_id, modified_by,
-                                        was_derived_from, was_revision_of, was_generated_by)
+        super().__init__(
+            about, types, properties, description, identifier, short_title, title,
+            contributor, creator, subject, created, modified, type, discussed_by,
+            instance_shape, service_provider, relation, short_id, modified_by,
+            was_derived_from, was_revision_of, was_generated_by,
+        )
 
         self.__member = member if member is not None else set()
         self.__contains_relation = contains_relation if contains_relation is not None else set()

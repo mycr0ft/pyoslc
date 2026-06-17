@@ -25,9 +25,11 @@ class RootService(BaseResource):
         Initialize Root Service
         """
 
-        super().__init__(about, types, properties, description, identifier, short_title, title,
-                                          contributor, creator, subject, created, modified, type, discussed_by,
-                                          instance_shape, service_provider, relation)
+        super().__init__(
+            about, types, properties, description, identifier, short_title, title,
+            contributor, creator, subject, created, modified, type, discussed_by,
+            instance_shape, service_provider, relation,
+        )
 
         self.__friends = friends or list()
         self.__publisher = publisher or ''

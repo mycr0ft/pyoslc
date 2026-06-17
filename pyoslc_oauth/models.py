@@ -1,4 +1,3 @@
-from authlib.integrations.sqla_oauth1 import OAuth1ClientMixin, OAuth1TokenCredentialMixin
 from flask import current_app, g
 from flask_login import UserMixin
 try:
@@ -36,9 +35,13 @@ class User(UserMixin, db.Model):
         return dict(id=self.id, username=self.username)
 
 
-class Client(db.Model, OAuth1ClientMixin):
+class Client(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(48), nullable=False)
+    client_id = db.Column(db.String(48), nullable=False)
+    client_secret = db.Column(db.String(120), nullable=False)
+    default_redirect_uri = db.Column(db.Text, nullable=False)
+    redirect_uris = db.Column(db.Text, default='')
 
     # This section could be overwritten by the implementer
     # to link the Client with a functional user
@@ -54,16 +57,43 @@ class Client(db.Model, OAuth1ClientMixin):
         self.client_secret = client_secret
         self.default_redirect_uri = default_redirect_uri
 
+    def get_client_id(self):
+        return self.client_id
 
-class TokenCredential(db.Model, OAuth1TokenCredentialMixin):
+    def get_client_secret(self):
+        return self.client_secret
+
+    def get_default_redirect_uri(self):
+        return self.default_redirect_uri
+
+    def get_rsa_public_key(self):
+        return None
+
+
+class TokenCredential(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(
         db.Integer, db.ForeignKey('user.id', ondelete='CASCADE')
     )
     user = db.relationship('User')
+    client_id = db.Column(db.String(48), nullable=False)
+    oauth_token = db.Column(db.String(120), nullable=False)
+    oauth_token_secret = db.Column(db.String(120), nullable=False)
 
     def set_user_id(self, user_id):
         self.user_id = user_id
+
+    def get_user_id(self):
+        return self.user_id
+
+    def get_client_id(self):
+        return self.client_id
+
+    def get_oauth_token(self):
+        return self.oauth_token
+
+    def get_oauth_token_secret(self):
+        return self.oauth_token_secret
 
 
 def _get_cache():
