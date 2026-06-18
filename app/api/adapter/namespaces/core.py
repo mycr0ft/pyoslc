@@ -8,13 +8,14 @@ from flask_restx import Namespace
 from rdflib import Graph
 from rdflib.plugin import register
 from rdflib.serializer import Serializer
+import rdflib
 from werkzeug.exceptions import UnsupportedMediaType, NotAcceptable, PreconditionFailed, NotFound, BadRequest
 from werkzeug.http import http_date
 
 from app.api.adapter import api
 from app.api.adapter.namespaces.business import get_requirement_list, get_requirement, attributes, create_requirement, \
     update_requirement, delete_requirement
-from app.api.adapter.namespaces.rm.csv_requirement_repository import CsvRequirementRepository
+from app.api.adapter.resources.repository import get_requirement_repository
 from app.api.adapter.namespaces.rm.parsers import specification_parser
 from app.api.adapter.resources.resource_service import config_service_resource
 from app.api.adapter.services.providers import ServiceProviderCatalogSingleton, RootServiceSingleton, PublisherSingleton
@@ -23,6 +24,7 @@ from app.api.adapter.services.shapes import build_requirement_shape
 from pyoslc.resources.domains.rm import Requirement
 from pyoslc.resources.models import ResponseInfo, Compact, Preview
 from pyoslc.rest.resource import OslcResource
+from pyoslc.shacl.converter import oslc_shape_to_shacl, validate_resource
 
 logger = logging.getLogger(__name__)
 
@@ -254,8 +256,8 @@ class ResourcePreview(OslcResource):
 
         etag = request.headers.get(key='If-Match', default=None, type=str)
 
-        rq = CsvRequirementRepository('specs')
-        r = rq.find(requirement_id)
+        repo = get_requirement_repository()
+        r = repo.find(requirement_id)
         r.about = base_url
 
         if not r:
@@ -283,8 +285,8 @@ class ResourcePreview(OslcResource):
             return OslcResource.build_error_response(req.code, req.description)
 
     def delete(self, service_provider_id, requirement_id):
-        rq = CsvRequirementRepository('specs')
-        r = rq.find(requirement_id)
+        repo = get_requirement_repository()
+        r = repo.find(requirement_id)
 
         if r:
             req = delete_requirement(requirement_id)
@@ -350,7 +352,52 @@ class ResourceShapeEndpoint(OslcResource):
             raise NotFound()
 
         shape.to_rdf(self.graph)
+
+        validate_url = request.args.get('validate')
+        if validate_url:
+            self._run_validation(validate_url)
+
         return self.create_response(graph=self.graph)
+
+    def _run_validation(self, validate_url):
+        import urllib.request
+
+        try:
+            req = urllib.request.Request(
+                validate_url,
+                headers={'Accept': 'text/turtle, application/rdf+xml;q=0.9, application/ld+json;q=0.8'}
+            )
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                resource_data = resp.read()
+
+            content_type = resp.headers.get('Content-Type', '')
+            fmt = 'turtle'
+            if 'application/rdf+xml' in content_type:
+                fmt = 'xml'
+            elif 'application/ld+json' in content_type:
+                fmt = 'json-ld'
+
+            resource_graph = Graph()
+            resource_graph.parse(data=resource_data, format=fmt)
+
+            shacl_graph = oslc_shape_to_shacl(self.graph)
+            _, results_graph, results_text = validate_resource(resource_graph, shacl_graph)
+
+            self.graph += results_graph
+        except Exception as exc:
+            err_g = Graph()
+            err_g.bind('sh', 'http://www.w3.org/ns/shacl#')
+            ns_sh = rdflib.Namespace('http://www.w3.org/ns/shacl#')
+            report = ns_sh.ValidationReport
+            result = ns_sh.ValidationResult
+            result_node = rdflib.BNode()
+            err_g.add((result_node, rdflib.RDF.type, report))
+            err_g.add((result_node, ns_sh.conforms, rdflib.Literal(False)))
+            err_node = rdflib.BNode()
+            err_g.add((result_node, ns_sh.result, err_node))
+            err_g.add((err_node, rdflib.RDF.type, result))
+            err_g.add((err_node, ns_sh.resultMessage, rdflib.Literal(str(exc))))
+            self.graph += err_g
 
     def options(self, shape_name):
         response = make_response('', 204)

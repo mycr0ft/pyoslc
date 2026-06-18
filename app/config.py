@@ -20,3 +20,9 @@ class Config:
 
     MAIL_SERVER = None
     LOG_TO_STDOUT = None
+
+    STORAGE_BACKEND = os.environ.get('STORAGE_BACKEND', 'csv')
+    CSV_REQUIREMENT_PATH = os.environ.get(
+        'CSV_REQUIREMENT_PATH',
+        os.path.join(os.path.abspath(''), 'examples', 'specifications.csv'))
+    OXYGRAPH_URL = os.environ.get('OXYGRAPH_URL', 'http://127.0.0.1:7878')

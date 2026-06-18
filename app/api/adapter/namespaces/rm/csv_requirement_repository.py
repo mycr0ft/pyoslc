@@ -1,20 +1,21 @@
 import csv
 import os
+import shutil
+from tempfile import NamedTemporaryFile
 
-from app.api.adapter.resources.repository import Repository
+from werkzeug.exceptions import NotFound
+
+from app.api.adapter.resources.repository import RequirementRepository
 from pyoslc.resources.domains.rm import Requirement
 
 
-class CsvRequirementRepository(Repository):
+class CsvRequirementRepository(RequirementRepository):
 
     specification_map = {
-        # RDF and OSLC attributes
         'Specification_id': {'attribute': '_BaseResource__identifier', 'oslc_property': 'DCTERMS.identifier'},
         'Title': {'attribute': '_BaseResource__title', 'oslc_property': 'DCTERMS.title'},
         'Description': {'attribute': '_BaseResource__description', 'oslc_property': 'DCTERMS.description'},
         'Author': {'attribute': '_BaseResource__creator', 'oslc_property': 'DCTERMS.creator'},
-
-        # RM and Custom attributes
         'Product': {'attribute': '_BaseResource__short_title', 'oslc_property': 'DCTERMS.shortTitle'},
         'Subject': {'attribute': '_BaseResource__subject', 'oslc_property': 'DCTERMS.subject'},
         'Source': {'attribute': '_Requirement__elaborated_by', 'oslc_property': 'OSLC_RM.elaboratedBy'},
@@ -24,96 +25,118 @@ class CsvRequirementRepository(Repository):
         'Target_Value': {'attribute': '_Requirement__validated_by', 'oslc_property': 'OSLC_RM.validatedBy'},
         'Degree_of_fulfillment': {'attribute': '_Requirement__affected_by', 'oslc_property': 'OSLC_RM.affectedBy'},
         'Status': {'attribute': '_Requirement__decomposed_by', 'oslc_property': 'OSLC_RM.decomposedBy'},
-
-        # CUSTOM attributes
         'PUID': {'attribute': '_Requirement__puid', 'oslc_property': 'OSLC_RM.puid'},
         'Project': {'attribute': '_BaseResource__subject', 'oslc_property': 'DCTERMS.subject'},
     }
 
-    def __init__(self, title):
-        # self.csv_file_path = csv_file_path
+    def __init__(self, title: str, csv_file_path: str | None = None):
         super().__init__(title)
-        self.csv_file_path = os.path.join(
+        self.csv_file_path = csv_file_path or os.path.join(
             os.path.abspath(''), 'examples', 'specifications.csv')
 
-    def find(self, requirement_id):
-        requirement = None
+    def csv_path(self) -> str | None:
+        return self.csv_file_path
+
+    def find(self, requirement_id: str) -> Requirement | None:
         with open(self.csv_file_path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f, delimiter=';')
             for row in reader:
                 if row['Specification_id'] == requirement_id:
                     requirement = Requirement()
                     requirement.update(row, attributes=self.specification_map)
-                    break
-        return requirement
+                    return requirement
+        return None
 
-    def create(self, requirement):
-        with open(self.csv_file_path, 'a', encoding='utf-8') as f:
-            fieldnames = list(CsvRequirementRepository.specification_map.keys())
-            writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter=';')
-            writer.writerow(
-                CsvRequirementRepository.requirement_to_dict(requirement))
-
-    def read(self):
-        with open(self.csv_file_path, 'rb') as f:
+    def list(self) -> list[Requirement]:
+        requirements: list[Requirement] = []
+        if not os.path.isfile(self.csv_file_path):
+            return requirements
+        with open(self.csv_file_path, 'r', encoding='utf-8') as f:
             reader = csv.DictReader(f, delimiter=';')
             for row in reader:
-                yield CsvRequirementRepository.read_requirement(row)
+                requirement = Requirement()
+                requirement.update(row, attributes=self.specification_map)
+                requirements.append(requirement)
+        return requirements
 
-    def delete(self, requirement):
-        temp_csv_file_path = 'temp_' + self.csv_file_path
-        with open(self.csv_file_path, 'rb') as file, open(temp_csv_file_path, 'wb') as new_file:
-            fieldnames = list(CsvRequirementRepository.specification_map.keys())
-            writer = csv.DictWriter(
-                new_file, fieldnames=fieldnames, delimiter=';')
-            for row in csv.reader(file):
-                if requirement.identifier != CsvRequirementRepository.read_requirement(row).identifier:
-                    writer.writerow(row)
+    def _csv_fieldnames(self):
+        if not os.path.isfile(self.csv_file_path):
+            return list(self.specification_map.keys())
+        with open(self.csv_file_path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f, delimiter=';')
+            return reader.fieldnames if reader.fieldnames else []
 
-        os.remove(self.csv_file_path)
-        os.rename(temp_csv_file_path, self.csv_file_path)
-
-    def update(self, requirement):
-        temp_csv_file_path = 'temp_' + self.csv_file_path
-        with open(self.csv_file_path, 'rb') as file, open(temp_csv_file_path, 'wb') as new_file:
-            fieldnames = list(CsvRequirementRepository.specification_map.keys())
-            writer = csv.DictWriter(
-                new_file, fieldnames=fieldnames, delimiter=';')
-            for row in csv.reader(file):
-                if requirement.identifier == CsvRequirementRepository.read_requirement(row).identifier:
-                    writer.writerow(
-                        CsvRequirementRepository.requirement_to_dict(requirement))
-                else:
-                    writer.writerow(row)
-
-        os.remove(self.csv_file_path)
-        os.rename(temp_csv_file_path, self.csv_file_path)
+    def create(self, requirement):
+        fieldnames = self._csv_fieldnames()
+        with open(self.csv_file_path, 'a', encoding='utf-8') as f:
+            writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter=';')
+            writer.writerow(self._requirement_to_dict(requirement, fieldnames))
+        return requirement
 
     @staticmethod
-    def requirement_to_dict(requirement):
-        specification = dict()
+    def _sanitize_row(row):
+        row.pop(None, None)
+        row.pop('', None)
+        return row
 
-        for key in CsvRequirementRepository.specification_map:
-            attribute_name = CsvRequirementRepository.specification_map[key]['attribute']
+    def _rewrite_csv(self, requirement_id, modify_func):
+        path = self.csv_file_path
+        tempfile = NamedTemporaryFile(mode='w', delete=False)
+
+        with open(path, 'r', encoding='utf-8') as f:
+            reader = csv.DictReader(f, delimiter=';')
+            field_names = reader.fieldnames
+
+        found = False
+        with open(path, 'r', encoding='utf-8') as csvfile, tempfile:
+            reader = csv.DictReader(csvfile, fieldnames=field_names, delimiter=';')
+            writer = csv.DictWriter(tempfile, fieldnames=field_names, delimiter=';')
+            for row in reader:
+                found = modify_func(row, writer) or found
+
+        shutil.move(tempfile.name, path)
+        return found
+
+    def update(self, requirement_id: str, requirement):
+        field_names = self._csv_fieldnames()
+
+        def _do_update(row, writer):
+            if row['Specification_id'] == str(requirement_id):
+                writer.writerow(self._requirement_to_dict(requirement, field_names))
+                return True
+            writer.writerow(self._sanitize_row(row))
+            return False
+
+        found = self._rewrite_csv(requirement_id, _do_update)
+        if not found:
+            raise NotFound(f'Requirement {requirement_id} not found')
+        return requirement
+
+    def delete(self, requirement_id: str):
+        def _do_delete(row, writer):
+            if row['Specification_id'] != str(requirement_id):
+                writer.writerow(self._sanitize_row(row))
+                return False
+            return True
+
+        found = self._rewrite_csv(requirement_id, _do_delete)
+        if not found:
+            raise NotFound(f'Requirement {requirement_id} not found')
+        return True
+
+    def _requirement_to_dict(self, requirement, fieldnames=None):
+        if fieldnames is None:
+            fieldnames = self._csv_fieldnames()
+        specification: dict = {}
+        for key in fieldnames:
+            if key not in self.specification_map:
+                continue
+            attribute_name = self.specification_map[key]['attribute']
             if hasattr(requirement, attribute_name):
                 attribute_value = getattr(requirement, attribute_name)
                 if attribute_value:
                     if isinstance(attribute_value, set):
-                        specification[key] = attribute_value.pop()
+                        specification[key] = next(iter(attribute_value))
                     else:
                         specification[key] = attribute_value
-
         return specification
-
-    @staticmethod
-    def read_requirement(data):
-        requirement = Requirement()
-        for k, v in data.items():
-            if k in CsvRequirementRepository.specification_map:
-                attribute = CsvRequirementRepository.specification_map[k]['attribute']
-                if hasattr(requirement, attribute):
-                    attr = getattr(requirement, attribute, None)
-                    if isinstance(attr, set):
-                        attr.add(v if v != '' else 'Empty')
-                    else:
-                        setattr(requirement, attribute, v)

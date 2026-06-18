@@ -1,59 +1,35 @@
-import csv
-import os
-import shutil
-from tempfile import NamedTemporaryFile
-
 from rdflib import Graph, DCTERMS
 from werkzeug.exceptions import NotFound
 
 from app.api.adapter.exceptions import NotModified
 from app.api.adapter.mappings.specification import specification_map
+from app.api.adapter.resources.repository import get_requirement_repository
 from pyoslc.resources.domains.rm import Requirement
 
 attributes = specification_map
 
 
-def get_requirement(base_url, specification_id):
-    path = 'examples/specifications.csv'
-    if os.path.isfile(path):
-        with open(path, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f, delimiter=';')
-            for row in reader:
-                if row['Specification_id'] == specification_id:
-                    about = base_url.replace('selector', 'requirement')
-                    requirement = Requirement(about=about)
-                    requirement.update(row, attributes)
+def _repo():
+    return get_requirement_repository()
 
-                    return requirement
+
+def get_requirement(base_url, specification_id):
+    repo = _repo()
+    requirement = repo.find(specification_id)
+    if requirement:
+        about = base_url.replace('selector', 'requirement')
+        requirement.about = about
+    return requirement
 
 
 def get_requirement_list(base_url, select, where):
-    requirements = list()
-    path = 'examples/specifications.csv'
-    if os.path.isfile(path):
-        with open(path, 'r', encoding='utf-8') as f:
-            reader = csv.DictReader(f, delimiter=';')
-            for row in reader:
-                requirement = Requirement()
-                requirement.update(row, attributes=attributes)
-                requirements.append(requirement)
-
-    return requirements
+    repo = _repo()
+    return repo.list()
 
 
 def get_requirements(base_url):
-    path = 'examples/specifications.csv'
-    requirements = list()
-    with open(path, 'r', encoding='utf-8') as f:
-        reader = csv.DictReader(f, delimiter=';')
-
-        for row in reader:
-            about = base_url.replace('selector', 'requirement') + '/' + row['Specification_id']
-            requirement = Requirement(about=about)
-            requirement.update(row, attributes=attributes)
-            requirements.append(requirement)
-
-    return requirements
+    repo = _repo()
+    return repo.list()
 
 
 def create_requirement(data):
@@ -68,38 +44,15 @@ def create_requirement(data):
         else:
             requirement.from_json(data=data, attributes=attributes)
 
-        specification = requirement.to_mapped_object(attributes)
+        repo = _repo()
+        existing = repo.find(requirement.identifier)
+        if existing:
+            return NotModified()
 
-        if specification:
-            path = 'examples/specifications.csv'
-            tempfile = NamedTemporaryFile(mode='w', delete=False)
+        repo.create(requirement)
+        return requirement
 
-            with open(path, 'r', encoding='utf-8') as f:
-                reader = csv.DictReader(f, delimiter=';')
-                field_names = reader.fieldnames
-
-            with open(path, 'r', encoding='utf-8') as csvfile, tempfile:
-                reader = csv.DictReader(csvfile, fieldnames=field_names, delimiter=';')
-                writer = csv.DictWriter(tempfile, fieldnames=field_names, delimiter=';')
-                exist = False
-
-                for row in reader:
-                    if row['Specification_id'] == specification['Specification_id']:
-                        exist = True
-                    writer.writerow(row)
-
-                if not exist:
-                    writer.writerow(specification)
-
-            shutil.move(tempfile.name, path)
-
-            if exist:
-                return NotModified()
-
-            return requirement
-
-        else:
-            return NotFound()
+    return NotFound()
 
 
 def update_requirement(requirement_id, data):
@@ -114,71 +67,33 @@ def update_requirement(requirement_id, data):
         else:
             requirement.from_json(data=data, attributes=attributes)
 
-        specification = requirement.to_mapped_object(attributes)
-
-        if specification:
-            path = 'examples/specifications.csv'
-            tempfile = NamedTemporaryFile(mode='w', delete=False)
-
-            with open(path, 'r', encoding='utf-8') as f:
-                reader = csv.DictReader(f, delimiter=';')
-                field_names = reader.fieldnames
-
-            modified = False
-            with open(path, 'r', encoding='utf-8') as csvfile, tempfile:
-                reader = csv.DictReader(csvfile, fieldnames=field_names, delimiter=';')
-                writer = csv.DictWriter(tempfile, fieldnames=field_names, delimiter=';')
-                for row in reader:
-                    if row['Specification_id'] == str(requirement_id):
-                        rq = Requirement()
-                        rq.from_json(specification, attributes=attributes)
-                        row = rq.to_mapped_object(attributes=attributes)
-                        row['Specification_id'] = requirement_id
-                        modified = True
-                    writer.writerow(row)
-
-            shutil.move(tempfile.name, path)
-
-            if not modified:
-                raise NotModified()
-
+        repo = _repo()
+        try:
+            repo.update(str(requirement_id), requirement)
             return requirement
+        except NotFound:
+            raise NotModified()
 
-        else:
-            return NotFound()
+    return NotFound()
 
 
 def delete_requirement(requirement_id):
-    path = 'examples/specifications.csv'
-    tempfile = NamedTemporaryFile(mode='w', delete=False)
-
-    with open(path, 'r', encoding='utf-8') as f:
-        reader = csv.DictReader(f, delimiter=';')
-        field_names = reader.fieldnames
-
-    modified = False
-    with open(path, 'r', encoding='utf-8') as csvfile, tempfile:
-        reader = csv.DictReader(csvfile, fieldnames=field_names, delimiter=';')
-        writer = csv.DictWriter(tempfile, fieldnames=field_names, delimiter=';')
-        for row in reader:
-            if row['Specification_id'] != str(requirement_id):
-                writer.writerow(row)
-            else:
-                modified = True
-
-    shutil.move(tempfile.name, path)
-
-    if not modified:
-        return NotModified()
-
-    return True
+    repo = _repo()
+    try:
+        repo.delete(str(requirement_id))
+        return True
+    except NotFound:
+        raise NotModified()
 
 
 def get_field_names(path):
-    with open(path, 'rb') as f:
-        reader = csv.DictReader(f, delimiter=';')
-        field_names = reader.fieldnames
-    return field_names if field_names else None
+    if _repo().csv_path():
+        import csv
+        with open(_repo().csv_path(), 'rb') as f:
+            reader = csv.DictReader(f, delimiter=';')
+            field_names = reader.fieldnames
+        return field_names if field_names else None
+    return None
 
 
 def update_store(id, data):
