@@ -8,7 +8,7 @@ XSD_NS = str(XSD)
 
 
 def build_requirement_shape(base_uri):
-    shape_uri = base_uri.rstrip('/') + '/resourceShapes/requirement'
+    shape_uri = base_uri.rstrip('/')
     shape = ResourceShape(
         about=shape_uri,
         title='Requirement Resource Shape',
