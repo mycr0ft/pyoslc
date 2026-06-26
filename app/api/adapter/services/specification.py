@@ -121,6 +121,53 @@ class Specification(ServiceResource):
         }
 
 
+class SysMLSpecification(ServiceResource):
+
+    domain = 'http://open-services.net/ns/am#'
+    service_path = 'provider/{id}/sysml'
+
+    @staticmethod
+    def query_capability():
+        return {
+            'title': 'SysML Query Capability',
+            'label': 'SysML Query Capability',
+            'resource_shape': 'resourceShapes/sysmlElement',
+            'resource_type': [
+                'http://open-services.net/ns/am#Resource',
+                'https://www.omg.org/spec/sysml/vocabulary#Element',
+            ],
+            'usages': []
+        }
+
+    @staticmethod
+    def creation_factory():
+        return {
+            'title': 'SysML Creation Factory',
+            'label': 'SysML Creation Factory',
+            'resource_shape': ['resourceShapes/sysmlElement'],
+            'resource_type': [
+                'http://open-services.net/ns/am#Resource',
+                'https://www.omg.org/spec/sysml/vocabulary#Element',
+            ],
+            'usages': []
+        }
+
+    @staticmethod
+    def selection_dialog():
+        return {
+            'title': 'SysML Selection Dialog',
+            'label': 'SysML Selection Dialog Service',
+            'uri': 'provider/{id}/sysml/selector',
+            'hint_width': '525px',
+            'hint_height': '325px',
+            'resource_type': [
+                'http://open-services.net/ns/am#Resource',
+                'https://www.omg.org/spec/sysml/vocabulary#Element',
+            ],
+            'usages': ['http://open-services.net/ns/am#PyOSLCSelectionDialog']
+        }
+
+
 class Configuration(ServiceResource):
 
     @staticmethod

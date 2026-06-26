@@ -20,7 +20,45 @@ from app.api.adapter.namespaces.rm.parsers import specification_parser
 from app.api.adapter.resources.resource_service import config_service_resource
 from app.api.adapter.services.providers import ServiceProviderCatalogSingleton, RootServiceSingleton, PublisherSingleton
 from app.api.adapter.services.specification import ServiceResource
-from app.api.adapter.services.shapes import build_requirement_shape
+from app.api.adapter.services.shapes import (
+    build_requirement_shape, build_sysml_element_shape,
+    build_sysml_relationship_shape, build_sysml_namespace_shape,
+    build_sysml_type_shape, build_sysml_package_shape,
+    build_sysml_definition_shape, build_sysml_usage_shape,
+    build_sysml_item_definition_shape, build_sysml_item_usage_shape,
+    build_sysml_part_definition_shape, build_sysml_part_usage_shape,
+    build_sysml_port_definition_shape, build_sysml_port_usage_shape,
+    build_sysml_requirement_definition_shape, build_sysml_requirement_usage_shape,
+    build_sysml_concern_definition_shape, build_sysml_concern_usage_shape,
+    build_sysml_action_definition_shape, build_sysml_action_usage_shape,
+    build_sysml_state_definition_shape, build_sysml_state_usage_shape,
+    build_sysml_constraint_definition_shape, build_sysml_constraint_usage_shape,
+    build_sysml_view_definition_shape, build_sysml_view_usage_shape,
+    build_sysml_viewpoint_definition_shape, build_sysml_viewpoint_usage_shape,
+    build_sysml_feature_shape, build_sysml_classifier_shape,
+    build_sysml_occurrence_definition_shape, build_sysml_occurrence_usage_shape,
+    build_sysml_class_shape, build_sysml_structure_shape,
+    build_sysml_data_type_shape, build_sysml_behavior_shape,
+    build_sysml_function_shape, build_sysml_predicate_shape,
+    build_sysml_library_package_shape,
+    build_sysml_attribute_definition_shape, build_sysml_attribute_usage_shape,
+    build_sysml_enumeration_definition_shape, build_sysml_enumeration_usage_shape,
+    build_sysml_calculation_definition_shape, build_sysml_calculation_usage_shape,
+    build_sysml_case_definition_shape, build_sysml_case_usage_shape,
+    build_sysml_use_case_definition_shape, build_sysml_use_case_usage_shape,
+    build_sysml_analysis_case_definition_shape, build_sysml_analysis_case_usage_shape,
+    build_sysml_verification_case_definition_shape, build_sysml_verification_case_usage_shape,
+    build_sysml_connection_definition_shape, build_sysml_connection_usage_shape,
+    build_sysml_flow_definition_shape, build_sysml_flow_usage_shape,
+    build_sysml_interface_definition_shape, build_sysml_interface_usage_shape,
+    build_sysml_allocation_definition_shape, build_sysml_allocation_usage_shape,
+    build_sysml_rendering_definition_shape, build_sysml_rendering_usage_shape,
+    build_sysml_reference_usage_shape,
+    build_sysml_conjugated_port_definition_shape,
+    build_sysml_connector_as_usage_shape,
+    build_sysml_succession_as_usage_shape,
+    build_sysml_binding_connector_as_usage_shape,
+)
 from pyoslc.resources.domains.rm import Requirement
 from pyoslc.resources.models import ResponseInfo, Compact, Preview
 from pyoslc.rest.resource import OslcResource
@@ -38,6 +76,11 @@ register(
 config_service_resource(
     'specification', ServiceResource,
     'app.api.adapter.services.specification', 'Specification',
+)
+
+config_service_resource(
+    'sysml_specification', ServiceResource,
+    'app.api.adapter.services.specification', 'SysMLSpecification',
 )
 
 
@@ -348,6 +391,140 @@ class ResourceShapeEndpoint(OslcResource):
 
         if shape_name == 'requirement':
             shape = build_requirement_shape(base_url)
+        elif shape_name == 'sysmlElement':
+            shape = build_sysml_element_shape(base_url)
+        elif shape_name == 'sysmlRelationship':
+            shape = build_sysml_relationship_shape(base_url)
+        elif shape_name == 'sysmlNamespace':
+            shape = build_sysml_namespace_shape(base_url)
+        elif shape_name == 'sysmlType':
+            shape = build_sysml_type_shape(base_url)
+        elif shape_name == 'sysmlPackage':
+            shape = build_sysml_package_shape(base_url)
+        elif shape_name == 'sysmlDefinition':
+            shape = build_sysml_definition_shape(base_url)
+        elif shape_name == 'sysmlUsage':
+            shape = build_sysml_usage_shape(base_url)
+        elif shape_name == 'sysmlItemDefinition':
+            shape = build_sysml_item_definition_shape(base_url)
+        elif shape_name == 'sysmlItemUsage':
+            shape = build_sysml_item_usage_shape(base_url)
+        elif shape_name == 'sysmlPartDefinition':
+            shape = build_sysml_part_definition_shape(base_url)
+        elif shape_name == 'sysmlPartUsage':
+            shape = build_sysml_part_usage_shape(base_url)
+        elif shape_name == 'sysmlPortDefinition':
+            shape = build_sysml_port_definition_shape(base_url)
+        elif shape_name == 'sysmlPortUsage':
+            shape = build_sysml_port_usage_shape(base_url)
+        elif shape_name == 'sysmlRequirementDefinition':
+            shape = build_sysml_requirement_definition_shape(base_url)
+        elif shape_name == 'sysmlRequirementUsage':
+            shape = build_sysml_requirement_usage_shape(base_url)
+        elif shape_name == 'sysmlConcernDefinition':
+            shape = build_sysml_concern_definition_shape(base_url)
+        elif shape_name == 'sysmlConcernUsage':
+            shape = build_sysml_concern_usage_shape(base_url)
+        elif shape_name == 'sysmlActionDefinition':
+            shape = build_sysml_action_definition_shape(base_url)
+        elif shape_name == 'sysmlActionUsage':
+            shape = build_sysml_action_usage_shape(base_url)
+        elif shape_name == 'sysmlStateDefinition':
+            shape = build_sysml_state_definition_shape(base_url)
+        elif shape_name == 'sysmlStateUsage':
+            shape = build_sysml_state_usage_shape(base_url)
+        elif shape_name == 'sysmlConstraintDefinition':
+            shape = build_sysml_constraint_definition_shape(base_url)
+        elif shape_name == 'sysmlConstraintUsage':
+            shape = build_sysml_constraint_usage_shape(base_url)
+        elif shape_name == 'sysmlViewDefinition':
+            shape = build_sysml_view_definition_shape(base_url)
+        elif shape_name == 'sysmlViewUsage':
+            shape = build_sysml_view_usage_shape(base_url)
+        elif shape_name == 'sysmlViewpointDefinition':
+            shape = build_sysml_viewpoint_definition_shape(base_url)
+        elif shape_name == 'sysmlViewpointUsage':
+            shape = build_sysml_viewpoint_usage_shape(base_url)
+        elif shape_name == 'sysmlFeature':
+            shape = build_sysml_feature_shape(base_url)
+        elif shape_name == 'sysmlClassifier':
+            shape = build_sysml_classifier_shape(base_url)
+        elif shape_name == 'sysmlOccurrenceDefinition':
+            shape = build_sysml_occurrence_definition_shape(base_url)
+        elif shape_name == 'sysmlOccurrenceUsage':
+            shape = build_sysml_occurrence_usage_shape(base_url)
+        elif shape_name == 'sysmlClass':
+            shape = build_sysml_class_shape(base_url)
+        elif shape_name == 'sysmlStructure':
+            shape = build_sysml_structure_shape(base_url)
+        elif shape_name == 'sysmlDataType':
+            shape = build_sysml_data_type_shape(base_url)
+        elif shape_name == 'sysmlBehavior':
+            shape = build_sysml_behavior_shape(base_url)
+        elif shape_name == 'sysmlFunction':
+            shape = build_sysml_function_shape(base_url)
+        elif shape_name == 'sysmlPredicate':
+            shape = build_sysml_predicate_shape(base_url)
+        elif shape_name == 'sysmlLibraryPackage':
+            shape = build_sysml_library_package_shape(base_url)
+        elif shape_name == 'sysmlAttributeDefinition':
+            shape = build_sysml_attribute_definition_shape(base_url)
+        elif shape_name == 'sysmlAttributeUsage':
+            shape = build_sysml_attribute_usage_shape(base_url)
+        elif shape_name == 'sysmlEnumerationDefinition':
+            shape = build_sysml_enumeration_definition_shape(base_url)
+        elif shape_name == 'sysmlEnumerationUsage':
+            shape = build_sysml_enumeration_usage_shape(base_url)
+        elif shape_name == 'sysmlCalculationDefinition':
+            shape = build_sysml_calculation_definition_shape(base_url)
+        elif shape_name == 'sysmlCalculationUsage':
+            shape = build_sysml_calculation_usage_shape(base_url)
+        elif shape_name == 'sysmlCaseDefinition':
+            shape = build_sysml_case_definition_shape(base_url)
+        elif shape_name == 'sysmlCaseUsage':
+            shape = build_sysml_case_usage_shape(base_url)
+        elif shape_name == 'sysmlUseCaseDefinition':
+            shape = build_sysml_use_case_definition_shape(base_url)
+        elif shape_name == 'sysmlUseCaseUsage':
+            shape = build_sysml_use_case_usage_shape(base_url)
+        elif shape_name == 'sysmlAnalysisCaseDefinition':
+            shape = build_sysml_analysis_case_definition_shape(base_url)
+        elif shape_name == 'sysmlAnalysisCaseUsage':
+            shape = build_sysml_analysis_case_usage_shape(base_url)
+        elif shape_name == 'sysmlVerificationCaseDefinition':
+            shape = build_sysml_verification_case_definition_shape(base_url)
+        elif shape_name == 'sysmlVerificationCaseUsage':
+            shape = build_sysml_verification_case_usage_shape(base_url)
+        elif shape_name == 'sysmlConnectionDefinition':
+            shape = build_sysml_connection_definition_shape(base_url)
+        elif shape_name == 'sysmlConnectionUsage':
+            shape = build_sysml_connection_usage_shape(base_url)
+        elif shape_name == 'sysmlFlowDefinition':
+            shape = build_sysml_flow_definition_shape(base_url)
+        elif shape_name == 'sysmlFlowUsage':
+            shape = build_sysml_flow_usage_shape(base_url)
+        elif shape_name == 'sysmlInterfaceDefinition':
+            shape = build_sysml_interface_definition_shape(base_url)
+        elif shape_name == 'sysmlInterfaceUsage':
+            shape = build_sysml_interface_usage_shape(base_url)
+        elif shape_name == 'sysmlAllocationDefinition':
+            shape = build_sysml_allocation_definition_shape(base_url)
+        elif shape_name == 'sysmlAllocationUsage':
+            shape = build_sysml_allocation_usage_shape(base_url)
+        elif shape_name == 'sysmlRenderingDefinition':
+            shape = build_sysml_rendering_definition_shape(base_url)
+        elif shape_name == 'sysmlRenderingUsage':
+            shape = build_sysml_rendering_usage_shape(base_url)
+        elif shape_name == 'sysmlReferenceUsage':
+            shape = build_sysml_reference_usage_shape(base_url)
+        elif shape_name == 'sysmlConjugatedPortDefinition':
+            shape = build_sysml_conjugated_port_definition_shape(base_url)
+        elif shape_name == 'sysmlConnectorAsUsage':
+            shape = build_sysml_connector_as_usage_shape(base_url)
+        elif shape_name == 'sysmlSuccessionAsUsage':
+            shape = build_sysml_succession_as_usage_shape(base_url)
+        elif shape_name == 'sysmlBindingConnectorAsUsage':
+            shape = build_sysml_binding_connector_as_usage_shape(base_url)
         else:
             raise NotFound()
 

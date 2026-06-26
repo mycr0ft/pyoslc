@@ -29,3 +29,5 @@ test-reports/
 
 .python-version
 uv.lock
+
+session-ses_*.md

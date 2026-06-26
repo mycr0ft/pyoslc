@@ -5,6 +5,7 @@ OSLC_AM = ClosedNamespace(
     uri=URIRef("http://open-services.net/ns/am#"),
     terms=[
         # RDFS Classes in this namespace
+        "Resource",
         "LinkType",
 
         # RDF Properties in this namespace
