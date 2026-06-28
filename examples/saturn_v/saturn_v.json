@@ -1,0 +1,1635 @@
+[
+  {
+    "identifier": "SystemPackage",
+    "title": "SystemPackage",
+    "element_id": "SystemPackage",
+    "declared_name": "SystemPackage",
+    "name": "SystemPackage",
+    "qualified_name": "SystemPackage",
+    "type": "SysMLPackage",
+    "owned_member": [
+      "SystemPackage-Apollo11MissionSystem"
+    ]
+  },
+  {
+    "identifier": "SystemPackage-Apollo11MissionSystem",
+    "title": "Apollo11MissionSystem",
+    "element_id": "SystemPackage-Apollo11MissionSystem",
+    "declared_name": "Apollo11MissionSystem",
+    "name": "Apollo11MissionSystem",
+    "qualified_name": "SystemPackage::Apollo11MissionSystem",
+    "type": "SysMLPartDefinition",
+    "owned_part": [
+      "SystemPackage-Apollo11MissionSystem-launchVehicle",
+      "SystemPackage-Apollo11MissionSystem-spacecraft",
+      "SystemPackage-Apollo11MissionSystem-spaceSuits"
+    ]
+  },
+  {
+    "identifier": "SystemPackage-Apollo11MissionSystem-launchVehicle",
+    "title": "launchVehicle",
+    "element_id": "SystemPackage-Apollo11MissionSystem-launchVehicle",
+    "declared_name": "launchVehicle",
+    "name": "launchVehicle",
+    "qualified_name": "SystemPackage::Apollo11MissionSystem::launchVehicle",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "SA_506"
+    ]
+  },
+  {
+    "identifier": "SystemPackage-Apollo11MissionSystem-spacecraft",
+    "title": "spacecraft",
+    "element_id": "SystemPackage-Apollo11MissionSystem-spacecraft",
+    "declared_name": "spacecraft",
+    "name": "spacecraft",
+    "qualified_name": "SystemPackage::Apollo11MissionSystem::spacecraft",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "ApolloSpacecraft"
+    ],
+    "owned_part": [
+      "SystemPackage-Apollo11MissionSystem-spacecraft-csm",
+      "SystemPackage-Apollo11MissionSystem-spacecraft-lm"
+    ]
+  },
+  {
+    "identifier": "SystemPackage-Apollo11MissionSystem-spacecraft-csm",
+    "title": "csm",
+    "element_id": "SystemPackage-Apollo11MissionSystem-spacecraft-csm",
+    "declared_name": "csm",
+    "name": "csm",
+    "qualified_name": "SystemPackage::Apollo11MissionSystem::spacecraft::csm",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "CSM_107"
+    ]
+  },
+  {
+    "identifier": "SystemPackage-Apollo11MissionSystem-spacecraft-lm",
+    "title": "lm",
+    "element_id": "SystemPackage-Apollo11MissionSystem-spacecraft-lm",
+    "declared_name": "lm",
+    "name": "lm",
+    "qualified_name": "SystemPackage::Apollo11MissionSystem::spacecraft::lm",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "LM_5"
+    ]
+  },
+  {
+    "identifier": "SystemPackage-Apollo11MissionSystem-spaceSuits",
+    "title": "spaceSuits",
+    "element_id": "SystemPackage-Apollo11MissionSystem-spaceSuits",
+    "declared_name": "spaceSuits",
+    "name": "spaceSuits",
+    "qualified_name": "SystemPackage::Apollo11MissionSystem::spaceSuits",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "ExtravehicularMobilityUnit"
+    ]
+  },
+  {
+    "identifier": "SystemSpecificationPackage",
+    "title": "SystemSpecificationPackage",
+    "element_id": "SystemSpecificationPackage",
+    "declared_name": "SystemSpecificationPackage",
+    "name": "SystemSpecificationPackage",
+    "qualified_name": "SystemSpecificationPackage",
+    "description": "Apollo 11 System requirements group",
+    "type": "SysMLPackage",
+    "owned_member": [
+      "SystemSpecificationPackage-apollo11MissionSystemSpecification"
+    ]
+  },
+  {
+    "identifier": "SystemSpecificationPackage-apollo11MissionSystemSpecification",
+    "title": "apollo11MissionSystemSpecification",
+    "element_id": "SystemSpecificationPackage-apollo11MissionSystemSpecification",
+    "declared_name": "apollo11MissionSystemSpecification",
+    "name": "apollo11MissionSystemSpecification",
+    "qualified_name": "SystemSpecificationPackage::apollo11MissionSystemSpecification",
+    "description": "Apollo 11 System requirements group",
+    "type": "SysMLRequirementUsage"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage",
+    "title": "TechnicalComponentsPackage",
+    "element_id": "TechnicalComponentsPackage",
+    "declared_name": "TechnicalComponentsPackage",
+    "name": "TechnicalComponentsPackage",
+    "qualified_name": "TechnicalComponentsPackage",
+    "type": "SysMLPackage",
+    "owned_member": [
+      "TechnicalComponentsPackage-PropelledSpacecraft",
+      "TechnicalComponentsPackage-FuelledComponent",
+      "TechnicalComponentsPackage-RocketEngine",
+      "TechnicalComponentsPackage-RocketStage",
+      "TechnicalComponentsPackage-MultistageRocket",
+      "TechnicalComponentsPackage-SaturnVInstrumentUnit",
+      "TechnicalComponentsPackage-ApolloLaunchEscapeSystem",
+      "TechnicalComponentsPackage-ApolloCommandModule",
+      "TechnicalComponentsPackage-ApolloServiceModule",
+      "TechnicalComponentsPackage-ApolloCommandServiceModule",
+      "TechnicalComponentsPackage-ApolloLunarModule",
+      "TechnicalComponentsPackage-LunarModuleDescentStage",
+      "TechnicalComponentsPackage-LunarModuleAscentStage",
+      "TechnicalComponentsPackage-ApolloSpacecraftLMAdapter",
+      "TechnicalComponentsPackage-ApolloSpacecraft",
+      "TechnicalComponentsPackage-SaturnV",
+      "TechnicalComponentsPackage-F-1",
+      "TechnicalComponentsPackage-J-2",
+      "TechnicalComponentsPackage-S-IVB",
+      "TechnicalComponentsPackage-S-II",
+      "TechnicalComponentsPackage-S-IC",
+      "TechnicalComponentsPackage-ExtravehicularMobilityUnit",
+      "TechnicalComponentsPackage-PressureSuiteAssembly",
+      "TechnicalComponentsPackage-PortableLifeSupportSystem"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-PropelledSpacecraft",
+    "title": "PropelledSpacecraft",
+    "element_id": "TechnicalComponentsPackage-PropelledSpacecraft",
+    "declared_name": "PropelledSpacecraft",
+    "name": "PropelledSpacecraft",
+    "qualified_name": "TechnicalComponentsPackage::PropelledSpacecraft",
+    "type": "SysMLPartDefinition",
+    "owned_attribute": [
+      "TechnicalComponentsPackage-PropelledSpacecraft-maxThrust",
+      "TechnicalComponentsPackage-PropelledSpacecraft-specificImpulse"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-PropelledSpacecraft-maxThrust",
+    "title": "maxThrust",
+    "element_id": "TechnicalComponentsPackage-PropelledSpacecraft-maxThrust",
+    "declared_name": "maxThrust",
+    "name": "maxThrust",
+    "qualified_name": "TechnicalComponentsPackage::PropelledSpacecraft::maxThrust",
+    "type": "SysMLAttributeUsage"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-PropelledSpacecraft-specificImpulse",
+    "title": "specificImpulse",
+    "element_id": "TechnicalComponentsPackage-PropelledSpacecraft-specificImpulse",
+    "declared_name": "specificImpulse",
+    "name": "specificImpulse",
+    "qualified_name": "TechnicalComponentsPackage::PropelledSpacecraft::specificImpulse",
+    "type": "SysMLAttributeUsage"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-FuelledComponent",
+    "title": "FuelledComponent",
+    "element_id": "TechnicalComponentsPackage-FuelledComponent",
+    "declared_name": "FuelledComponent",
+    "name": "FuelledComponent",
+    "qualified_name": "TechnicalComponentsPackage::FuelledComponent",
+    "type": "SysMLPartDefinition",
+    "owned_attribute": [
+      "TechnicalComponentsPackage-FuelledComponent-propellantMass",
+      "TechnicalComponentsPackage-FuelledComponent-dryMass"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-FuelledComponent-propellantMass",
+    "title": "propellantMass",
+    "element_id": "TechnicalComponentsPackage-FuelledComponent-propellantMass",
+    "declared_name": "propellantMass",
+    "name": "propellantMass",
+    "qualified_name": "TechnicalComponentsPackage::FuelledComponent::propellantMass",
+    "type": "SysMLAttributeUsage"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-FuelledComponent-dryMass",
+    "title": "dryMass",
+    "element_id": "TechnicalComponentsPackage-FuelledComponent-dryMass",
+    "declared_name": "dryMass",
+    "name": "dryMass",
+    "qualified_name": "TechnicalComponentsPackage::FuelledComponent::dryMass",
+    "type": "SysMLAttributeUsage"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-RocketEngine",
+    "title": "RocketEngine",
+    "element_id": "TechnicalComponentsPackage-RocketEngine",
+    "declared_name": "RocketEngine",
+    "name": "RocketEngine",
+    "qualified_name": "TechnicalComponentsPackage::RocketEngine",
+    "type": "SysMLPartDefinition",
+    "owned_attribute": [
+      "TechnicalComponentsPackage-RocketEngine-thrustVacuum",
+      "TechnicalComponentsPackage-RocketEngine-specificImpulseVacuum"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-RocketEngine-thrustVacuum",
+    "title": "thrustVacuum",
+    "element_id": "TechnicalComponentsPackage-RocketEngine-thrustVacuum",
+    "declared_name": "thrustVacuum",
+    "name": "thrustVacuum",
+    "qualified_name": "TechnicalComponentsPackage::RocketEngine::thrustVacuum",
+    "type": "SysMLAttributeUsage"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-RocketEngine-specificImpulseVacuum",
+    "title": "specificImpulseVacuum",
+    "element_id": "TechnicalComponentsPackage-RocketEngine-specificImpulseVacuum",
+    "declared_name": "specificImpulseVacuum",
+    "name": "specificImpulseVacuum",
+    "qualified_name": "TechnicalComponentsPackage::RocketEngine::specificImpulseVacuum",
+    "type": "SysMLAttributeUsage"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-RocketStage",
+    "title": "RocketStage",
+    "element_id": "TechnicalComponentsPackage-RocketStage",
+    "declared_name": "RocketStage",
+    "name": "RocketStage",
+    "qualified_name": "TechnicalComponentsPackage::RocketStage",
+    "type": "SysMLPartDefinition",
+    "owned_part": [
+      "TechnicalComponentsPackage-RocketStage-engines"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-RocketStage-engines",
+    "title": "engines",
+    "element_id": "TechnicalComponentsPackage-RocketStage-engines",
+    "declared_name": "engines",
+    "name": "engines",
+    "qualified_name": "TechnicalComponentsPackage::RocketStage::engines",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "RocketEngine"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-MultistageRocket",
+    "title": "MultistageRocket",
+    "element_id": "TechnicalComponentsPackage-MultistageRocket",
+    "declared_name": "MultistageRocket",
+    "name": "MultistageRocket",
+    "qualified_name": "TechnicalComponentsPackage::MultistageRocket",
+    "type": "SysMLPartDefinition",
+    "owned_part": [
+      "TechnicalComponentsPackage-MultistageRocket-stages"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-MultistageRocket-stages",
+    "title": "stages",
+    "element_id": "TechnicalComponentsPackage-MultistageRocket-stages",
+    "declared_name": "stages",
+    "name": "stages",
+    "qualified_name": "TechnicalComponentsPackage::MultistageRocket::stages",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "RocketStage"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-SaturnVInstrumentUnit",
+    "title": "SaturnVInstrumentUnit",
+    "element_id": "TechnicalComponentsPackage-SaturnVInstrumentUnit",
+    "declared_name": "SaturnVInstrumentUnit",
+    "name": "SaturnVInstrumentUnit",
+    "qualified_name": "TechnicalComponentsPackage::SaturnVInstrumentUnit",
+    "type": "SysMLPartDefinition",
+    "owned_attribute": [
+      "TechnicalComponentsPackage-SaturnVInstrumentUnit-dryMass"
+    ],
+    "owned_port": [
+      "TechnicalComponentsPackage-SaturnVInstrumentUnit-stageControlPort",
+      "TechnicalComponentsPackage-SaturnVInstrumentUnit-payloadInterfacePort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-SaturnVInstrumentUnit-dryMass",
+    "title": "dryMass",
+    "element_id": "TechnicalComponentsPackage-SaturnVInstrumentUnit-dryMass",
+    "declared_name": "dryMass",
+    "name": "dryMass",
+    "qualified_name": "TechnicalComponentsPackage::SaturnVInstrumentUnit::dryMass",
+    "type": "SysMLAttributeUsage",
+    "description": "Value: 1950 [kg]"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-SaturnVInstrumentUnit-stageControlPort",
+    "title": "stageControlPort",
+    "element_id": "TechnicalComponentsPackage-SaturnVInstrumentUnit-stageControlPort",
+    "declared_name": "stageControlPort",
+    "name": "stageControlPort",
+    "qualified_name": "TechnicalComponentsPackage::SaturnVInstrumentUnit::stageControlPort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "ControlPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-SaturnVInstrumentUnit-payloadInterfacePort",
+    "title": "payloadInterfacePort",
+    "element_id": "TechnicalComponentsPackage-SaturnVInstrumentUnit-payloadInterfacePort",
+    "declared_name": "payloadInterfacePort",
+    "name": "payloadInterfacePort",
+    "qualified_name": "TechnicalComponentsPackage::SaturnVInstrumentUnit::payloadInterfacePort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "PayloadInterfacePort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloLaunchEscapeSystem",
+    "title": "ApolloLaunchEscapeSystem",
+    "element_id": "TechnicalComponentsPackage-ApolloLaunchEscapeSystem",
+    "declared_name": "ApolloLaunchEscapeSystem",
+    "name": "ApolloLaunchEscapeSystem",
+    "qualified_name": "TechnicalComponentsPackage::ApolloLaunchEscapeSystem",
+    "type": "SysMLPartDefinition",
+    "owned_port": [
+      "TechnicalComponentsPackage-ApolloLaunchEscapeSystem-cmInterfacePort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloLaunchEscapeSystem-cmInterfacePort",
+    "title": "cmInterfacePort",
+    "element_id": "TechnicalComponentsPackage-ApolloLaunchEscapeSystem-cmInterfacePort",
+    "declared_name": "cmInterfacePort",
+    "name": "cmInterfacePort",
+    "qualified_name": "TechnicalComponentsPackage::ApolloLaunchEscapeSystem::cmInterfacePort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "LaunchEscapeSystemPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloCommandModule",
+    "title": "ApolloCommandModule",
+    "element_id": "TechnicalComponentsPackage-ApolloCommandModule",
+    "declared_name": "ApolloCommandModule",
+    "name": "ApolloCommandModule",
+    "qualified_name": "TechnicalComponentsPackage::ApolloCommandModule",
+    "type": "SysMLPartDefinition",
+    "owned_port": [
+      "TechnicalComponentsPackage-ApolloCommandModule-umbilicalPort",
+      "TechnicalComponentsPackage-ApolloCommandModule-dockingPort",
+      "TechnicalComponentsPackage-ApolloCommandModule-lesInterfacePort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloCommandModule-umbilicalPort",
+    "title": "umbilicalPort",
+    "element_id": "TechnicalComponentsPackage-ApolloCommandModule-umbilicalPort",
+    "declared_name": "umbilicalPort",
+    "name": "umbilicalPort",
+    "qualified_name": "TechnicalComponentsPackage::ApolloCommandModule::umbilicalPort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "UmbilicalPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloCommandModule-dockingPort",
+    "title": "dockingPort",
+    "element_id": "TechnicalComponentsPackage-ApolloCommandModule-dockingPort",
+    "declared_name": "dockingPort",
+    "name": "dockingPort",
+    "qualified_name": "TechnicalComponentsPackage::ApolloCommandModule::dockingPort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "DockingPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloCommandModule-lesInterfacePort",
+    "title": "lesInterfacePort",
+    "element_id": "TechnicalComponentsPackage-ApolloCommandModule-lesInterfacePort",
+    "declared_name": "lesInterfacePort",
+    "name": "lesInterfacePort",
+    "qualified_name": "TechnicalComponentsPackage::ApolloCommandModule::lesInterfacePort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "LaunchEscapeSystemPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloServiceModule",
+    "title": "ApolloServiceModule",
+    "element_id": "TechnicalComponentsPackage-ApolloServiceModule",
+    "declared_name": "ApolloServiceModule",
+    "name": "ApolloServiceModule",
+    "qualified_name": "TechnicalComponentsPackage::ApolloServiceModule",
+    "type": "SysMLPartDefinition",
+    "owned_port": [
+      "TechnicalComponentsPackage-ApolloServiceModule-umbilicalPort",
+      "TechnicalComponentsPackage-ApolloServiceModule-launchVehicleInterfacePort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloServiceModule-umbilicalPort",
+    "title": "umbilicalPort",
+    "element_id": "TechnicalComponentsPackage-ApolloServiceModule-umbilicalPort",
+    "declared_name": "umbilicalPort",
+    "name": "umbilicalPort",
+    "qualified_name": "TechnicalComponentsPackage::ApolloServiceModule::umbilicalPort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "UmbilicalPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloServiceModule-launchVehicleInterfacePort",
+    "title": "launchVehicleInterfacePort",
+    "element_id": "TechnicalComponentsPackage-ApolloServiceModule-launchVehicleInterfacePort",
+    "declared_name": "launchVehicleInterfacePort",
+    "name": "launchVehicleInterfacePort",
+    "qualified_name": "TechnicalComponentsPackage::ApolloServiceModule::launchVehicleInterfacePort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "StagingPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloCommandServiceModule",
+    "title": "ApolloCommandServiceModule",
+    "element_id": "TechnicalComponentsPackage-ApolloCommandServiceModule",
+    "declared_name": "ApolloCommandServiceModule",
+    "name": "ApolloCommandServiceModule",
+    "qualified_name": "TechnicalComponentsPackage::ApolloCommandServiceModule",
+    "type": "SysMLPartDefinition",
+    "owned_part": [
+      "TechnicalComponentsPackage-ApolloCommandServiceModule-commandModule",
+      "TechnicalComponentsPackage-ApolloCommandServiceModule-serviceModule"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloCommandServiceModule-commandModule",
+    "title": "commandModule",
+    "element_id": "TechnicalComponentsPackage-ApolloCommandServiceModule-commandModule",
+    "declared_name": "commandModule",
+    "name": "commandModule",
+    "qualified_name": "TechnicalComponentsPackage::ApolloCommandServiceModule::commandModule",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "ApolloCommandModule"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloCommandServiceModule-serviceModule",
+    "title": "serviceModule",
+    "element_id": "TechnicalComponentsPackage-ApolloCommandServiceModule-serviceModule",
+    "declared_name": "serviceModule",
+    "name": "serviceModule",
+    "qualified_name": "TechnicalComponentsPackage::ApolloCommandServiceModule::serviceModule",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "ApolloServiceModule"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloLunarModule",
+    "title": "ApolloLunarModule",
+    "element_id": "TechnicalComponentsPackage-ApolloLunarModule",
+    "declared_name": "ApolloLunarModule",
+    "name": "ApolloLunarModule",
+    "qualified_name": "TechnicalComponentsPackage::ApolloLunarModule",
+    "type": "SysMLPartDefinition",
+    "owned_part": [
+      "TechnicalComponentsPackage-ApolloLunarModule-lunarModuleDescentStage",
+      "TechnicalComponentsPackage-ApolloLunarModule-lunarModuleAscentStage"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloLunarModule-lunarModuleDescentStage",
+    "title": "lunarModuleDescentStage",
+    "element_id": "TechnicalComponentsPackage-ApolloLunarModule-lunarModuleDescentStage",
+    "declared_name": "lunarModuleDescentStage",
+    "name": "lunarModuleDescentStage",
+    "qualified_name": "TechnicalComponentsPackage::ApolloLunarModule::lunarModuleDescentStage",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "LunarModuleDescentStage"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloLunarModule-lunarModuleAscentStage",
+    "title": "lunarModuleAscentStage",
+    "element_id": "TechnicalComponentsPackage-ApolloLunarModule-lunarModuleAscentStage",
+    "declared_name": "lunarModuleAscentStage",
+    "name": "lunarModuleAscentStage",
+    "qualified_name": "TechnicalComponentsPackage::ApolloLunarModule::lunarModuleAscentStage",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "LunarModuleAscentStage"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-LunarModuleDescentStage",
+    "title": "LunarModuleDescentStage",
+    "element_id": "TechnicalComponentsPackage-LunarModuleDescentStage",
+    "declared_name": "LunarModuleDescentStage",
+    "name": "LunarModuleDescentStage",
+    "qualified_name": "TechnicalComponentsPackage::LunarModuleDescentStage",
+    "type": "SysMLPartDefinition",
+    "owned_port": [
+      "TechnicalComponentsPackage-LunarModuleDescentStage-upperStagePort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-LunarModuleDescentStage-upperStagePort",
+    "title": "upperStagePort",
+    "element_id": "TechnicalComponentsPackage-LunarModuleDescentStage-upperStagePort",
+    "declared_name": "upperStagePort",
+    "name": "upperStagePort",
+    "qualified_name": "TechnicalComponentsPackage::LunarModuleDescentStage::upperStagePort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "LMStagingPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-LunarModuleAscentStage",
+    "title": "LunarModuleAscentStage",
+    "element_id": "TechnicalComponentsPackage-LunarModuleAscentStage",
+    "declared_name": "LunarModuleAscentStage",
+    "name": "LunarModuleAscentStage",
+    "qualified_name": "TechnicalComponentsPackage::LunarModuleAscentStage",
+    "type": "SysMLPartDefinition",
+    "owned_port": [
+      "TechnicalComponentsPackage-LunarModuleAscentStage-lowerStagePort",
+      "TechnicalComponentsPackage-LunarModuleAscentStage-dockingPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-LunarModuleAscentStage-lowerStagePort",
+    "title": "lowerStagePort",
+    "element_id": "TechnicalComponentsPackage-LunarModuleAscentStage-lowerStagePort",
+    "declared_name": "lowerStagePort",
+    "name": "lowerStagePort",
+    "qualified_name": "TechnicalComponentsPackage::LunarModuleAscentStage::lowerStagePort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "LMStagingPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-LunarModuleAscentStage-dockingPort",
+    "title": "dockingPort",
+    "element_id": "TechnicalComponentsPackage-LunarModuleAscentStage-dockingPort",
+    "declared_name": "dockingPort",
+    "name": "dockingPort",
+    "qualified_name": "TechnicalComponentsPackage::LunarModuleAscentStage::dockingPort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "DockingPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloSpacecraftLMAdapter",
+    "title": "ApolloSpacecraftLMAdapter",
+    "element_id": "TechnicalComponentsPackage-ApolloSpacecraftLMAdapter",
+    "declared_name": "ApolloSpacecraftLMAdapter",
+    "name": "ApolloSpacecraftLMAdapter",
+    "qualified_name": "TechnicalComponentsPackage::ApolloSpacecraftLMAdapter",
+    "type": "SysMLPartDefinition",
+    "owned_port": [
+      "TechnicalComponentsPackage-ApolloSpacecraftLMAdapter-launchVehicleInterfacePort",
+      "TechnicalComponentsPackage-ApolloSpacecraftLMAdapter-csmInterfacePort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloSpacecraftLMAdapter-launchVehicleInterfacePort",
+    "title": "launchVehicleInterfacePort",
+    "element_id": "TechnicalComponentsPackage-ApolloSpacecraftLMAdapter-launchVehicleInterfacePort",
+    "declared_name": "launchVehicleInterfacePort",
+    "name": "launchVehicleInterfacePort",
+    "qualified_name": "TechnicalComponentsPackage::ApolloSpacecraftLMAdapter::launchVehicleInterfacePort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "PayloadInterfacePort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloSpacecraftLMAdapter-csmInterfacePort",
+    "title": "csmInterfacePort",
+    "element_id": "TechnicalComponentsPackage-ApolloSpacecraftLMAdapter-csmInterfacePort",
+    "declared_name": "csmInterfacePort",
+    "name": "csmInterfacePort",
+    "qualified_name": "TechnicalComponentsPackage::ApolloSpacecraftLMAdapter::csmInterfacePort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "StagingPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloSpacecraft",
+    "title": "ApolloSpacecraft",
+    "element_id": "TechnicalComponentsPackage-ApolloSpacecraft",
+    "declared_name": "ApolloSpacecraft",
+    "name": "ApolloSpacecraft",
+    "qualified_name": "TechnicalComponentsPackage::ApolloSpacecraft",
+    "type": "SysMLPartDefinition",
+    "owned_part": [
+      "TechnicalComponentsPackage-ApolloSpacecraft-launchEscapeSystem",
+      "TechnicalComponentsPackage-ApolloSpacecraft-commandServiceModule",
+      "TechnicalComponentsPackage-ApolloSpacecraft-lunarModule",
+      "TechnicalComponentsPackage-ApolloSpacecraft-spacecraftLMAdapter"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloSpacecraft-launchEscapeSystem",
+    "title": "launchEscapeSystem",
+    "element_id": "TechnicalComponentsPackage-ApolloSpacecraft-launchEscapeSystem",
+    "declared_name": "launchEscapeSystem",
+    "name": "launchEscapeSystem",
+    "qualified_name": "TechnicalComponentsPackage::ApolloSpacecraft::launchEscapeSystem",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "ApolloLaunchEscapeSystem"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloSpacecraft-commandServiceModule",
+    "title": "commandServiceModule",
+    "element_id": "TechnicalComponentsPackage-ApolloSpacecraft-commandServiceModule",
+    "declared_name": "commandServiceModule",
+    "name": "commandServiceModule",
+    "qualified_name": "TechnicalComponentsPackage::ApolloSpacecraft::commandServiceModule",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "ApolloCommandServiceModule"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloSpacecraft-lunarModule",
+    "title": "lunarModule",
+    "element_id": "TechnicalComponentsPackage-ApolloSpacecraft-lunarModule",
+    "declared_name": "lunarModule",
+    "name": "lunarModule",
+    "qualified_name": "TechnicalComponentsPackage::ApolloSpacecraft::lunarModule",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "ApolloLunarModule"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ApolloSpacecraft-spacecraftLMAdapter",
+    "title": "spacecraftLMAdapter",
+    "element_id": "TechnicalComponentsPackage-ApolloSpacecraft-spacecraftLMAdapter",
+    "declared_name": "spacecraftLMAdapter",
+    "name": "spacecraftLMAdapter",
+    "qualified_name": "TechnicalComponentsPackage::ApolloSpacecraft::spacecraftLMAdapter",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "ApolloSpacecraftLMAdapter"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-SaturnV",
+    "title": "SaturnV",
+    "element_id": "TechnicalComponentsPackage-SaturnV",
+    "declared_name": "SaturnV",
+    "name": "SaturnV",
+    "qualified_name": "TechnicalComponentsPackage::SaturnV",
+    "type": "SysMLPartDefinition",
+    "owned_part": [
+      "TechnicalComponentsPackage-SaturnV-stage1",
+      "TechnicalComponentsPackage-SaturnV-stage2",
+      "TechnicalComponentsPackage-SaturnV-stage3",
+      "TechnicalComponentsPackage-SaturnV-instrumentUnit"
+    ],
+    "owned_attribute": [
+      "TechnicalComponentsPackage-SaturnV-height",
+      "TechnicalComponentsPackage-SaturnV-launchMass",
+      "TechnicalComponentsPackage-SaturnV-payloadToLunarTransferOrbit"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-SaturnV-height",
+    "title": "height",
+    "element_id": "TechnicalComponentsPackage-SaturnV-height",
+    "declared_name": "height",
+    "name": "height",
+    "qualified_name": "TechnicalComponentsPackage::SaturnV::height",
+    "type": "SysMLAttributeUsage",
+    "description": "Value: 110.6 [m]"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-SaturnV-launchMass",
+    "title": "launchMass",
+    "element_id": "TechnicalComponentsPackage-SaturnV-launchMass",
+    "declared_name": "launchMass",
+    "name": "launchMass",
+    "qualified_name": "TechnicalComponentsPackage::SaturnV::launchMass",
+    "type": "SysMLAttributeUsage",
+    "description": "Value: 2970000 [kg]"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-SaturnV-payloadToLunarTransferOrbit",
+    "title": "payloadToLunarTransferOrbit",
+    "element_id": "TechnicalComponentsPackage-SaturnV-payloadToLunarTransferOrbit",
+    "declared_name": "payloadToLunarTransferOrbit",
+    "name": "payloadToLunarTransferOrbit",
+    "qualified_name": "TechnicalComponentsPackage::SaturnV::payloadToLunarTransferOrbit",
+    "type": "SysMLAttributeUsage",
+    "description": "Value: 43500 [kg]"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-SaturnV-stage1",
+    "title": "stage1",
+    "element_id": "TechnicalComponentsPackage-SaturnV-stage1",
+    "declared_name": "stage1",
+    "name": "stage1",
+    "qualified_name": "TechnicalComponentsPackage::SaturnV::stage1",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "S_IC"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-SaturnV-stage2",
+    "title": "stage2",
+    "element_id": "TechnicalComponentsPackage-SaturnV-stage2",
+    "declared_name": "stage2",
+    "name": "stage2",
+    "qualified_name": "TechnicalComponentsPackage::SaturnV::stage2",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "S_II"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-SaturnV-stage3",
+    "title": "stage3",
+    "element_id": "TechnicalComponentsPackage-SaturnV-stage3",
+    "declared_name": "stage3",
+    "name": "stage3",
+    "qualified_name": "TechnicalComponentsPackage::SaturnV::stage3",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "S_IVB"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-SaturnV-instrumentUnit",
+    "title": "instrumentUnit",
+    "element_id": "TechnicalComponentsPackage-SaturnV-instrumentUnit",
+    "declared_name": "instrumentUnit",
+    "name": "instrumentUnit",
+    "qualified_name": "TechnicalComponentsPackage::SaturnV::instrumentUnit",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "SaturnVInstrumentUnit"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-F-1",
+    "title": "F-1",
+    "element_id": "TechnicalComponentsPackage-F-1",
+    "declared_name": "F-1",
+    "name": "F-1",
+    "qualified_name": "TechnicalComponentsPackage::'F-1'",
+    "type": "SysMLPartDefinition",
+    "owned_attribute": [
+      "TechnicalComponentsPackage-F-1-thrustSeaLevel"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-F-1-thrustSeaLevel",
+    "title": "thrustSeaLevel",
+    "element_id": "TechnicalComponentsPackage-F-1-thrustSeaLevel",
+    "declared_name": "thrustSeaLevel",
+    "name": "thrustSeaLevel",
+    "qualified_name": "TechnicalComponentsPackage::'F-1'::thrustSeaLevel",
+    "type": "SysMLAttributeUsage",
+    "description": "Value: 6770 ['kN']"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-J-2",
+    "title": "J-2",
+    "element_id": "TechnicalComponentsPackage-J-2",
+    "declared_name": "J-2",
+    "name": "J-2",
+    "qualified_name": "TechnicalComponentsPackage::'J-2'",
+    "type": "SysMLPartDefinition"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-IVB",
+    "title": "S-IVB",
+    "element_id": "TechnicalComponentsPackage-S-IVB",
+    "declared_name": "S-IVB",
+    "name": "S-IVB",
+    "qualified_name": "TechnicalComponentsPackage::'S-IVB'",
+    "type": "SysMLPartDefinition",
+    "owned_part": [
+      "TechnicalComponentsPackage-S-IVB-engine"
+    ],
+    "owned_port": [
+      "TechnicalComponentsPackage-S-IVB-lowerStagePort",
+      "TechnicalComponentsPackage-S-IVB-controlPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-IVB-lowerStagePort",
+    "title": "lowerStagePort",
+    "element_id": "TechnicalComponentsPackage-S-IVB-lowerStagePort",
+    "declared_name": "lowerStagePort",
+    "name": "lowerStagePort",
+    "qualified_name": "TechnicalComponentsPackage::'S-IVB'::lowerStagePort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "StagingPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-IVB-controlPort",
+    "title": "controlPort",
+    "element_id": "TechnicalComponentsPackage-S-IVB-controlPort",
+    "declared_name": "controlPort",
+    "name": "controlPort",
+    "qualified_name": "TechnicalComponentsPackage::'S-IVB'::controlPort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "ControlPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-IVB-engine",
+    "title": "engine",
+    "element_id": "TechnicalComponentsPackage-S-IVB-engine",
+    "declared_name": "engine",
+    "name": "engine",
+    "qualified_name": "TechnicalComponentsPackage::'S-IVB'::engine",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "J_2"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-II",
+    "title": "S-II",
+    "element_id": "TechnicalComponentsPackage-S-II",
+    "declared_name": "S-II",
+    "name": "S-II",
+    "qualified_name": "TechnicalComponentsPackage::'S-II'",
+    "type": "SysMLPartDefinition",
+    "owned_part": [
+      "TechnicalComponentsPackage-S-II-engine1",
+      "TechnicalComponentsPackage-S-II-engine2",
+      "TechnicalComponentsPackage-S-II-engine3",
+      "TechnicalComponentsPackage-S-II-engine4",
+      "TechnicalComponentsPackage-S-II-engine5"
+    ],
+    "owned_port": [
+      "TechnicalComponentsPackage-S-II-lowerStagePort",
+      "TechnicalComponentsPackage-S-II-upperStagePort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-II-lowerStagePort",
+    "title": "lowerStagePort",
+    "element_id": "TechnicalComponentsPackage-S-II-lowerStagePort",
+    "declared_name": "lowerStagePort",
+    "name": "lowerStagePort",
+    "qualified_name": "TechnicalComponentsPackage::'S-II'::lowerStagePort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "StagingPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-II-upperStagePort",
+    "title": "upperStagePort",
+    "element_id": "TechnicalComponentsPackage-S-II-upperStagePort",
+    "declared_name": "upperStagePort",
+    "name": "upperStagePort",
+    "qualified_name": "TechnicalComponentsPackage::'S-II'::upperStagePort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "StagingPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-II-engine1",
+    "title": "engine1",
+    "element_id": "TechnicalComponentsPackage-S-II-engine1",
+    "declared_name": "engine1",
+    "name": "engine1",
+    "qualified_name": "TechnicalComponentsPackage::'S-II'::engine1",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "J_2"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-II-engine2",
+    "title": "engine2",
+    "element_id": "TechnicalComponentsPackage-S-II-engine2",
+    "declared_name": "engine2",
+    "name": "engine2",
+    "qualified_name": "TechnicalComponentsPackage::'S-II'::engine2",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "J_2"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-II-engine3",
+    "title": "engine3",
+    "element_id": "TechnicalComponentsPackage-S-II-engine3",
+    "declared_name": "engine3",
+    "name": "engine3",
+    "qualified_name": "TechnicalComponentsPackage::'S-II'::engine3",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "J_2"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-II-engine4",
+    "title": "engine4",
+    "element_id": "TechnicalComponentsPackage-S-II-engine4",
+    "declared_name": "engine4",
+    "name": "engine4",
+    "qualified_name": "TechnicalComponentsPackage::'S-II'::engine4",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "J_2"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-II-engine5",
+    "title": "engine5",
+    "element_id": "TechnicalComponentsPackage-S-II-engine5",
+    "declared_name": "engine5",
+    "name": "engine5",
+    "qualified_name": "TechnicalComponentsPackage::'S-II'::engine5",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "J_2"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-IC",
+    "title": "S-IC",
+    "element_id": "TechnicalComponentsPackage-S-IC",
+    "declared_name": "S-IC",
+    "name": "S-IC",
+    "qualified_name": "TechnicalComponentsPackage::'S-IC'",
+    "type": "SysMLPartDefinition",
+    "owned_part": [
+      "TechnicalComponentsPackage-S-IC-engine1",
+      "TechnicalComponentsPackage-S-IC-engine2",
+      "TechnicalComponentsPackage-S-IC-engine3",
+      "TechnicalComponentsPackage-S-IC-engine4",
+      "TechnicalComponentsPackage-S-IC-engine5"
+    ],
+    "owned_port": [
+      "TechnicalComponentsPackage-S-IC-upperStagePort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-IC-upperStagePort",
+    "title": "upperStagePort",
+    "element_id": "TechnicalComponentsPackage-S-IC-upperStagePort",
+    "declared_name": "upperStagePort",
+    "name": "upperStagePort",
+    "qualified_name": "TechnicalComponentsPackage::'S-IC'::upperStagePort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "StagingPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-IC-engine1",
+    "title": "engine1",
+    "element_id": "TechnicalComponentsPackage-S-IC-engine1",
+    "declared_name": "engine1",
+    "name": "engine1",
+    "qualified_name": "TechnicalComponentsPackage::'S-IC'::engine1",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "F_1"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-IC-engine2",
+    "title": "engine2",
+    "element_id": "TechnicalComponentsPackage-S-IC-engine2",
+    "declared_name": "engine2",
+    "name": "engine2",
+    "qualified_name": "TechnicalComponentsPackage::'S-IC'::engine2",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "F_1"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-IC-engine3",
+    "title": "engine3",
+    "element_id": "TechnicalComponentsPackage-S-IC-engine3",
+    "declared_name": "engine3",
+    "name": "engine3",
+    "qualified_name": "TechnicalComponentsPackage::'S-IC'::engine3",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "F_1"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-IC-engine4",
+    "title": "engine4",
+    "element_id": "TechnicalComponentsPackage-S-IC-engine4",
+    "declared_name": "engine4",
+    "name": "engine4",
+    "qualified_name": "TechnicalComponentsPackage::'S-IC'::engine4",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "F_1"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-S-IC-engine5",
+    "title": "engine5",
+    "element_id": "TechnicalComponentsPackage-S-IC-engine5",
+    "declared_name": "engine5",
+    "name": "engine5",
+    "qualified_name": "TechnicalComponentsPackage::'S-IC'::engine5",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "F_1"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ExtravehicularMobilityUnit",
+    "title": "ExtravehicularMobilityUnit",
+    "element_id": "TechnicalComponentsPackage-ExtravehicularMobilityUnit",
+    "declared_name": "ExtravehicularMobilityUnit",
+    "name": "ExtravehicularMobilityUnit",
+    "qualified_name": "TechnicalComponentsPackage::ExtravehicularMobilityUnit",
+    "type": "SysMLPartDefinition",
+    "owned_part": [
+      "TechnicalComponentsPackage-ExtravehicularMobilityUnit-psa",
+      "TechnicalComponentsPackage-ExtravehicularMobilityUnit-plss"
+    ],
+    "owned_attribute": [
+      "TechnicalComponentsPackage-ExtravehicularMobilityUnit-massOnEarth",
+      "TechnicalComponentsPackage-ExtravehicularMobilityUnit-nominalOperatingPressure",
+      "TechnicalComponentsPackage-ExtravehicularMobilityUnit-lifeSupportDuration"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ExtravehicularMobilityUnit-massOnEarth",
+    "title": "massOnEarth",
+    "element_id": "TechnicalComponentsPackage-ExtravehicularMobilityUnit-massOnEarth",
+    "declared_name": "massOnEarth",
+    "name": "massOnEarth",
+    "qualified_name": "TechnicalComponentsPackage::ExtravehicularMobilityUnit::massOnEarth",
+    "type": "SysMLAttributeUsage",
+    "description": "Value: 83 [kg]"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ExtravehicularMobilityUnit-nominalOperatingPressure",
+    "title": "nominalOperatingPressure",
+    "element_id": "TechnicalComponentsPackage-ExtravehicularMobilityUnit-nominalOperatingPressure",
+    "declared_name": "nominalOperatingPressure",
+    "name": "nominalOperatingPressure",
+    "qualified_name": "TechnicalComponentsPackage::ExtravehicularMobilityUnit::nominalOperatingPressure",
+    "type": "SysMLAttributeUsage",
+    "description": "Value: 25.5 ['kPa']"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ExtravehicularMobilityUnit-lifeSupportDuration",
+    "title": "lifeSupportDuration",
+    "element_id": "TechnicalComponentsPackage-ExtravehicularMobilityUnit-lifeSupportDuration",
+    "declared_name": "lifeSupportDuration",
+    "name": "lifeSupportDuration",
+    "qualified_name": "TechnicalComponentsPackage::ExtravehicularMobilityUnit::lifeSupportDuration",
+    "type": "SysMLAttributeUsage",
+    "description": "Value: 7 ['h']"
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ExtravehicularMobilityUnit-psa",
+    "title": "psa",
+    "element_id": "TechnicalComponentsPackage-ExtravehicularMobilityUnit-psa",
+    "declared_name": "psa",
+    "name": "psa",
+    "qualified_name": "TechnicalComponentsPackage::ExtravehicularMobilityUnit::psa",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "PressureSuiteAssembly"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-ExtravehicularMobilityUnit-plss",
+    "title": "plss",
+    "element_id": "TechnicalComponentsPackage-ExtravehicularMobilityUnit-plss",
+    "declared_name": "plss",
+    "name": "plss",
+    "qualified_name": "TechnicalComponentsPackage::ExtravehicularMobilityUnit::plss",
+    "type": "SysMLPartUsage",
+    "definition": [
+      "PortableLifeSupportSystem"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-PressureSuiteAssembly",
+    "title": "PressureSuiteAssembly",
+    "element_id": "TechnicalComponentsPackage-PressureSuiteAssembly",
+    "declared_name": "PressureSuiteAssembly",
+    "name": "PressureSuiteAssembly",
+    "qualified_name": "TechnicalComponentsPackage::PressureSuiteAssembly",
+    "type": "SysMLPartDefinition",
+    "owned_port": [
+      "TechnicalComponentsPackage-PressureSuiteAssembly-umbilicalPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-PressureSuiteAssembly-umbilicalPort",
+    "title": "umbilicalPort",
+    "element_id": "TechnicalComponentsPackage-PressureSuiteAssembly-umbilicalPort",
+    "declared_name": "umbilicalPort",
+    "name": "umbilicalPort",
+    "qualified_name": "TechnicalComponentsPackage::PressureSuiteAssembly::umbilicalPort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "EVAUmbilicalPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-PortableLifeSupportSystem",
+    "title": "PortableLifeSupportSystem",
+    "element_id": "TechnicalComponentsPackage-PortableLifeSupportSystem",
+    "declared_name": "PortableLifeSupportSystem",
+    "name": "PortableLifeSupportSystem",
+    "qualified_name": "TechnicalComponentsPackage::PortableLifeSupportSystem",
+    "type": "SysMLPartDefinition",
+    "owned_port": [
+      "TechnicalComponentsPackage-PortableLifeSupportSystem-umbilicalPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalComponentsPackage-PortableLifeSupportSystem-umbilicalPort",
+    "title": "umbilicalPort",
+    "element_id": "TechnicalComponentsPackage-PortableLifeSupportSystem-umbilicalPort",
+    "declared_name": "umbilicalPort",
+    "name": "umbilicalPort",
+    "qualified_name": "TechnicalComponentsPackage::PortableLifeSupportSystem::umbilicalPort",
+    "type": "SysMLPortUsage",
+    "definition": [
+      "EVAUmbilicalPort"
+    ]
+  },
+  {
+    "identifier": "TechnicalPortsPackage",
+    "title": "TechnicalPortsPackage",
+    "element_id": "TechnicalPortsPackage",
+    "declared_name": "TechnicalPortsPackage",
+    "name": "TechnicalPortsPackage",
+    "qualified_name": "TechnicalPortsPackage",
+    "description": "Represents the transfer of physical forces (compression, tension, torsion).",
+    "type": "SysMLPackage",
+    "owned_member": [
+      "TechnicalPortsPackage-StructuralLoad",
+      "TechnicalPortsPackage-CommandSignal",
+      "TechnicalPortsPackage-TelemetryData",
+      "TechnicalPortsPackage-ElectricalPower",
+      "TechnicalPortsPackage-LifeSupportFlows",
+      "TechnicalPortsPackage-PayloadInterfacePort",
+      "TechnicalPortsPackage-StagingPort",
+      "TechnicalPortsPackage-ControlPort",
+      "TechnicalPortsPackage-UmbilicalPort",
+      "TechnicalPortsPackage-DockingPort",
+      "TechnicalPortsPackage-LMStagingPort",
+      "TechnicalPortsPackage-EVAUmbilicalPort",
+      "TechnicalPortsPackage-LaunchEscapeSystemPort",
+      "TechnicalPortsPackage-StagingInterface",
+      "TechnicalPortsPackage-GuidanceInterface",
+      "TechnicalPortsPackage-CSMInterface",
+      "TechnicalPortsPackage-DockingInterface",
+      "TechnicalPortsPackage-LMStagingInterface",
+      "TechnicalPortsPackage-EVAInterface",
+      "TechnicalPortsPackage-LVPayloadInterface",
+      "TechnicalPortsPackage-LESInterface"
+    ]
+  },
+  {
+    "identifier": "TechnicalPortsPackage-StructuralLoad",
+    "title": "StructuralLoad",
+    "element_id": "TechnicalPortsPackage-StructuralLoad",
+    "declared_name": "StructuralLoad",
+    "name": "StructuralLoad",
+    "qualified_name": "TechnicalPortsPackage::StructuralLoad",
+    "description": "Represents the transfer of physical forces (compression, tension, torsion).",
+    "type": "SysMLItemDefinition"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-CommandSignal",
+    "title": "CommandSignal",
+    "element_id": "TechnicalPortsPackage-CommandSignal",
+    "declared_name": "CommandSignal",
+    "name": "CommandSignal",
+    "qualified_name": "TechnicalPortsPackage::CommandSignal",
+    "description": "Represents a discrete command or electrical signal.",
+    "type": "SysMLItemDefinition"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-TelemetryData",
+    "title": "TelemetryData",
+    "element_id": "TechnicalPortsPackage-TelemetryData",
+    "declared_name": "TelemetryData",
+    "name": "TelemetryData",
+    "qualified_name": "TechnicalPortsPackage::TelemetryData",
+    "description": "Represents a flow of vehicle health and status data.",
+    "type": "SysMLItemDefinition"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-ElectricalPower",
+    "title": "ElectricalPower",
+    "element_id": "TechnicalPortsPackage-ElectricalPower",
+    "declared_name": "ElectricalPower",
+    "name": "ElectricalPower",
+    "qualified_name": "TechnicalPortsPackage::ElectricalPower",
+    "description": "Represents a flow of electrical energy.",
+    "type": "SysMLItemDefinition"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-LifeSupportFlows",
+    "title": "LifeSupportFlows",
+    "element_id": "TechnicalPortsPackage-LifeSupportFlows",
+    "declared_name": "LifeSupportFlows",
+    "name": "LifeSupportFlows",
+    "qualified_name": "TechnicalPortsPackage::LifeSupportFlows",
+    "description": "Represents a flow of oxygen, water, and thermal control fluids.",
+    "type": "SysMLItemDefinition"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-PayloadInterfacePort",
+    "title": "PayloadInterfacePort",
+    "element_id": "TechnicalPortsPackage-PayloadInterfacePort",
+    "declared_name": "PayloadInterfacePort",
+    "name": "PayloadInterfacePort",
+    "qualified_name": "TechnicalPortsPackage::PayloadInterfacePort",
+    "type": "SysMLPortUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-PayloadInterfacePort-loads",
+    "title": "loads",
+    "element_id": "TechnicalPortsPackage-PayloadInterfacePort-loads",
+    "declared_name": "loads",
+    "name": "loads",
+    "qualified_name": "TechnicalPortsPackage::PayloadInterfacePort::loads",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-PayloadInterfacePort-commands",
+    "title": "commands",
+    "element_id": "TechnicalPortsPackage-PayloadInterfacePort-commands",
+    "declared_name": "commands",
+    "name": "commands",
+    "qualified_name": "TechnicalPortsPackage::PayloadInterfacePort::commands",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-PayloadInterfacePort-telemetry",
+    "title": "telemetry",
+    "element_id": "TechnicalPortsPackage-PayloadInterfacePort-telemetry",
+    "declared_name": "telemetry",
+    "name": "telemetry",
+    "qualified_name": "TechnicalPortsPackage::PayloadInterfacePort::telemetry",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-PayloadInterfacePort-power",
+    "title": "power",
+    "element_id": "TechnicalPortsPackage-PayloadInterfacePort-power",
+    "declared_name": "power",
+    "name": "power",
+    "qualified_name": "TechnicalPortsPackage::PayloadInterfacePort::power",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-StagingPort",
+    "title": "StagingPort",
+    "element_id": "TechnicalPortsPackage-StagingPort",
+    "declared_name": "StagingPort",
+    "name": "StagingPort",
+    "qualified_name": "TechnicalPortsPackage::StagingPort",
+    "type": "SysMLPortUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-StagingPort-loads",
+    "title": "loads",
+    "element_id": "TechnicalPortsPackage-StagingPort-loads",
+    "declared_name": "loads",
+    "name": "loads",
+    "qualified_name": "TechnicalPortsPackage::StagingPort::loads",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-StagingPort-commands",
+    "title": "commands",
+    "element_id": "TechnicalPortsPackage-StagingPort-commands",
+    "declared_name": "commands",
+    "name": "commands",
+    "qualified_name": "TechnicalPortsPackage::StagingPort::commands",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-ControlPort",
+    "title": "ControlPort",
+    "element_id": "TechnicalPortsPackage-ControlPort",
+    "declared_name": "ControlPort",
+    "name": "ControlPort",
+    "qualified_name": "TechnicalPortsPackage::ControlPort",
+    "type": "SysMLPortUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-ControlPort-guidanceCmds",
+    "title": "guidanceCmds",
+    "element_id": "TechnicalPortsPackage-ControlPort-guidanceCmds",
+    "declared_name": "guidanceCmds",
+    "name": "guidanceCmds",
+    "qualified_name": "TechnicalPortsPackage::ControlPort::guidanceCmds",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-ControlPort-thrustCmds",
+    "title": "thrustCmds",
+    "element_id": "TechnicalPortsPackage-ControlPort-thrustCmds",
+    "declared_name": "thrustCmds",
+    "name": "thrustCmds",
+    "qualified_name": "TechnicalPortsPackage::ControlPort::thrustCmds",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-ControlPort-telemetry",
+    "title": "telemetry",
+    "element_id": "TechnicalPortsPackage-ControlPort-telemetry",
+    "declared_name": "telemetry",
+    "name": "telemetry",
+    "qualified_name": "TechnicalPortsPackage::ControlPort::telemetry",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-ControlPort-power",
+    "title": "power",
+    "element_id": "TechnicalPortsPackage-ControlPort-power",
+    "declared_name": "power",
+    "name": "power",
+    "qualified_name": "TechnicalPortsPackage::ControlPort::power",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-UmbilicalPort",
+    "title": "UmbilicalPort",
+    "element_id": "TechnicalPortsPackage-UmbilicalPort",
+    "declared_name": "UmbilicalPort",
+    "name": "UmbilicalPort",
+    "qualified_name": "TechnicalPortsPackage::UmbilicalPort",
+    "type": "SysMLPortUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-UmbilicalPort-power",
+    "title": "power",
+    "element_id": "TechnicalPortsPackage-UmbilicalPort-power",
+    "declared_name": "power",
+    "name": "power",
+    "qualified_name": "TechnicalPortsPackage::UmbilicalPort::power",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-UmbilicalPort-lifeSupport",
+    "title": "lifeSupport",
+    "element_id": "TechnicalPortsPackage-UmbilicalPort-lifeSupport",
+    "declared_name": "lifeSupport",
+    "name": "lifeSupport",
+    "qualified_name": "TechnicalPortsPackage::UmbilicalPort::lifeSupport",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-UmbilicalPort-dataAndControl",
+    "title": "dataAndControl",
+    "element_id": "TechnicalPortsPackage-UmbilicalPort-dataAndControl",
+    "declared_name": "dataAndControl",
+    "name": "dataAndControl",
+    "qualified_name": "TechnicalPortsPackage::UmbilicalPort::dataAndControl",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-DockingPort",
+    "title": "DockingPort",
+    "element_id": "TechnicalPortsPackage-DockingPort",
+    "declared_name": "DockingPort",
+    "name": "DockingPort",
+    "qualified_name": "TechnicalPortsPackage::DockingPort",
+    "type": "SysMLPortUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-DockingPort-loads",
+    "title": "loads",
+    "element_id": "TechnicalPortsPackage-DockingPort-loads",
+    "declared_name": "loads",
+    "name": "loads",
+    "qualified_name": "TechnicalPortsPackage::DockingPort::loads",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-DockingPort-power",
+    "title": "power",
+    "element_id": "TechnicalPortsPackage-DockingPort-power",
+    "declared_name": "power",
+    "name": "power",
+    "qualified_name": "TechnicalPortsPackage::DockingPort::power",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-DockingPort-data",
+    "title": "data",
+    "element_id": "TechnicalPortsPackage-DockingPort-data",
+    "declared_name": "data",
+    "name": "data",
+    "qualified_name": "TechnicalPortsPackage::DockingPort::data",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-LMStagingPort",
+    "title": "LMStagingPort",
+    "element_id": "TechnicalPortsPackage-LMStagingPort",
+    "declared_name": "LMStagingPort",
+    "name": "LMStagingPort",
+    "qualified_name": "TechnicalPortsPackage::LMStagingPort",
+    "type": "SysMLPortUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-LMStagingPort-loads",
+    "title": "loads",
+    "element_id": "TechnicalPortsPackage-LMStagingPort-loads",
+    "declared_name": "loads",
+    "name": "loads",
+    "qualified_name": "TechnicalPortsPackage::LMStagingPort::loads",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-LMStagingPort-commands",
+    "title": "commands",
+    "element_id": "TechnicalPortsPackage-LMStagingPort-commands",
+    "declared_name": "commands",
+    "name": "commands",
+    "qualified_name": "TechnicalPortsPackage::LMStagingPort::commands",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-LMStagingPort-powerAndData",
+    "title": "powerAndData",
+    "element_id": "TechnicalPortsPackage-LMStagingPort-powerAndData",
+    "declared_name": "powerAndData",
+    "name": "powerAndData",
+    "qualified_name": "TechnicalPortsPackage::LMStagingPort::powerAndData",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-EVAUmbilicalPort",
+    "title": "EVAUmbilicalPort",
+    "element_id": "TechnicalPortsPackage-EVAUmbilicalPort",
+    "declared_name": "EVAUmbilicalPort",
+    "name": "EVAUmbilicalPort",
+    "qualified_name": "TechnicalPortsPackage::EVAUmbilicalPort",
+    "type": "SysMLPortUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-EVAUmbilicalPort-lifeSupport",
+    "title": "lifeSupport",
+    "element_id": "TechnicalPortsPackage-EVAUmbilicalPort-lifeSupport",
+    "declared_name": "lifeSupport",
+    "name": "lifeSupport",
+    "qualified_name": "TechnicalPortsPackage::EVAUmbilicalPort::lifeSupport",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-EVAUmbilicalPort-power",
+    "title": "power",
+    "element_id": "TechnicalPortsPackage-EVAUmbilicalPort-power",
+    "declared_name": "power",
+    "name": "power",
+    "qualified_name": "TechnicalPortsPackage::EVAUmbilicalPort::power",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-EVAUmbilicalPort-commsAndData",
+    "title": "commsAndData",
+    "element_id": "TechnicalPortsPackage-EVAUmbilicalPort-commsAndData",
+    "declared_name": "commsAndData",
+    "name": "commsAndData",
+    "qualified_name": "TechnicalPortsPackage::EVAUmbilicalPort::commsAndData",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-LaunchEscapeSystemPort",
+    "title": "LaunchEscapeSystemPort",
+    "element_id": "TechnicalPortsPackage-LaunchEscapeSystemPort",
+    "declared_name": "LaunchEscapeSystemPort",
+    "name": "LaunchEscapeSystemPort",
+    "qualified_name": "TechnicalPortsPackage::LaunchEscapeSystemPort",
+    "type": "SysMLPortUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-LaunchEscapeSystemPort-loads",
+    "title": "loads",
+    "element_id": "TechnicalPortsPackage-LaunchEscapeSystemPort-loads",
+    "declared_name": "loads",
+    "name": "loads",
+    "qualified_name": "TechnicalPortsPackage::LaunchEscapeSystemPort::loads",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-LaunchEscapeSystemPort-abortSignal",
+    "title": "abortSignal",
+    "element_id": "TechnicalPortsPackage-LaunchEscapeSystemPort-abortSignal",
+    "declared_name": "abortSignal",
+    "name": "abortSignal",
+    "qualified_name": "TechnicalPortsPackage::LaunchEscapeSystemPort::abortSignal",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-LaunchEscapeSystemPort-jettisonSignal",
+    "title": "jettisonSignal",
+    "element_id": "TechnicalPortsPackage-LaunchEscapeSystemPort-jettisonSignal",
+    "declared_name": "jettisonSignal",
+    "name": "jettisonSignal",
+    "qualified_name": "TechnicalPortsPackage::LaunchEscapeSystemPort::jettisonSignal",
+    "type": "SysMLItemUsage"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-StagingInterface",
+    "title": "StagingInterface",
+    "element_id": "TechnicalPortsPackage-StagingInterface",
+    "declared_name": "StagingInterface",
+    "name": "StagingInterface",
+    "qualified_name": "TechnicalPortsPackage::StagingInterface",
+    "type": "SysMLInterfaceDefinition"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-GuidanceInterface",
+    "title": "GuidanceInterface",
+    "element_id": "TechnicalPortsPackage-GuidanceInterface",
+    "declared_name": "GuidanceInterface",
+    "name": "GuidanceInterface",
+    "qualified_name": "TechnicalPortsPackage::GuidanceInterface",
+    "type": "SysMLInterfaceDefinition"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-CSMInterface",
+    "title": "CSMInterface",
+    "element_id": "TechnicalPortsPackage-CSMInterface",
+    "declared_name": "CSMInterface",
+    "name": "CSMInterface",
+    "qualified_name": "TechnicalPortsPackage::CSMInterface",
+    "type": "SysMLInterfaceDefinition"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-DockingInterface",
+    "title": "DockingInterface",
+    "element_id": "TechnicalPortsPackage-DockingInterface",
+    "declared_name": "DockingInterface",
+    "name": "DockingInterface",
+    "qualified_name": "TechnicalPortsPackage::DockingInterface",
+    "type": "SysMLInterfaceDefinition"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-LMStagingInterface",
+    "title": "LMStagingInterface",
+    "element_id": "TechnicalPortsPackage-LMStagingInterface",
+    "declared_name": "LMStagingInterface",
+    "name": "LMStagingInterface",
+    "qualified_name": "TechnicalPortsPackage::LMStagingInterface",
+    "type": "SysMLInterfaceDefinition"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-EVAInterface",
+    "title": "EVAInterface",
+    "element_id": "TechnicalPortsPackage-EVAInterface",
+    "declared_name": "EVAInterface",
+    "name": "EVAInterface",
+    "qualified_name": "TechnicalPortsPackage::EVAInterface",
+    "type": "SysMLInterfaceDefinition"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-LVPayloadInterface",
+    "title": "LVPayloadInterface",
+    "element_id": "TechnicalPortsPackage-LVPayloadInterface",
+    "declared_name": "LVPayloadInterface",
+    "name": "LVPayloadInterface",
+    "qualified_name": "TechnicalPortsPackage::LVPayloadInterface",
+    "type": "SysMLInterfaceDefinition"
+  },
+  {
+    "identifier": "TechnicalPortsPackage-LESInterface",
+    "title": "LESInterface",
+    "element_id": "TechnicalPortsPackage-LESInterface",
+    "declared_name": "LESInterface",
+    "name": "LESInterface",
+    "qualified_name": "TechnicalPortsPackage::LESInterface",
+    "type": "SysMLInterfaceDefinition"
+  }
+]

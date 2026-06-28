@@ -54,8 +54,10 @@ def get_sysml_element(base_url, element_id):
     return element
 
 
-def get_sysml_element_list(base_url, select, where):
+def get_sysml_element_list(base_url, select, where, resource_class=None):
     repo = _repo()
+    if resource_class is not None:
+        return repo.list_by_type(resource_class)
     return repo.list()
 
 

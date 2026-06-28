@@ -73,19 +73,24 @@ class ServiceProviderFactory(object):
         resource_type = attributes.get('resource_type', list())
         usages = attributes.get('usages', list())
 
-        base_path = base_uri + '/'
-        class_path = 'provider/{id}/resources'
-        method_path = 'requirement'
-
-        base_path = base_path.replace('/catalog', '')
-
-        query = cls.resolve_path_parameter(base_path, class_path, method_path, parameters)
+        query_base_override = attributes.get('query_base')
+        if query_base_override:
+            base = base_uri.split('/services/')[0]
+            query = base + '/' + query_base_override
+        else:
+            base_path = base_uri + '/'
+            class_path = 'provider/{id}/resources'
+            method_path = 'requirement'
+            base_path = base_path.replace('/catalog', '')
+            query = cls.resolve_path_parameter(base_path, class_path, method_path, parameters)
 
         query_capability = QueryCapability(about=query, title=title, query_base=query)
         if label:
             query_capability.label = label
 
         if resource_shape:
+            base_path = base_uri + '/'
+            base_path = base_path.replace('/catalog', '')
             resource_shape_url = urlparse(base_path + resource_shape)
             query_capability.resource_shape = resource_shape_url.geturl()
 
@@ -113,16 +118,21 @@ class ServiceProviderFactory(object):
         resource_type = attributes.get('resource_type', list())
         usages = attributes.get('usages', list())
 
-        base_path = base_uri + '/'
-
-        creation = cls.resolve_path_parameter(base_path, class_path, method_path, parameters)
-        creation = creation.replace('/catalog', '')
+        creation_override = attributes.get('creation')
+        if creation_override:
+            base = base_uri.split('/services/')[0]
+            creation = base + '/' + creation_override
+        else:
+            base_path = base_uri + '/'
+            creation = cls.resolve_path_parameter(base_path, class_path, method_path, parameters)
+            creation = creation.replace('/catalog', '')
 
         creation_factory = CreationFactory(about=creation, title=title, creation=creation)
 
         if label:
             creation_factory.label = label
 
+        base_path = base_uri + '/'
         for rs in resource_shape:
             resource_shape_url = urlparse(base_path + rs)
             creation_factory.add_resource_shape(resource_shape_url.geturl())

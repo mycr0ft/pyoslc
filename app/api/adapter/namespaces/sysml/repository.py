@@ -70,6 +70,11 @@ class InMemorySysMLRepository(SysMLElementRepository, SysMLRelationshipRepositor
     def list(self):
         return list(self._elements.values()) + list(self._relationships.values())
 
+    def list_by_type(self, resource_class):
+        return [
+            e for e in self.list() if isinstance(e, resource_class)
+        ]
+
     def list_elements(self):
         return list(self._elements.values())
 

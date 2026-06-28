@@ -185,8 +185,118 @@ from app.api.adapter.namespaces.sysml.parsers import (
 from pyoslc.vocabularies.am import OSLC_AM
 from pyoslc.vocabularies.core import OSLC
 from pyoslc.vocabularies.sysml import OSLC_SYSML
+from pyoslc.resources.domains.sysml import (
+    SysMLElement, SysMLRelationship,
+    SysMLPackage,
+    SysMLDefinition, SysMLUsage,
+    SysMLItemDefinition, SysMLItemUsage,
+    SysMLPartDefinition, SysMLPartUsage,
+    SysMLPortDefinition, SysMLPortUsage,
+    SysMLRequirementDefinition, SysMLRequirementUsage,
+    SysMLConcernDefinition, SysMLConcernUsage,
+    SysMLActionDefinition, SysMLActionUsage,
+    SysMLStateDefinition, SysMLStateUsage,
+    SysMLConstraintDefinition, SysMLConstraintUsage,
+    SysMLViewDefinition, SysMLViewUsage,
+    SysMLViewpointDefinition, SysMLViewpointUsage,
+    SysMLFeature, SysMLClassifier,
+    SysMLOccurrenceDefinition, SysMLOccurrenceUsage,
+    SysMLClass, SysMLStructure, SysMLDataType,
+    SysMLBehavior, SysMLFunction, SysMLPredicate,
+    SysMLLibraryPackage,
+    SysMLAttributeDefinition, SysMLAttributeUsage,
+    SysMLEnumerationDefinition, SysMLEnumerationUsage,
+    SysMLCalculationDefinition, SysMLCalculationUsage,
+    SysMLCaseDefinition, SysMLCaseUsage,
+    SysMLUseCaseDefinition, SysMLUseCaseUsage,
+    SysMLAnalysisCaseDefinition, SysMLAnalysisCaseUsage,
+    SysMLVerificationCaseDefinition, SysMLVerificationCaseUsage,
+    SysMLConnectionDefinition, SysMLConnectionUsage,
+    SysMLFlowDefinition, SysMLFlowUsage,
+    SysMLInterfaceDefinition, SysMLInterfaceUsage,
+    SysMLAllocationDefinition, SysMLAllocationUsage,
+    SysMLRenderingDefinition, SysMLRenderingUsage,
+    SysMLReferenceUsage,
+    SysMLConjugatedPortDefinition,
+    SysMLConnectorAsUsage,
+    SysMLSuccessionAsUsage,
+    SysMLBindingConnectorAsUsage,
+)
 
 logger = logging.getLogger(__name__)
+
+_PATH_TYPE_MAP = {
+    'element': SysMLElement,
+    'relationship': SysMLRelationship,
+    'package': SysMLPackage,
+    'definition': SysMLDefinition,
+    'usage': SysMLUsage,
+    'itemDefinition': SysMLItemDefinition,
+    'itemUsage': SysMLItemUsage,
+    'partDefinition': SysMLPartDefinition,
+    'partUsage': SysMLPartUsage,
+    'portDefinition': SysMLPortDefinition,
+    'portUsage': SysMLPortUsage,
+    'requirementDefinition': SysMLRequirementDefinition,
+    'requirementUsage': SysMLRequirementUsage,
+    'concernDefinition': SysMLConcernDefinition,
+    'concernUsage': SysMLConcernUsage,
+    'actionDefinition': SysMLActionDefinition,
+    'actionUsage': SysMLActionUsage,
+    'stateDefinition': SysMLStateDefinition,
+    'stateUsage': SysMLStateUsage,
+    'constraintDefinition': SysMLConstraintDefinition,
+    'constraintUsage': SysMLConstraintUsage,
+    'viewDefinition': SysMLViewDefinition,
+    'viewUsage': SysMLViewUsage,
+    'viewpointDefinition': SysMLViewpointDefinition,
+    'viewpointUsage': SysMLViewpointUsage,
+    'feature': SysMLFeature,
+    'classifier': SysMLClassifier,
+    'occurrenceDefinition': SysMLOccurrenceDefinition,
+    'occurrenceUsage': SysMLOccurrenceUsage,
+    'class': SysMLClass,
+    'structure': SysMLStructure,
+    'dataType': SysMLDataType,
+    'behavior': SysMLBehavior,
+    'function': SysMLFunction,
+    'predicate': SysMLPredicate,
+    'libraryPackage': SysMLLibraryPackage,
+    'attributeDefinition': SysMLAttributeDefinition,
+    'attributeUsage': SysMLAttributeUsage,
+    'enumerationDefinition': SysMLEnumerationDefinition,
+    'enumerationUsage': SysMLEnumerationUsage,
+    'calculationDefinition': SysMLCalculationDefinition,
+    'calculationUsage': SysMLCalculationUsage,
+    'caseDefinition': SysMLCaseDefinition,
+    'caseUsage': SysMLCaseUsage,
+    'useCaseDefinition': SysMLUseCaseDefinition,
+    'useCaseUsage': SysMLUseCaseUsage,
+    'analysisCaseDefinition': SysMLAnalysisCaseDefinition,
+    'analysisCaseUsage': SysMLAnalysisCaseUsage,
+    'verificationCaseDefinition': SysMLVerificationCaseDefinition,
+    'verificationCaseUsage': SysMLVerificationCaseUsage,
+    'connectionDefinition': SysMLConnectionDefinition,
+    'connectionUsage': SysMLConnectionUsage,
+    'flowDefinition': SysMLFlowDefinition,
+    'flowUsage': SysMLFlowUsage,
+    'interfaceDefinition': SysMLInterfaceDefinition,
+    'interfaceUsage': SysMLInterfaceUsage,
+    'allocationDefinition': SysMLAllocationDefinition,
+    'allocationUsage': SysMLAllocationUsage,
+    'renderingDefinition': SysMLRenderingDefinition,
+    'renderingUsage': SysMLRenderingUsage,
+    'referenceUsage': SysMLReferenceUsage,
+    'conjugatedPortDefinition': SysMLConjugatedPortDefinition,
+    'connectorAsUsage': SysMLConnectorAsUsage,
+    'successionAsUsage': SysMLSuccessionAsUsage,
+    'bindingConnectorAsUsage': SysMLBindingConnectorAsUsage,
+}
+
+
+def _resource_class_from_path():
+    segment = request.path.rstrip('/').rsplit('/', 1)[-1]
+    return _PATH_TYPE_MAP.get(segment)
 
 
 class SysMLElementList(Resource):
@@ -194,11 +304,11 @@ class SysMLElementList(Resource):
     @api.response(200, 'The RDF formatted response of the SysML elements')
     def get(self):
         try:
-            content_type = request.headers['accept']
+            content_type = request.headers.get('accept', 'application/rdf+xml')
             if content_type in ('application/json-ld', 'application/json'):
                 content_type = 'json-ld'
 
-            elements = get_sysml_element_list(request.base_url, '', '')
+            elements = get_sysml_element_list(request.base_url, '', '', resource_class=SysMLElement)
 
             graph = Graph()
             graph.bind('oslc', OSLC, override=False)
@@ -250,7 +360,7 @@ class SysMLElementItem(Resource):
 
     def get(self, id):
         try:
-            content_type = request.headers['accept']
+            content_type = request.headers.get('accept', 'application/rdf+xml')
             if content_type in ('application/json-ld', 'application/json'):
                 content_type = 'json-ld'
 
@@ -294,7 +404,7 @@ class SysMLRelationshipList(Resource):
     @api.response(200, 'The RDF formatted response of the SysML relationships')
     def get(self):
         try:
-            content_type = request.headers['accept']
+            content_type = request.headers.get('accept', 'application/rdf+xml')
             if content_type in ('application/json-ld', 'application/json'):
                 content_type = 'json-ld'
 
@@ -349,7 +459,7 @@ class SysMLRelationshipItem(Resource):
 
     def get(self, id):
         try:
-            content_type = request.headers['accept']
+            content_type = request.headers.get('accept', 'application/rdf+xml')
             if content_type in ('application/json-ld', 'application/json'):
                 content_type = 'json-ld'
 
@@ -393,11 +503,11 @@ class SysMLPackageList(Resource):
     @api.response(200, 'The RDF formatted response of the SysML packages')
     def get(self):
         try:
-            content_type = request.headers['accept']
+            content_type = request.headers.get('accept', 'application/rdf+xml')
             if content_type in ('application/json-ld', 'application/json'):
                 content_type = 'json-ld'
 
-            elements = get_sysml_element_list(request.base_url, '', '')
+            elements = get_sysml_element_list(request.base_url, '', '', resource_class=SysMLPackage)
 
             graph = Graph()
             graph.bind('oslc', OSLC, override=False)
@@ -448,7 +558,7 @@ class SysMLPackageItem(Resource):
 
     def get(self, id):
         try:
-            content_type = request.headers['accept']
+            content_type = request.headers.get('accept', 'application/rdf+xml')
             if content_type in ('application/json-ld', 'application/json'):
                 content_type = 'json-ld'
 
@@ -483,11 +593,11 @@ class SysMLDefinitionList(Resource):
     @api.response(200, 'The RDF formatted response of the SysML definitions')
     def get(self):
         try:
-            content_type = request.headers['accept']
+            content_type = request.headers.get('accept', 'application/rdf+xml')
             if content_type in ('application/json-ld', 'application/json'):
                 content_type = 'json-ld'
 
-            elements = get_sysml_element_list(request.base_url, '', '')
+            elements = get_sysml_element_list(request.base_url, '', '', resource_class=SysMLDefinition)
 
             graph = Graph()
             graph.bind('oslc', OSLC, override=False)
@@ -538,7 +648,7 @@ class SysMLDefinitionItem(Resource):
 
     def get(self, id):
         try:
-            content_type = request.headers['accept']
+            content_type = request.headers.get('accept', 'application/rdf+xml')
             if content_type in ('application/json-ld', 'application/json'):
                 content_type = 'json-ld'
 
@@ -573,11 +683,11 @@ class SysMLUsageList(Resource):
     @api.response(200, 'The RDF formatted response of the SysML usages')
     def get(self):
         try:
-            content_type = request.headers['accept']
+            content_type = request.headers.get('accept', 'application/rdf+xml')
             if content_type in ('application/json-ld', 'application/json'):
                 content_type = 'json-ld'
 
-            elements = get_sysml_element_list(request.base_url, '', '')
+            elements = get_sysml_element_list(request.base_url, '', '', resource_class=SysMLUsage)
 
             graph = Graph()
             graph.bind('oslc', OSLC, override=False)
@@ -628,7 +738,7 @@ class SysMLUsageItem(Resource):
 
     def get(self, id):
         try:
-            content_type = request.headers['accept']
+            content_type = request.headers.get('accept', 'application/rdf+xml')
             if content_type in ('application/json-ld', 'application/json'):
                 content_type = 'json-ld'
 
@@ -660,11 +770,12 @@ class SysMLUsageItem(Resource):
 
 def _list_get(self):
     try:
-        content_type = request.headers['accept']
+        content_type = request.headers.get('accept', 'application/rdf+xml')
         if content_type in ('application/json-ld', 'application/json'):
             content_type = 'json-ld'
 
-        elements = get_sysml_element_list(request.base_url, '', '')
+        resource_class = _resource_class_from_path()
+        elements = get_sysml_element_list(request.base_url, '', '', resource_class=resource_class)
 
         graph = Graph()
         graph.bind('oslc', OSLC, override=False)
@@ -689,7 +800,7 @@ def _list_get(self):
 
 def _item_get(self, id):
     try:
-        content_type = request.headers['accept']
+        content_type = request.headers.get('accept', 'application/rdf+xml')
         if content_type in ('application/json-ld', 'application/json'):
             content_type = 'json-ld'
 

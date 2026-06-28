@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pyoslc"
-version = "0.3.0"
+version = "0.4.0"
 description = "SDK for implementing OSLC API using Python."
 readme = "README.md"
 license = {file = "LICENSE"}
@@ -46,6 +46,7 @@ dotenv = ["python-dotenv"]
 dev = ["check-manifest"]
 test = ["pytest>=8.0", "pytest-cov", "pytest-html"]
 docs = ["sphinx"]
+sysml = ["sysmlpy>=0.34.0"]
 
 [dependency-groups]
 dev = ["flake8"]

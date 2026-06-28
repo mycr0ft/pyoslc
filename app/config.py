@@ -26,3 +26,6 @@ class Config:
         'CSV_REQUIREMENT_PATH',
         os.path.join(os.path.abspath(''), 'examples', 'specifications.csv'))
     OXYGRAPH_URL = os.environ.get('OXYGRAPH_URL', 'http://127.0.0.1:7878')
+    SYSML_MODEL_PATH = os.environ.get(
+        'SYSML_MODEL_PATH',
+        os.path.join(os.path.abspath(''), 'examples', 'saturn_v', 'saturn_v.json'))

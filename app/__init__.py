@@ -55,4 +55,8 @@ def create_app(app_config=None):
     from app.api.oauth import oslc_oauth
     oslc_oauth.init_app(app)
 
+    if app.config.get('SYSML_MODEL_PATH'):
+        from app.api.adapter.namespaces.sysml.seeder import seed_saturn_v
+        seed_saturn_v(app.config['SYSML_MODEL_PATH'])
+
     return app

@@ -124,7 +124,7 @@ class Specification(ServiceResource):
 class SysMLSpecification(ServiceResource):
 
     domain = 'http://open-services.net/ns/am#'
-    service_path = 'provider/{id}/sysml'
+    service_path = 'sysml'
 
     @staticmethod
     def query_capability():
@@ -136,7 +136,8 @@ class SysMLSpecification(ServiceResource):
                 'http://open-services.net/ns/am#Resource',
                 'https://www.omg.org/spec/sysml/vocabulary#Element',
             ],
-            'usages': []
+            'usages': [],
+            'query_base': 'sysml/element',
         }
 
     @staticmethod
@@ -149,7 +150,8 @@ class SysMLSpecification(ServiceResource):
                 'http://open-services.net/ns/am#Resource',
                 'https://www.omg.org/spec/sysml/vocabulary#Element',
             ],
-            'usages': []
+            'usages': [],
+            'creation': 'sysml/element',
         }
 
     @staticmethod
