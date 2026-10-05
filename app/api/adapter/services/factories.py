@@ -1,5 +1,6 @@
 from app.api.adapter.resources.resource_service import get_service_resources
-from app.api.adapter.services.specification import ServiceResource
+from app.api.adapter.services.specification import (
+    ServiceResource, Specification, SysMLSpecification, StepSpecification)
 from pyoslc.resources.factories import ServiceProviderFactory, ConfigurationFactory
 from pyoslc.vocabularies.jazz import JAZZ_CONFIG
 

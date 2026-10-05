@@ -1,4 +1,6 @@
-from app.api.adapter.services.specification import Specification, SysMLSpecification
+from app.api.adapter.services.specification import (
+    Specification, StepSpecification, SysMLSpecification
+)
 
 
 class CSVImplementation(object):
@@ -13,6 +15,10 @@ class CSVImplementation(object):
             'id': 'SysML-1',
             'name': 'PyOSLC SysML Service Provider',
             'class': SysMLSpecification
+        }, {
+            'id': 'Step-1',
+            'name': 'PyOSLC STEP Service Provider',
+            'class': StepSpecification
         }]
 
         return service_providers

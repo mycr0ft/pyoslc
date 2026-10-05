@@ -71,3 +71,75 @@ def default_error_handler(e):
     if isinstance(e, HTTPException):
         return OslcResource.build_error_response(e.code, str(e))
     return OslcResource.build_error_response(500, str(e))
+
+
+def register_representations(api) -> None:
+    """Called from oslc.init_app AFTER all namespaces import — re-registers
+    the real serializers, undoing the class-as-representation bug from
+    core.py's @api.representation-decorated resource classes."""
+    api.representation("application/rdf+xml")(represent_rdf_xml)
+    api.representation("application/json-ld")(represent_jsonld)
+    api.representation("text/turtle")(represent_turtle)
+    api.representation("application/json")(represent_json)
+
+
+# ---------------------------------------------------------------------------
+# representation (serializer) functions — ROOT-CAUSE FIX for the
+# 'ResourceShapeEndpoint' object has no attribute 'headers' crash on any
+# flask-restx error path.
+#
+# flask-restx's @api.representation decorator registers a function that
+# turns a marshalled payload into a Response.  core.py decorated
+# Resource CLASSES with it, so flask_restx stored the class as the
+# serializer; when a Resource returns (dict, status) — every error
+# path in every namespace — make_response calls
+# representations[mediatype](data, code, headers) which resolves to the
+# class constructor and then crashes on .headers.  Any error response
+# (404/400/500 from a flask-restx resource) reproduced it; the reason
+# it lurked so long is that the happy paths all return real Response
+# objects via OslcResource.create_response, bypassing the serializer.
+#
+# Fix: register real serializer functions.  build_error_response already
+# renders a proper OSLC Error document; these serializers pass
+# marshalled payloads (dicts/Response) through with the right
+# Content-Type.
+# ---------------------------------------------------------------------------
+
+def _serialize_payload(data, code, headers, content_type):
+    from flask import make_response as _make_response
+    import json as _json
+
+    if isinstance(data, tuple) and len(data) == 2 and \
+            isinstance(data[1], int) and not hasattr(data, 'headers'):
+        # (payload, status) tuple from a Resource
+        payload, status = data
+        response = _make_response(payload, status)
+    elif isinstance(data, dict):
+        response = _make_response(_json.dumps(data), code or 200)
+    elif hasattr(data, 'headers'):     # already a Response
+        response = data
+    else:
+        response = _make_response(data, code or 200)
+    if response.headers.get('Content-Type') in (None, '') or \
+            not hasattr(data, 'headers') and response.mimetype == 'text/html':
+        response.headers['Content-Type'] = content_type
+    for k, v in (headers or {}).items():
+        response.headers[k] = v
+    return response
+
+
+def represent_rdf_xml(data, code=200, headers=None):
+    return _serialize_payload(data, code, headers,
+                              'application/rdf+xml; charset=UTF-8')
+
+
+def represent_jsonld(data, code=200, headers=None):
+    return _serialize_payload(data, code, headers, 'application/json-ld')
+
+
+def represent_turtle(data, code=200, headers=None):
+    return _serialize_payload(data, code, headers, 'text/turtle')
+
+
+def represent_json(data, code=200, headers=None):
+    return _serialize_payload(data, code, headers, 'application/json')

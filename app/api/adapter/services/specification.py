@@ -170,6 +170,46 @@ class SysMLSpecification(ServiceResource):
         }
 
 
+class StepSpecification(ServiceResource):
+    """STEP AP242 product-structure domain (P2 of the stepper × pyoslc
+    integration).  Resources are stepper-vocabulary-typed; the seeder
+    loads stepper's P1 output."""
+
+    domain = 'https://github.com/mycr0ft/stepper/vocab#'
+    service_path = 'step'
+
+    STEP_BASE = 'https://github.com/mycr0ft/stepper/vocab#'
+
+    @staticmethod
+    def query_capability():
+        return {
+            'title': 'STEP Query Capability',
+            'label': 'STEP Query Capability',
+            'resource_shape': 'resourceShapes/stepProduct',
+            'resource_type': [
+                'http://open-services.net/ns/core#Resource',
+                StepSpecification.STEP_BASE + 'Product',
+                StepSpecification.STEP_BASE + 'ProductDefinition',
+            ],
+            'usages': [],
+            'query_base': 'step/product',
+        }
+
+    @staticmethod
+    def creation_factory():
+        return {
+            'title': 'STEP Creation Factory',
+            'label': 'STEP Creation Factory',
+            'resource_shape': ['resourceShapes/stepProduct'],
+            'resource_type': [
+                'http://open-services.net/ns/core#Resource',
+                StepSpecification.STEP_BASE + 'ProductDefinition',
+            ],
+            'usages': [],
+            'creation': 'step/productDefinition',
+        }
+
+
 class Configuration(ServiceResource):
 
     @staticmethod

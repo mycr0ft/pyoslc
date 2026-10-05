@@ -58,6 +58,8 @@ from app.api.adapter.services.shapes import (
     build_sysml_connector_as_usage_shape,
     build_sysml_succession_as_usage_shape,
     build_sysml_binding_connector_as_usage_shape,
+    build_step_product_shape, build_step_product_definition_shape,
+    build_step_shape_representation_shape, build_step_file_shape,
 )
 from pyoslc.resources.domains.rm import Requirement
 from pyoslc.resources.models import ResponseInfo, Compact, Preview
@@ -525,6 +527,14 @@ class ResourceShapeEndpoint(OslcResource):
             shape = build_sysml_succession_as_usage_shape(base_url)
         elif shape_name == 'sysmlBindingConnectorAsUsage':
             shape = build_sysml_binding_connector_as_usage_shape(base_url)
+        elif shape_name == 'stepProduct':
+            shape = build_step_product_shape(base_url)
+        elif shape_name == 'stepProductDefinition':
+            shape = build_step_product_definition_shape(base_url)
+        elif shape_name == 'stepShapeRepresentation':
+            shape = build_step_shape_representation_shape(base_url)
+        elif shape_name == 'stepFile':
+            shape = build_step_file_shape(base_url)
         else:
             raise NotFound()
 

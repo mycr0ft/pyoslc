@@ -2569,3 +2569,151 @@ def build_sysml_port_usage_shape(base_uri):
     ))
 
     return shape
+
+
+STEP_NS = 'https://github.com/mycr0ft/stepper/vocab#'
+
+
+def _step_common_properties(shape):
+    """identifier / title / description / sourceRef — shared by all
+    STEP resources."""
+    shape.add_shape_property(Property(
+        property_definition=DCTERMS_NS + 'identifier',
+        name='identifier',
+        value_type=XSD_NS + 'string',
+        occurs=OSLC_NS + 'Exactly-one',
+        title='Identifier',
+        read_only=True,
+    ))
+    shape.add_shape_property(Property(
+        property_definition=DCTERMS_NS + 'title',
+        name='title',
+        value_type=XSD_NS + 'string',
+        occurs=OSLC_NS + 'Zero-or-one',
+        title='Title',
+    ))
+    shape.add_shape_property(Property(
+        property_definition=DCTERMS_NS + 'description',
+        name='description',
+        value_type=XSD_NS + 'string',
+        occurs=OSLC_NS + 'Zero-or-one',
+        title='Description',
+    ))
+    shape.add_shape_property(Property(
+        property_definition=STEP_NS + 'sourceRef',
+        name='sourceRef',
+        value_type=XSD_NS + 'string',
+        occurs=OSLC_NS + 'Zero-or-one',
+        title='STEP Source Ref',
+        read_only=True,
+    ))
+
+
+def build_step_product_shape(base_uri):
+    shape_uri = base_uri.rstrip('/')
+    shape = ResourceShape(
+        about=shape_uri,
+        title='STEP Product Resource Shape',
+        describes=STEP_NS + 'Product',
+    )
+    _step_common_properties(shape)
+    shape.add_shape_property(Property(
+        property_definition=STEP_NS + 'productId',
+        name='productId',
+        value_type=XSD_NS + 'string',
+        occurs=OSLC_NS + 'Zero-or-one',
+        title='Product Id',
+        read_only=True,
+    ))
+    return shape
+
+
+def build_step_product_definition_shape(base_uri):
+    shape_uri = base_uri.rstrip('/')
+    shape = ResourceShape(
+        about=shape_uri,
+        title='STEP ProductDefinition Resource Shape',
+        describes=STEP_NS + 'ProductDefinition',
+    )
+    _step_common_properties(shape)
+    shape.add_shape_property(Property(
+        property_definition=STEP_NS + 'product',
+        name='product',
+        value_type=OSLC_NS + 'Resource',
+        range=STEP_NS + 'Product',
+        occurs=OSLC_NS + 'Zero-or-many',
+        representation=OSLC_NS + 'Either',
+        title='Product',
+    ))
+    shape.add_shape_property(Property(
+        property_definition=STEP_NS + 'shapeRepresentation',
+        name='shapeRepresentation',
+        value_type=OSLC_NS + 'Resource',
+        range=STEP_NS + 'ShapeRepresentation',
+        occurs=OSLC_NS + 'Zero-or-many',
+        representation=OSLC_NS + 'Either',
+        title='Shape Representation',
+    ))
+    shape.add_shape_property(Property(
+        property_definition=OSLC_NS + 'link',
+        name='sysmlLink',
+        value_type=OSLC_NS + 'Resource',
+        occurs=OSLC_NS + 'Zero-or-many',
+        title='SysML Link',
+        description='Vee-link into the SysML domain (P3)',
+    ))
+    return shape
+
+
+def build_step_shape_representation_shape(base_uri):
+    shape_uri = base_uri.rstrip('/')
+    shape = ResourceShape(
+        about=shape_uri,
+        title='STEP ShapeRepresentation Resource Shape',
+        describes=STEP_NS + 'ShapeRepresentation',
+    )
+    _step_common_properties(shape)
+    shape.add_shape_property(Property(
+        property_definition=STEP_NS + 'representationKind',
+        name='representationKind',
+        value_type=XSD_NS + 'string',
+        occurs=OSLC_NS + 'Zero-or-one',
+        title='Representation Kind',
+        read_only=True,
+    ))
+    shape.add_shape_property(Property(
+        property_definition=STEP_NS + 'geometryItemCount',
+        name='geometryItemCount',
+        value_type=XSD_NS + 'integer',
+        occurs=OSLC_NS + 'Exactly-one',
+        title='Geometry Item Count',
+        read_only=True,
+    ))
+    return shape
+
+
+def build_step_file_shape(base_uri):
+    shape_uri = base_uri.rstrip('/')
+    shape = ResourceShape(
+        about=shape_uri,
+        title='STEP File Resource Shape',
+        describes=STEP_NS + 'StepFile',
+    )
+    _step_common_properties(shape)
+    shape.add_shape_property(Property(
+        property_definition=STEP_NS + 'schemaName',
+        name='schemaName',
+        value_type=XSD_NS + 'string',
+        occurs=OSLC_NS + 'Exactly-one',
+        title='Schema Name',
+        read_only=True,
+    ))
+    shape.add_shape_property(Property(
+        property_definition=STEP_NS + 'productCount',
+        name='productCount',
+        value_type=XSD_NS + 'integer',
+        occurs=OSLC_NS + 'Exactly-one',
+        title='Product Count',
+        read_only=True,
+    ))
+    return shape
