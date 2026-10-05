@@ -103,3 +103,12 @@ class VeeLinkList(Resource):
 
 
 step_ns.add_resource(VeeLinkList, "/vee")
+
+# -- P4: Config-Management baselines ---------------------------------------
+
+from app.api.adapter.namespaces.step.baseline_routes import (
+    BaselineList, BaselineItem,
+)
+
+step_ns.add_resource(BaselineList, "/baselines")
+step_ns.add_resource(BaselineItem, "/baselines/<string:baseline_id>")

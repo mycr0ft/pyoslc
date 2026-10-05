@@ -2,6 +2,22 @@
 
 ## [Unreleased] — on master
 
+### P4: Vee baselines (OSLC Config Management)
+- `baselines.py` (`namespaces/step/`): a baseline pins the SE-Vee
+  configuration by content hash — .sysml + .stp source bytes in a
+  sha256 content-addressed artifact store, plus the DERIVED payloads
+  (sysml interchange stable-ids JSON with its qn_registry; stepper
+  structure JSON-LD per .stp) and the Vee-link table snapshot.
+  Baseline id = manifest digest: identical content → same id
+  (idempotent, duplicate creation raises); artifact or any derived
+  change → new id. `derived_from` chains baselines (release history).
+  `verify_baseline(id)` re-hashes every stored artifact (tamper
+  detection pinned by test).
+- Baselines are immutable — `update()` raises; the REST surface is
+  read/create/verify only (`/oslc/step/baselines`).
+- Tests: `tests/functional/test_baselines.py` (15). Suite: 72 green.
+
+
 ### P3: Vee-link registry (`/oslc/step/vee`)
 - `VeeRegistry` (`app/api/adapter/namespaces/step/vee.py`): identity
   edges between SysML elements (declared QN + stable interchange `@id`
