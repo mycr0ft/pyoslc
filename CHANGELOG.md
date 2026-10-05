@@ -1,5 +1,24 @@
 # Changelog
 
+## [Unreleased] — on master
+
+### P3: Vee-link registry (`/oslc/step/vee`)
+- `VeeRegistry` (`app/api/adapter/namespaces/step/vee.py`): identity
+  edges between SysML elements (declared QN + stable interchange `@id`
+  from sysmlpy's new `qn_registry()` export side table) and STEP
+  resources. Bidirectional queries, deduped (element, step, kind)
+  pairs, kinds `realizes|specifies|traces`, optional JSON sidecar
+  persistence (the sysmlpy reconcile-registry pattern).
+- `POST /oslc/step/vee` two modes: `{"registry": {...}}` auto-ingest
+  (leaf-name match, quoted SysML short names stripped) or single
+  manual edge; `GET ?sysml_qn=` / `?step_ref=%23…`.
+- Serializer fix extension: `_serialize_payload` honors an explicit
+  status code when the payload is already a Response (jsonify+201
+  tuple shape).
+- Depends on sysmlpy `qn_registry` (sibling repo, 8d17259); stepper
+  installed editable for the full-pipe seeder. Tests:
+  `tests/functional/test_vee.py` (11). Suite: 57 green.
+
 ## [0.2.0] - 2026-06-16
 
 ### Python 3 Migration

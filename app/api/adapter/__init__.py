@@ -118,6 +118,8 @@ def _serialize_payload(data, code, headers, content_type):
         response = _make_response(_json.dumps(data), code or 200)
     elif hasattr(data, 'headers'):     # already a Response
         response = data
+        if code is not None and response.status_code != code:
+            response.status_code = code
     else:
         response = _make_response(data, code or 200)
     if response.headers.get('Content-Type') in (None, '') or \
