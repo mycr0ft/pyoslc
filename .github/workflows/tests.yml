@@ -1,5 +1,8 @@
-# This workflows will upload a Python Package using Twine when a release is created
-# For more information see: https://help.github.com/en/actions/language-and-framework-guides/using-python-with-github-actions#publishing-to-package-registries
+# pyoslc adapter tests — run the functional/unit suite on every push.
+#
+# The suite needs the stepper package (P2 STEP-domain seeder imports it
+# for the seed_from_step_file tests); installed from the sibling repo
+# checkout. requirements.txt is reference-only (see pyproject.toml).
 
 name: Testing the Adapter
 
@@ -7,63 +10,27 @@ on: [push]
 
 jobs:
   tests:
-    name: test
+    name: test py${{ matrix.python }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        python: [2.7, 3.7, 3.8, 3.9]
+        python: ["3.11", "3.13"]
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python }}
 
-      - name: Install dependencies
+      - name: Install
         run: |
           python -m pip install --upgrade pip
-          pip install setuptools wheel twine
+          pip install -e .
+          pip install pytest
 
+      - name: Install stepper (sibling project, P2 seeder dep)
+        run: pip install git+https://github.com/mycr0ft/stepper.git
 
-      - name: Install requirements
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Lint with flake8
-        run: |
-          pip install flake8
-          flake8 .
-
-      - name: Install Tox and any other packages
-        run: |
-          pip install tox
-
-      - name: Run Tox
-        # Run tox using the version of Python in `PATH`
-        run: |
-          tox -e py
-
-#  deploy:
-#
-#    runs-on: ubuntu-latest
-#
-#    steps:
-#    - uses: actions/checkout@v2
-#    - name: Set up Python
-#      uses: actions/setup-python@v2
-#      with:
-#        python-version: ${{ matrix.python }}
-#    - name: Install dependencies
-#      run: |
-#        python -m pip install --upgrade pip
-#        pip install setuptools wheel twine
-#    - name: Build and publish
-#      env:
-#        TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
-#        TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
-#      run: |
-#        python setup.py sdist bdist_wheel
-#        twine upload dist/*
+      - name: Run tests
+        run: pytest tests/ -q --tb=short
