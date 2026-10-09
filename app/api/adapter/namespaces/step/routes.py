@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 """flask-restx namespace wiring for the STEP domain."""
 
+import os
+
 from flask_restx import Resource, reqparse
 from flask import request, make_response
 from rdflib import Graph
@@ -147,3 +149,24 @@ StepShapeRepresentationList, StepShapeRepresentationItem = \
         create_step_shape_representation)
 StepFileList, StepFileItem = _make_list_item_classes(
     "StepFileList", "StepFileItem", "file", StepFile, create_step_file)
+
+
+class StepFileDownload(Resource):
+    """GET /oslc/step/file/<id>/model.stp — stream the raw Part 21 bytes
+    so browser viewers can tessellate the model locally (occt-import-js
+    in mvp-viewer). The file path is the resource's vocab#file value."""
+
+    def get(self, id):
+        from flask import send_file
+        from app.api.adapter.namespaces.step.repository import (
+            get_step_repository as _g,
+        )
+        res = _g().find(id)
+        if res is None or not getattr(res, "file_ref", ""):
+            return {"status": "fail", "message": "no backing file"}, 404
+        path = res.file_ref
+        if not os.path.exists(path):
+            return {"status": "fail", "message": f"missing {path}"}, 404
+        return send_file(path, mimetype="application/step",
+                         as_attachment=False,
+                         download_name=os.path.basename(path))

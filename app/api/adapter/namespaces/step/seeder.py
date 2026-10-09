@@ -34,6 +34,13 @@ def seed_from_jsonld(document, file_ref=None):
 
     graph = document.get("@graph", []) if isinstance(document, dict) else []
 
+    def _upsert(r):
+        """Idempotent seeding — re-seeding the same file must not raise."""
+        try:
+            return repo.create(r)
+        except ValueError:
+            return repo.update(r.identifier, r) if repo.find(r.identifier) else r
+
     for res in graph:
         rid = res.get("@id", "")
         tail = rid.rstrip("/").rsplit("/", 1)[-1]
@@ -42,7 +49,7 @@ def seed_from_jsonld(document, file_ref=None):
                 identifier=tail, title=res.get("dcterms:title", ""),
                 description=res.get("dcterms:description", ""),
                 source_ref=res.get("dcterms:identifier", ""))
-            repo.create(r)
+            _upsert(r)
             created.append(r)
         elif "/product_definition/" in rid:
             r = StepProductDefinition(
@@ -55,7 +62,7 @@ def seed_from_jsonld(document, file_ref=None):
                     r.add_shape_representation(part["@id"])
                 elif "/product/" in part.get("@id", ""):
                     r.add_product(part["@id"])
-            repo.create(r)
+            _upsert(r)
             created.append(r)
         elif "/shape_rep/" in rid:
             r = StepShapeRepresentation(
@@ -66,7 +73,7 @@ def seed_from_jsonld(document, file_ref=None):
             title = r.title or ""
             if " " in title and not r.representation_kind:
                 r.representation_kind = title.split(" ")[0]
-            repo.create(r)
+            _upsert(r)
             created.append(r)
         elif "/file/" in rid:
             r = StepFile(
@@ -75,7 +82,7 @@ def seed_from_jsonld(document, file_ref=None):
                 schema_name=res.get("dcterms:description", ""),
                 product_count=res.get("stepper:productCount", 0),
                 file_ref=file_ref or res.get("dcterms:identifier", ""))
-            repo.create(r)
+            _upsert(r)
             created.append(r)
 
     logger.info("step seeder: %d resources seeded", len(created))
@@ -119,7 +126,7 @@ def seed_from_turtle(turtle_text, file_ref=None):
                 r.schema_name = str(o)
             for o in g.objects(s, STEPPER.productCount):
                 r.product_count = int(o)
-            repo.create(r)
+            _upsert(r)
             created.append(r)
 
     logger.info("step seeder: %d resources seeded (turtle)", len(created))

@@ -19,7 +19,7 @@ from app.api.adapter.namespaces.step.routes import (
     StepProductList, StepProductItem,
     StepProductDefinitionList, StepProductDefinitionItem,
     StepShapeRepresentationList, StepShapeRepresentationItem,
-    StepFileList, StepFileItem,
+    StepFileList, StepFileItem, StepFileDownload,
 )
 
 step_ns = Namespace(name="step", description="STEP product structure",
@@ -35,6 +35,7 @@ step_ns.add_resource(StepShapeRepresentationItem,
                      "/shapeRepresentation/<string:id>")
 step_ns.add_resource(StepFileList, "/file")
 step_ns.add_resource(StepFileItem, "/file/<string:id>")
+step_ns.add_resource(StepFileDownload, "/file/<string:id>/model.stp")
 
 # -- P3: the Vee-link registry endpoint ------------------------------------
 
