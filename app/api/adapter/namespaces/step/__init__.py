@@ -112,3 +112,9 @@ from app.api.adapter.namespaces.step.baseline_routes import (
 
 step_ns.add_resource(BaselineList, "/baselines")
 step_ns.add_resource(BaselineItem, "/baselines/<string:baseline_id>")
+
+# -- Phase C item 3: the OBP domain + ISO/TS 10303-400 uuid links -------------
+
+from app.api.adapter.namespaces.step.obp_routes import register_obp_routes
+
+register_obp_routes(step_ns)

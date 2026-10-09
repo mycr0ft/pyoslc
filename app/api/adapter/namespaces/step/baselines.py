@@ -241,6 +241,20 @@ def create_baseline(inp: BaselineInput, *, include_payloads: bool = True) -> dic
                     "kind": "step_structure", "path": label,
                     "error": str(e)[:200],
                 })
+            # -- Phase C item 3: the OBP (-3001) payload as the third derived artifact
+            try:
+                from stepper.bom import to_obp, to_obp_json
+                obp_payload = json.dumps(to_obp_json(to_obp(p)), sort_keys=True)
+                digest = store.put_text(obp_payload)
+                artifacts.append({
+                    "kind": "step_obp", "path": label,
+                    "sha256": digest, "size": len(obp_payload),
+                })
+            except Exception as e:
+                artifacts.append({
+                    "kind": "step_obp", "path": label,
+                    "error": str(e)[:200],
+                })
 
     # -- vee links snapshot ---------------------------------------------
     vee_rows = [l.to_dict() for l in get_vee_registry().all()]
