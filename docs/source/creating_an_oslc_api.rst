@@ -101,7 +101,7 @@ used for the auto documented web app.
         version='1.0.0',
         title='Python OSLC API',
         description='Implementation for the OSLC specification for python application',
-        contact='Contact Software & Koneksys',
+        contact='CONTACT Software',
         contact_url='https://www.contact-software.com/en/',
         contact_email="oslc@contact-software.com",
         validate=True
