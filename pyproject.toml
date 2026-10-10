@@ -10,7 +10,7 @@ readme = "README.md"
 license = {file = "LICENSE"}
 requires-python = ">=3.10"
 authors = [
-    {name = "Contact Software", email = "fp@contact.de"},
+    {name = "Jon Fox", email = "mycr0ft@users.noreply.github.com"},
 ]
 keywords = ["OSLC", "SDK", "REST", "API", "RDF", "JSON-LD"]
 classifiers = [

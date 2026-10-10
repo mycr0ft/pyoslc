@@ -16,8 +16,8 @@ class ServiceProviderCatalogSingleton(object):
             cls.instance = super().__new__(cls, *args, **kwargs)
 
             cls.catalog = ServiceProviderCatalog()
-            cls.catalog.title = 'Contact Software Platform Service Provider Catalog'
-            cls.catalog.description = 'A Service Provider for the Contact Software Platform.'
+            cls.catalog.title = 'PyOSLC Service Provider Catalog'
+            cls.catalog.description = 'A PyOSLC OSLC Service Provider.'
 
         return cls.instance
 
@@ -60,7 +60,7 @@ class ServiceProviderCatalogSingleton(object):
             if identifier not in list(cls.providers.keys()):
                 name = sp.get('name')
                 title = '{}'.format(name)
-                description = 'Service Provider for the Contact Software platform service (id: {}; kind: {})'.format(
+                description = 'PyOSLC service provider (id: {}; kind: {})'.format(
                     identifier, sp.get('class').__name__)
                 publisher = None
                 parameters = {'id': sp.get('id')}

@@ -183,9 +183,9 @@ Response:
     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
     <oslc:ServiceProviderCatalog rdf:about="http://127.0.0.1:5000/oslc/services/catalog">
         <oslc:domain rdf:resource="http://open-services.net/ns/rm#"/>
-        <dcterms:title>Contact Software Platform Service Provider Catalog</dcterms:title>
+        <dcterms:title>PyOSLC Service Provider Catalog</dcterms:title>
         <oslc:serviceProvider rdf:resource="http://127.0.0.1:5000/oslc/services/provider/Project-1"/>
-        <dcterms:description>A Service Provider for the Contact Software Platform.</dcterms:description>
+        <dcterms:description>A PyOSLC OSLC Service Provider.</dcterms:description>
         <oslc:domain rdf:resource="http://jazz.net/xmlns/prod/jazz/process/1.0/"/>
 
         ...
@@ -237,7 +237,7 @@ Response Body:
             <dcterms:title rdf:datatype="http://www.w3.org/2001/XMLSchema#Literal">PyOSLC Service Provider for Project 1</dcterms:title>
             <oslc:details rdf:resource="http://127.0.0.1:5000/oslc/services/provider/Project-1"/>
             <dcterms:identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Project-1</dcterms:identifier>
-            <dcterms:description>Service Provider for the Contact Software platform service (id: Project-1; kind: Specification)</dcterms:description>
+            <dcterms:description>PyOSLC service provider (id: Project-1; kind: Specification)</dcterms:description>
         </oslc:ServiceProvider>
     </rdf:RDF>
     

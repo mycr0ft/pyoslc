@@ -13,9 +13,9 @@ api = Api(
     version='1.0.0',
     title='Python OSLC API',
     description='Implementation for the OSLC specification for python application',
-    contact='CONTACT Software',
-    contact_url='https://www.contact-software.com/en/',
-    contact_email="oslc@contact-software.com",
+    contact='mycr0ft/pyoslc',
+    contact_url='https://github.com/mycr0ft/pyoslc',
+    contact_email="",
     validate=True
 )
 

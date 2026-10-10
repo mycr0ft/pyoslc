@@ -20,8 +20,8 @@
 # -- Project information -----------------------------------------------------
 
 project = 'PyOSLC'
-copyright = '2020, Contact-Software'
-author = 'Contact-Software'
+copyright = '2026, mycr0ft (PyOSLC fork)'
+author = 'mycr0ft'
 
 # The short X.Y version
 version = ''
@@ -131,7 +131,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
     (master_doc, 'PyOSLC.tex', 'PyOSLC Documentation',
-     'Contact-Software', 'manual'),
+     'mycr0ft', 'manual'),
 ]
 
 

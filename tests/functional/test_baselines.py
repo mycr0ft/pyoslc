@@ -31,8 +31,20 @@ from app.api.adapter.namespaces.step.baselines import (
 
 HOME = os.path.expanduser("~")
 SYSML_DIR = f"{HOME}/proj/pyoslc/examples/saturn_v/sysml"
-NIST = ("/home/jfox/.hermes/cache/scratch/nist/NIST-PMI-STEP-Files/"
-        "nist_ctc_01_asme1_ap242-e1.stp")
+import os as _os
+
+_NIST_CANDIDATES = (
+    _os.path.join(_os.path.dirname(__file__), "..", "..", "..", "stepper",
+                  "tests", "fixtures", "nist", "nist_ctc_01_asme1_ap242-e1.stp"),
+    "/storage16/home/jfox/proj/stepper/tests/fixtures/nist/nist_ctc_01_asme1_ap242-e1.stp",
+)
+NIST = next((p for p in _NIST_CANDIDATES if _os.path.exists(p)), None)
+pytestmark_missing_step = pytest.mark.skipif(NIST is None,
+    reason="no sibling stepper checkout with vendored NIST fixtures")
+
+if NIST is None:
+    pytest.skip("no sibling stepper checkout with vendored NIST fixtures",
+                allow_module_level=True)
 
 pytest.importorskip("sysmlpy")
 pytest.importorskip("stepper")
